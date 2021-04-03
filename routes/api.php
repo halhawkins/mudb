@@ -19,6 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/newreleases/',function() {
+    $res = Spotify::newReleases()->get();//Spotify::searchArtists('Peter Gabriel')->get();
+    return response()->json($res);
+});
+
 Route::get('/searchall/{query}',function($query){
     $res = Spotify::searchItems($query,['album', 'artist', 'track'])->get();
     return response()->json($res);
