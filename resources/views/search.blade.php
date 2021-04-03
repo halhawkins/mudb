@@ -165,7 +165,7 @@
             query = '{{$query}}';
             $.ajax({
                 type: "GET",
-                url: "../api/searchall/" + query,
+                url: "api/searchall/" + query,
                 success: function (response) {
                     artists = response.artists.items;
                     albums = response.albums.items;
@@ -185,7 +185,7 @@
                         content = `<div class="col-md-3">
                                         <div class="col-12 artist-card">
                                             <img src="` + image + `" style="width:100%;height:auto;">
-                                            <h5><a title="Artist name" href="../artist/` + artist.id + `">` + artist.name + `</a></h5><em>
+                                            <h5><a title="Artist name" href="artist/` + artist.id + `">` + artist.name + `</a></h5><em>
                                             `
                         if(artist.genres.length > 4)
                             numGenres = 4;
@@ -213,7 +213,7 @@
                         content = `<div class="col-md-3">
                                     <div class="col-12 artist-card">
                                         <img src="` + image + `" style="width:100%;height:auto;">
-                                        <h5><a title="Album name" href="../album/` + album.id + `">` + album.name + `</a></h5>
+                                        <h5><a title="Album name" href="album/` + album.id + `">` + album.name + `</a></h5>
                                         `
                         + "(" + releaseYear + `)<br/>
                         `;
@@ -248,13 +248,13 @@
                             }
                         });
                         content = content + `
-                                        <br/><a title="Album name" class="subalbum-name" href="../album/` + track.album.id + `">` + track.album.name + `</a>
+                                        <br/><a title="Album name" class="subalbum-name" href="album/` + track.album.id + `">` + track.album.name + `</a>
                                         </div>
                                 </div>`;
                         trks.append(content);                        
                         });
                         if(tracks.length > 19)
-                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="../artists/` + query + `/2">More...</a></div>`)
+                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="artists/` + query + `/2">More...</a></div>`)
                     }
                 })
             });
