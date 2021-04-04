@@ -20,7 +20,7 @@
     -->
     <nav class="navbar navbar-expand-md navbar-dark mb-3">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">A</span>pp</span> <span style="color:orange;">N</span>ame</a>
+            <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">crA</span>pp</span> <span style="color:orange;">N</span>ame</a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,7 +32,7 @@
                     <a href="#" class="nav-item nav-link">Contact</a> -->
                 </div>
                 <div class="navbar-nav ml-auto">
-      <form action="search/" method="GET" class="form">
+      <form action="{{url('/')}}/search/" method="GET" class="form">
 
         <input type="search" placeholder="Search" class="search-field"  name="query"/>
         <button type="submit" class="search-button">
