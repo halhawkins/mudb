@@ -35,16 +35,11 @@ Route::get('/album/{query}',function($query){
 });
 
 Route::get('/artist/{query}',function($query){
-    // Application name	Muzicor
-    // API key	40e7023497e3403fc3d672679eba6f03
-    // Shared secret	eb4c7ec7c11013b9322f894900edd3dc
-    // Registered to	halberthawkins
-    // https://www.last.fm/api/webauth
-
-    // Application name	Muzicor
-    // API key	a480efb1010bffbf654c1791ac72543d
-    // Shared secret	6efc7393dabc439b46e84c80e2cabc1b
-    // Registered to	halberthawkins
     $res = Spotify::artist($query)->get();
+    return response()->json($res);
+});
+
+Route::get('/track/{trackid}',function($trackid){
+    $res = Spotify::track($trackid)->get();
     return response()->json($res);
 });
