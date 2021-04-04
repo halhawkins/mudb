@@ -42,7 +42,8 @@ Route::get('/newreleases',function() {
     return response()->json($res);
 });
 
-Route::get('/search/{query}',function($query) {
+Route::get('/search',function(Request $req) {
+    $query = $req->query('query');
     // $res = Spotify::newReleases()->get();//Spotify::searchArtists('Peter Gabriel')->get();
     // return response()->json($res);
     return view('search')->with("query",$query);

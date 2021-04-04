@@ -1,0 +1,183 @@
+body{
+    /* background: rgb(29, 7, 0); */
+    background: rgb(46, 21, 89);
+}
+
+#recent-releases{
+    color: rgb(173, 145, 113);
+}
+.form {
+display: flex;
+flex-direction: row;
+}
+.search-field {
+width: 100%;
+padding: 5px 20px 5px 10px;
+border: none;
+border-radius: 100px;
+outline: none;
+}
+
+.search-button {
+background: transparent;
+border: none;
+outline: none;
+margin-left: -40px;
+}
+
+.search-button img {
+width: 20px;
+height: 20px;
+object-fit: cover;
+}
+.navbar-dark{
+background-color: #27889f;
+}
+.copyright{
+    font-size: .8em;
+}
+.track-list{
+    padding: 5px;
+}
+
+.track-col{
+    background-color: white;
+    opacity: .3;
+    margin: 3px 0 3px 0;
+}
+
+ul{
+    list-style: none;
+}
+.album-list{
+    list-style: none;
+}
+
+.album-list li{
+    margin-bottom: .25em;
+    background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(11,20,0,0) 100%);
+}
+
+.album-list:first-child{
+    margin-top: 2em;
+    margin-bottom: .25em;
+    background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(11,20,0,0) 100%);
+}
+
+.album-list li span {
+    margin-left: 1em;
+}
+.album-list li div {
+    margin-left: 1em;
+    display: inline;
+} 
+
+
+
+
+
+
+.album-list li{
+    margin-bottom: .25em;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    /* border: 1px #657287 solid; */
+    border: 1px rgba(101, 114, 135, .2) solid;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.78252804539784666) 0%, rgba(0,0,0,0) 100%);
+}
+
+.album-list li:hover{
+    margin-bottom: .25em;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    /* border: 1px #657287 solid; */
+    border: 1px rgba(101, 114, 135, .2) solid;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(0,0,0,0.1) 100%);
+}
+
+.album-list li img{
+    height: 48px;
+    width: 48px;
+    border-radius:10px;
+}
+
+.album-list:first-child{
+    margin-top: 2em;
+    margin-bottom: .25em;
+    background: linear-gradient(180deg, rgba(255,255,255,0.78252804539784666) 0%, rgba(11,20,0,0) 100%);
+}
+
+.album-list li span {
+    margin-left: 1em;
+    color: #021b42;
+}
+
+.album-list.album-list li a div{
+    color: #021b42;
+}
+
+.album-list li div {
+    vertical-align: top;
+    margin-left: 1em;
+    display: inline;
+} 
+
+.play-on-spotify{
+    width:24px !important;
+    height:24px !important;
+    margin-left: 8px;
+    margin-right: 8px;
+    cursor:pointer;
+}
+.artist-card{
+    background-color:white;
+    margin: 8px;
+    padding: 8px;
+    height:95%;
+}
+
+#artist-list{
+    padding: 8px;
+}
+.track-hr{
+    padding-bottom:0;
+    margin-bottom: 0;
+}
+.album-subheading{
+    text-align: center;
+    padding-top: 0;
+    font-size: .7em;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: -10px;
+    display: block;
+}
+.toggle-panel{
+    height: 24px;
+    width: 24px;
+    background-image: url(/assets/images/collapse.svg); 
+    background-size: cover;
+    float: right;
+    margin-top:8px;
+    opacity: .5;
+}
+.panel-heading{
+    display: inline-block;
+}
+.toggle-bar{
+    color: white;
+    background-color: #27889f;
+    border-bottom: 1px solid #17525f;
+}
+.toggle-bar:hover{
+    color: white;
+    background-color: #52a0b2;
+}
+a{
+    color: black;
+}
+a:hover{
+    color: black;
+}
