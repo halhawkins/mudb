@@ -5,7 +5,7 @@
         $(document).ready(function(){
             content = "";
             $.ajax({
-                type: "GET",
+                type: "GET", 
                 url: "api/newreleases",
                 success: function (response) {
                     ad = $("#recent-releases");

@@ -32,7 +32,7 @@
                             $("#bio").html(res2.artist.bio.summary);
                             $.ajax({
                                 type: "GET",
-                                url: "/mudb/public/artistalbums/" + artistID,
+                                url: "{{url('/')}}/api/artistalbums/" + artistID,
                                 success: function (res3) {
 
                                     content = `<div class="col-md-12"><div class="row">`
