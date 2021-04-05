@@ -39,7 +39,31 @@ Route::get('/artist/{query}',function($query){
     return response()->json($res);
 });
 
+Route::get('/albuminfo/{albumartist}/{albumname}',function($albumartist,$albumname){
+    $url = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=" . urlencode($albumartist) . "&album=" . urlencode($albumname) . "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    $result = json_decode(curl_exec($curl));
+    curl_close($curl);
+    return response()->json($result);
+});
+
+Route::get('/artistalbums/{query}',function($query){
+    $res = Spotify::artistAlbums($query)->get();
+    return response()->json($res);
+});
+
 Route::get('/track/{trackid}',function($trackid){
     $res = Spotify::track($trackid)->get();
     return response()->json($res);
+});
+
+Route::get('/trackvideo/{isrc}',function($isrc){
+    $res = Youtube::searchVideos($isrc);
+    return response()->json($res);
+});
+
+Route::get('/publicpath', function(){
+    return url('/');
 });
