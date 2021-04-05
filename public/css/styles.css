@@ -138,6 +138,12 @@ ul{
     height:95%;
 }
 
+.artist-info{
+    color: white;
+    background-color: #27889f;
+    border-bottom: 1px solid #17525f;
+}
+
 #artist-list{
     padding: 8px;
 }
