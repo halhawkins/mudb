@@ -15,6 +15,9 @@
     width: 100%;
     height: 100%;
 }
+#track-info h4{
+    color: black;
+}
     </style>
     <script>
     function playOnSpotify(id){
@@ -37,6 +40,7 @@
                     trackName = response.name;
                     releaseYear = new Date(response.album.release_date).getFullYear();
                     artists = "";
+                    $("#track-info").append(`<a href="` + response.uri + `"><img src="{{url("/")}}/images/Spotify_play.png" style="width:32px;height:auto;"><span style="font-size:1.2em;"> Play on Spotify</span></a>`);
                     $.each(response.artists,function(i,val){
                         artists += `<a href="{{url('/')}}/artist/` + val.id + `">` + val.name + `</a>`;
                         if(response.artists.length > (i+1))
@@ -49,23 +53,21 @@
                             $.each(res,function(i,val){
                                 console.log(JSON.stringify(val));
                                 $("#releases").html(`
-                                <div class="col-12">
                                     <div class="videoWrapper">
                                     <iframe
                                         src="https://www.youtube.com/embed/` + val.id.videoId + `">
                                     </iframe>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <h4>` + trackName + `</h4>
+                                <div class="col-12" id="track-info">
+                                    <h4>` + trackName + `</h4><br/>
                                 </div>
                                 `);
                             });
                         }
                     });
-                    $("#artist-image").parent().append("<h4>" + albumName + "</h4><em>" + albumType + "</em><br/>("+releaseYear+")<br/><h5>" + artists + "</h5>");
+                    $("#artist-image").parent().append(`<h4><a href="{{url("/")}}/album/` + response.album.id + `">` + albumName + "</a></h4><em>" + albumType + "</em><br/>("+releaseYear+")<br/><h5>" + artists + "</h5>");
                     additionalInfo = $("#releases").parent().append(`<div class="row"></div>`);
-                    additionalInfo.append("<div class='col-12'><pre>"+JSON.stringify(response,null,"\t")+"</pre></div>");
+                    // additionalInfo.append("<div class='col-12'><pre>"+JSON.stringify(response,null,"\t")+"</pre></div>");
                 }
             })
         });
@@ -83,8 +85,13 @@
                     </div>
 
                     <div class="col-md-9 col-lg-9 col-xl-9" style="background-color:#ccccff;">
-                                <div class="row" id="releases">
-
+                                <div class="row">
+                                    <div class="col-12" id="releases">
+                                    </div>
+                               </div>
+                               <div class="row">
+                                    <div class="col-12" id="track-info">
+                                    </div>
                                </div>
                     </div>
 
