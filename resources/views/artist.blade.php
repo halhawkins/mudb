@@ -40,7 +40,8 @@
                                         image = album.images[1].url;
                                         releaseDate = new Date(album.release_date);
                                         releaseYear = releaseDate.getFullYear();
-                                        content = `<div class="col-4 artist-card">
+                                        content = `<div class="col-4">
+                                                        <div class="col-12 artist-card">
                                                         <img src="` + image + `" style="width:100%;height:auto;">
                                                         <h5><a title="Album name" href="{{url('/')}}/album/` + album.id + `">` + album.name + `</a></h5>
                                                         `
@@ -53,6 +54,7 @@
                                         })
                                         content = content + `<br/><a href="` + album.uri + `"><img src="/assets/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a>`;
                                         content = content + `</div>
+                                                            </div>
                                                 `;
                                         albs.append(content);                        
                                         });
@@ -85,7 +87,7 @@
                     </div>
 
                     <div class="col-md-9 col-lg-9 col-xl-9" style="background-color:#ccccff;">
-                                <div class="row" id="releases">
+                                <div class="row" id="releases" style="background-color: #ccccff">
 
                                </div>
                     </div>

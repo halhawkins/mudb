@@ -56,14 +56,15 @@
                         image = response.images[0].url;
                         spotifyUrl = track.uri;
                         content = `
-                            <div class="col-3 artist-card">
+                            <div class="col-3"> 
+                                <div class="col-12 artist-card">
                                 <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
                                 <h5><a href="{{url('/')}}/track/` + track.id + `">` + trackName + `</a></h5>
                                 <h6>` + response.name + ` (` + releaseYear + `)</h6>
                                 `+ artists +`<br>
                                 <a href="` + spotifyUrl + `" title="Play on spotify"><img src="/assets/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                                <audio title="Audio preview" style="height:16px; width:250px;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
-
+                                <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                                </div>
                             </div>`;
                         $("#tracks").append(content)
                     });
@@ -101,7 +102,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12" style="background-color:white;">
-                        <div class="row" id="tracks"></div>
+                        <div class="row" id="tracks" style="background-color: #ccccff"></div>
                     </div>
                 </div>
             </div>

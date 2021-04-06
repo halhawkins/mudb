@@ -89,7 +89,7 @@
                         content = `<div class="col-md-3">
                                     <div class="col-12 artist-card">
                                         <img src="` + image + `" style="width:100%;height:auto;">
-                                        <h5><a title="Track name" href="{{url('/')}}/album/` + track.id + `">` + track.name + `</a></h5>`
+                                        <h5><a title="Track name" href="{{url('/')}}/track/` + track.id + `">` + track.name + `</a></h5>`
                                         + "(" + releaseYear + `)<br/>
                                         `;
                         $.each(track.artists, function(i,artist){
