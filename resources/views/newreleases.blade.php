@@ -6,7 +6,7 @@
             content = "";
             $.ajax({
                 type: "GET", 
-                url: "api/newreleases",
+                url: "{{url('/')}}/api/newreleases",
                 success: function (response) {
                     ad = $("#recent-releases");
                     releases = response.albums.items;
@@ -16,14 +16,14 @@
                         artistarray = val.artists;
                         artists = "";
                         $.each(artistarray,function(i,artist){
-                            artists = artists +`<a href="artist/` + artist.id + `">` +  artist.name + `</a>`;
+                            artists = artists +`<a href="{{url('/')}}/artist/` + artist.id + `">` +  artist.name + `</a>`;
                             if(artists.length > (i+1))
                                 artists = artists + ", ";
                         })
                         content = `<div class="col-md-3">
                                         <div class="col-12 artist-card">
                                             <img src="` + image + `" style="width:100%;height:auto;">
-                                            <h5><a href="album/` + val.id + `">` + name + `</a></h5><em>` + val.album_type + `</em><p>
+                                            <h5><a href="{{url('/')}}/album/` + val.id + `">` + name + `</a></h5><em>` + val.album_type + `</em><p>
                                             ` + artists +
                                         `</p></div>
                                     </div>`;
