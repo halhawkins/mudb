@@ -5,7 +5,7 @@ html {
 
 body{
     /* background: rgb(29, 7, 0); */
-    background: rgb(46, 21, 89);
+    /* background: rgb(46, 21, 89); */
     margin-bottom: 60px;
 }
 .footer {
@@ -78,10 +78,37 @@ ul{
     background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(11,20,0,0) 100%);
 }
 
-.primary-bg{}
-.secondary-bg{}
-.aux-bg1{}
-.aux-bg2{}
+/* .primary-bg{
+    background-color: #ccccff;
+}
+.secondary-bg{
+    background-color: white;
+} */
+
+/* .main-bg{
+    background-color: rgb(46, 21, 89);
+} */
+.main-bg{
+    background-color: #03045E;
+}
+.primary-bg{
+    background-color: #0077B6;
+}
+.secondary-bg{
+    background-color: white;
+}
+
+
+.aux-bg1{
+    background-color: #ADE8F4;
+}
+.aux-bg2{
+    background-color: #023e8a;
+    color:white;
+}
+.aux-bg2 a{
+    color:white;
+}
 .aux-bg3{}
 .aux-bg4{}
 
@@ -161,8 +188,6 @@ ul{
 
 .artist-info{
     color: white;
-    background-color: #27889f;
-    border-bottom: 1px solid #17525f;
 }
 
 #artist-list{
@@ -195,12 +220,12 @@ ul{
 }
 .toggle-bar{
     color: white;
-    background-color: #27889f;
+    background-color: #0077B6;
     border-bottom: 1px solid #17525f;
 }
 .toggle-bar:hover{
     color: white;
-    background-color: #52a0b2;
+    background-color: #0096C7;
 }
 a{
     color: black;
