@@ -39,7 +39,7 @@
 <div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Recent Releases</h3><div class="toggle-panel"></div>
             </div>
             <div class="col-md-12">
-                <div class="row" id="recent-releases" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="recent-releases"></div> <!--style="background-color: #ccccff"-->
             </div>
 
 @endsection

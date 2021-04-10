@@ -78,16 +78,16 @@
 @endsection
 
 @section('mainbody')
-        <div class="col-md-12 artist-info"><h3 id="artist-name-heading"></h3>
-                <div class="row" id="artist" style="padding-bottom:0px;">
-                    <div class="col-md-3 col-lg-3 col-xl-3" style="padding-bottom:0px;">
-                        <h3 id="artist-name"></h3>
+        <div class="col-md-12 artist-info primary-bg"><h3 id="artist-name-heading"></h3>
+                <div class="row primary-bg" id="artist" style="padding-bottom:0px;">
+                    <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
+                        <h3 id="artist-name  primary-bg"></h3>
                         <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
                         <p id="bio"></p>
                     </div>
 
-                    <div class="col-md-9 col-lg-9 col-xl-9" style="background-color:#ccccff;">
-                                <div class="row" id="releases" style="background-color: #ccccff">
+                    <div class="col-md-9 col-lg-9 col-xl-9 aux-bg1">
+                                <div class="row aux-bg1" id="releases">
 
                                </div>
                     </div>

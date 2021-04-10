@@ -3,13 +3,13 @@
 @section('script')
 @endsection
 @section('mainbody')
-<form action="register" method="post">
+<form action="register" method="post" style="width:100%">
     @csrf
 <div class="col-12">
     <div class="row">
         <div class="col-12 toggle-bar"><h3 id="view-name" class="panel-heading">Register</h3></div>
     </div>
-    <div class="row" style="background-color: #ccccff">
+    <div class="row aux-bg1">
         <div class="col-12">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">

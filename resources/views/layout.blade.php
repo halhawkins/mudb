@@ -12,13 +12,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 @yield('script')
-<body>
+<body class="main-bg">
     <!--
         =====================================
         Start of Nav
         =====================================
     -->
-    <nav class="navbar navbar-expand-md navbar-dark mb-3">
+    <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg">
         <div class="container-fluid">
             <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">crA</span>pp</span> <span style="color:orange;">N</span>ame</a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -67,15 +67,15 @@
 
         <hr>
     </div>
-        <footer class="footer">
+        <footer class="footer aux-bg2">
             <div class="row">
                 <div class="col-md-6">
                     <p>Copyright &copy; 2021 Musicor</p>
                 </div>
                 <div class="col-md-6 text-md-right">
-                    <a href="#" class="text-dark">Terms of Use</a> 
+                    <a href="#">Terms of Use</a> 
                     <span class="text-muted mx-2">|</span> 
-                    <a href="#" class="text-dark">Privacy Policy</a>
+                    <a href="#">Privacy Policy</a>
                 </div>
             </div>
         </footer>

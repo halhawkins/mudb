@@ -101,8 +101,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12" style="background-color:white;">
-                        <div class="row" id="tracks" style="background-color: #ccccff"></div>
+                    <div class="col-12 secondary-bg">
+                        <div class="row aux-bg1" id="tracks"></div> <!-- style="background-color: #ccccff" -->
                     </div>
                 </div>
             </div>
