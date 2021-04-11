@@ -119,7 +119,12 @@ ul{
     margin-left: 1em;
     display: inline;
 } 
-
+.avatar-image{
+    width:34px;
+    height:34px;
+    margin-left: 1em;
+    border-radius: 100%;
+}
 
 
 
