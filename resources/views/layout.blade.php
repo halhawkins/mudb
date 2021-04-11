@@ -39,13 +39,20 @@
           <img src="{{asset('/images/magnifying-glass-icon-20.png')}}">
         </button>
       </form>
-        @if(session()->has('username'))
-            <img src="{{session('avatar')}}" style="width:32px;height:auto;border-radius:50%;"><span>Hello {{session('username')}}</span>
-        @else
+        @guest
                     <!-- <input type="text" class="input" placeholder="search"><button type="submit"><i class="fa fa-search"></i></button> -->
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#register-dialog">Register</a>
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#login-modal">Login</a>
-        @endif
+        @else
+        <div class="dropdown">
+            <img id="user-avatar" src="{{Auth::user()->avatar}}" alt="user avatar" data-toggle="dropdown" aria-haspopup="true" class="avatar-image  dropdown-toggle">
+                <div class="dropdown-menu" aria-labelledby="user-avatar">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <hr/>
+                    <a href="#" class="dropdown-item">Logout</a>
+                </div>
+        </div>
+        @endguest
                 </div>
             </div>
         </div>    
