@@ -36,23 +36,8 @@ Route::get('/categories',function() {
     return response()->json($res);
 });
 
-Route::get('/auth/redirect', function () {
-    // dd($_REQUEST)
-    return Socialite::driver('google')->redirect();
-});
-
-Route::get('/auth/callback', function (Request $request) {
-    $user = Socialite::driver('google')->user();
-    $request->session()->put('username',$user['name']);
-    $request->session()->put('avatar',url('/')."/images/noartistimage.png");
-    return view("newreleases");
-    // $user->token
-});
-
-Route::get('/auth/user',function(){
-    $user = Socialite::driver('google')->user();
-    return response()->json($user);
-});
+Route::get('/auth/redirect',[LoginController::class,'redirectToGoogle']);
+Route::get('/auth/callback',[LoginController::class,'handleGoogleCallback']);
 
 Route::get('/register',function(){
     return view('register');
