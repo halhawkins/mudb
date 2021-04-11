@@ -40,7 +40,7 @@
                                         image = album.images[1].url;
                                         releaseDate = new Date(album.release_date);
                                         releaseYear = releaseDate.getFullYear();
-                                        content = `<div class="col-4">
+                                        content = `<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                                         <div class="col-12 artist-card">
                                                         <img src="` + image + `" style="width:100%;height:auto;">
                                                         <h5><a title="Album name" href="{{url('/')}}/album/` + album.id + `">` + album.name + `</a></h5>
