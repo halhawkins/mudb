@@ -23,6 +23,7 @@
                 type: "GET",
                 url: "../api/album/" + albumID,
                 success: function (response) {
+                    // console.log(response);
                     albumName = response.name;
                     $("#album-name-div").html(albumName);
                     cr = response.copyrights;
@@ -49,6 +50,7 @@
                     });
                     releaseYear = new Date(response.release_date).getFullYear();
                     trackArray = response.tracks.items;
+                    id = response.id;
                     $.each(trackArray, function(i,track){
                         trackName = track.name;
                         explicit = track.explicit;
@@ -56,7 +58,7 @@
                         image = response.images[0].url;
                         spotifyUrl = track.uri;
                         content = `
-                            <div class="col-3"> 
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> 
                                 <div class="col-12 artist-card">
                                 <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
                                 <h5><a href="{{url('/')}}/track/` + track.id + `">` + trackName + `</a></h5>
@@ -69,7 +71,22 @@
                         $("#tracks").append(content)
                     });
 
-                    albumInfoURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+                    albumInfoURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&artist=" + encodeURIComponent(artistArray[0].name) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+                    $.ajax({
+                        type: "GET",
+                        url: albumInfoURL,
+                        success: function (response) {
+                            if(typeof(response.album)=== 'undefined') {
+                                albumSummary = "";
+                                alert("woops");
+                            }
+                            else{
+                                albumSummary = response.album.wiki.summary;
+                                albumName = response.album.name;
+                                $("#album-info").append(albumSummary);
+                            }
+                        }
+                    });
                             tracks = response.tracks.items;
                             // $.each(tracks,function(i,val){
                             //     duration = val.duration_ms;
@@ -94,7 +111,27 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-12">
+            <div class="col-md-12 artist-info primary-bg"><h3 id="artist-name-heading"></h3>
+                <div class="row primary-bg" id="artist" style="padding-bottom:0px;">
+                    <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
+                        <h3 id="album-name-div"  class="primary-bg"></h3>
+                        <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
+                        <p id="album-info"></p>
+                    </div>
+
+                    <div class="col-md-9 col-lg-9 col-xl-9 aux-bg1">
+                                <div class="row aux-bg1" id="tracks">
+
+                               </div>
+                    </div>
+
+                    <!-- </div> -->
+                </div>
+            </div>
+
+
+
+            <!-- <div class="col-12">
                 <div class="row">
                     <div class="col-12 toggle-bar"><h3 id="album-name-div" class="panel-heading"></h3>
 
@@ -102,8 +139,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 secondary-bg">
-                        <div class="row aux-bg1" id="tracks"></div> <!-- style="background-color: #ccccff" -->
+                        <div class="row aux-bg1" id="tracks"></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 @endsection
