@@ -49,7 +49,7 @@
                 <div class="dropdown-menu" aria-labelledby="user-avatar">
                     <a href="#" class="dropdown-item">Profile</a>
                     <hr/>
-                    <a href="#" class="dropdown-item">Logout</a>
+                    <a href="{{url('/')}}/auth/logout" class="dropdown-item">Logout</a>
                 </div>
         </div>
         @endguest
@@ -159,7 +159,8 @@
                 </div>
                 <div class="modal-body">
 
-
+                <div style="text-align:center;margin:4px;"><a class="btn btn-dark" href="{{url('/')}}/auth/redirect"><img src="{{url('/')}}/images/google-logo.png" style="width:32px;height:32px;margin-right:8px;">Sign-in using Google</a></div>
+                <div style="text-align:center;margin:4px;">Or</div>
                 <form method="post" action="">
                     @csrf
                 <div class="form-group">
