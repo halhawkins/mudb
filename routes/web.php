@@ -36,6 +36,8 @@ Route::get('/categories',function() {
     return response()->json($res);
 });
 
+Route::get('/auth/logout',[LoginController::class,'logout']);
+
 Route::get('/auth/redirect',[LoginController::class,'redirectToGoogle']);
 Route::get('/auth/callback',[LoginController::class,'handleGoogleCallback']);
 
