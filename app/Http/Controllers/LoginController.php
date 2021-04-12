@@ -38,7 +38,7 @@ class LoginController extends Controller
     public function handleGoogleCallback(){
         $user = Socialite::driver('google')->user();
         $this->_registerOrLoginUser($user);
-        return redirect('/');
+        return redirect(url('/'));
     }
 
     protected function _registerOrLoginUser($data){
@@ -53,5 +53,14 @@ class LoginController extends Controller
         }
 
         Auth::login($user);
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect(url('/'));
     }
 }
