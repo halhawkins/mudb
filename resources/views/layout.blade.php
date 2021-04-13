@@ -39,12 +39,12 @@
           <img src="{{asset('/images/magnifying-glass-icon-20.png')}}">
         </button>
       </form>
-        @if(!auth()->user())
+        @guest
                     <!-- <input type="text" class="input" placeholder="search"><button type="submit"><i class="fa fa-search"></i></button> -->
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#register-dialog">Register</a>
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#login-modal">Login</a>
-                    {{dump(auth())}}
-        @else
+        @endguest        
+        @auth
         <div class="dropdown">
             <img id="user-avatar" src="{{Auth::user()->avatar}}" alt="user avatar" data-toggle="dropdown" aria-haspopup="true" class="avatar-image  dropdown-toggle">
                 <div class="dropdown-menu" aria-labelledby="user-avatar">
@@ -53,7 +53,7 @@
                     <a href="{{url('/')}}/auth/logout" class="dropdown-item">Logout</a>
                 </div>
         </div>
-        @endif
+        @endauth
                 </div>
             </div>
         </div>    
