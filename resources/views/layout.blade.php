@@ -39,7 +39,7 @@
           <img src="{{asset('/images/magnifying-glass-icon-20.png')}}">
         </button>
       </form>
-        @if(auth()->guest())
+        @if(!auth()->user())
                     <!-- <input type="text" class="input" placeholder="search"><button type="submit"><i class="fa fa-search"></i></button> -->
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#register-dialog">Register</a>
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#login-modal">Login</a>
