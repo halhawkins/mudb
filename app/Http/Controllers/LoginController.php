@@ -52,9 +52,8 @@ class LoginController extends Controller
             $user->avatar = $data->avatar;
             $user->save();
         }
-        Auth::login($user);
-
-        // return Auth::login($user);
+        error_log(print_r($user,true),3,"./errors.log");
+        return Auth::login($user);
     }
 
     public function logout(Request $request){
