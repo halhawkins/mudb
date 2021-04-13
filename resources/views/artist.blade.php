@@ -23,7 +23,7 @@
                     $(".artist-jumbo").css("background-image",backgroundimage);
                     $(".artist-jumbo").css("background-size","cover");
                     $("#artist-name-heading").html(artistName);
-                    bioURL = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + encodeURIComponent(artistName) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+                    bioURL = "https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + encodeURIComponent(artistName) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
                     $.ajax({
                         type: "GET",
                         url: bioURL,

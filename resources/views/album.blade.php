@@ -71,7 +71,7 @@
                         $("#tracks").append(content)
                     });
 
-                    albumInfoURL = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&artist=" + encodeURIComponent(artistArray[0].name) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+                    albumInfoURL = "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&artist=" + encodeURIComponent(artistArray[0].name) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
                     $.ajax({
                         type: "GET",
                         url: albumInfoURL,
