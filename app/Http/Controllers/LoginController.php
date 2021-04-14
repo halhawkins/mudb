@@ -35,14 +35,14 @@ class LoginController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback(){
+    public function handleGoogleCallback(Request $request){
         $user = Socialite::driver('google')->stateless()->user();
         // error_log(print_r($user,true),3,"./errors.log");
-        $this->_registerOrLoginUser($user);
+        $this->_registerOrLoginUser($request,$user);
         return redirect(url('/'));
     }
 
-    protected function _registerOrLoginUser($data){
+    protected function _registerOrLoginUser(Request $request,$data){
         $user = User::where('email','=',$data->email)->first();
         if(!$user){
             $user = new User();
@@ -53,6 +53,7 @@ class LoginController extends Controller
             $user->save();
         }
         error_log(print_r($user,true),3,"./errors.log");
+        $request->session()->regenerate();
         return Auth::login($user);
     }
 
