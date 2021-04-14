@@ -20,7 +20,7 @@
     -->
     <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">crA</span>pp</span> <span style="color:orange;">N</span>ame</a>
+            <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder</a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,7 +40,6 @@
         </button>
       </form>
         @guest
-                    <!-- <input type="text" class="input" placeholder="search"><button type="submit"><i class="fa fa-search"></i></button> -->
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#register-dialog">Register</a>
                     <a href="#" class="nav-item nav-link" data-toggle="modal" data-target="#login-modal">Login</a>
         @endguest        
