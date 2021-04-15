@@ -36,7 +36,7 @@ class LoginController extends Controller
         if($user){
             return Response::json(array("error"=>400,"Message"=>"Register: User email already exists."),400);
         }
-        else if($request->password !== $request->confirm{
+        else if($request->password !== $request->confirm){
             return Response::json(array("error"=>400,"Message"=>"Register: 'Password' and 'Confirm Password' fields do not match."),400);
         }
         else{

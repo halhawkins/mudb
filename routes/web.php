@@ -61,7 +61,7 @@ Route::get('/tracks/{query}/{page?}',function(Request $req){
         $page = $req->query('page');
     else
         $page = 1;
-    return view('tracks')->with(['query'=>$query,'page'=>$page])
+    return view('tracks')->with(['query'=>$query,'page'=>$page]);
 });
 
 /**
