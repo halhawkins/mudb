@@ -37,7 +37,6 @@ class LoginController extends Controller
 
     public function handleGoogleCallback(Request $request){
         $user = Socialite::driver('google')->stateless()->user();
-        // error_log(print_r($user,true),3,"./errors.log");
         $this->_registerOrLoginUser($request,$user);
         return redirect(url('/'));
     }
@@ -52,7 +51,6 @@ class LoginController extends Controller
             $user->avatar = $data->avatar;
             $user->save();
         }
-        error_log(print_r($user,true),3,"./errors.log");
         $request->session()->regenerate();
         return Auth::login($user);
     }
