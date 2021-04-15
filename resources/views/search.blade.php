@@ -105,7 +105,7 @@
                         trks.append(content);                        
                         });
                         if(tracks.length > 19)
-                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/artists/` + query + `/2">More...</a></div>`)
+                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/tracks/` + query + `/2">More...</a></div>`)
                     }
                 })
             });
