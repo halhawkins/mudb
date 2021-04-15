@@ -57,6 +57,7 @@
                             ad.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/artists/` + query + `/2">More...</a></div>`)
                     // albums
                     //
+                    // alert(query);
                     $.each(albums,function(i,album){
                         image = album.images[1].url;
                         releaseDate = new Date(album.release_date);
@@ -104,6 +105,7 @@
                                 </div>`;
                         trks.append(content);                        
                         });
+                        query = '{{$query}}';
                         if(tracks.length > 19)
                             trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/tracks/` + query + `/2">More...</a></div>`)
                     }

@@ -55,13 +55,10 @@ Route::get('/track/{trackid}',function($trackid){
 /**
  * Return a page of track search results
  */
-Route::get('/tracks/{query}/{page?}',function(Request $req){
-    $query = $req->query('query');
-    if($req->has('page'))
-        $page = $req->query('page');
-    else
-        $page = 1;
-    return view('tracks')->with(['query'=>$query,'page'=>$page]);
+Route::get('/tracks/{query}/{page?}',function($query,$page=1){
+    $query = $query;
+    $page = $page;
+    return view('tracks')->with('query',$query)->with('page',$page);
 });
 
 /**
