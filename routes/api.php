@@ -51,7 +51,6 @@ Route::get('/albuminfo/{albumartist}/{albumname}',function($albumartist,$albumna
 
 Route::get('/gettracks/{query}/{page}',function($query,$page){
     $res = Spotify::searchTracks($query)->limit(20)->offset($page*20)->get();
-    error_log(response()->json($res),3,"./tracks.log");
 
     return response()->json($res);
 });
