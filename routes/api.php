@@ -50,7 +50,13 @@ Route::get('/albuminfo/{albumartist}/{albumname}',function($albumartist,$albumna
 });
 
 Route::get('/gettracks/{query}/{page}',function($query,$page){
-    $res = Spotify::searchTracks($query)->limit(20)->offset($page*20)->get();
+    $res = Spotify::searchTracks($query)->limit(20)->offset(($page-1)*20)->get();
+
+    return response()->json($res);
+});
+
+Route::get('/getartists/{query}/{page}',function($query,$page){
+    $res = Spotify::searchArtists($query)->limit(20)->offset(($page-1)*20)->get();
 
     return response()->json($res);
 });
