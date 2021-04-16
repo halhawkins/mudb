@@ -62,12 +62,21 @@ Route::get('/tracks/{query}/{page?}',function($query,$page=1){
 });
 
 /**
- * Return a page of track search results
+ * Return a page of artist search results
  */
 Route::get('/artists/{query}/{page?}',function($query,$page=1){
     $query = $query;
     $page = $page;
     return view('artists')->with('query',$query)->with('page',$page);
+});
+
+/**
+ * Return a page of album search results
+ */
+Route::get('/albums/{query}/{page?}',function($query,$page=1){
+    $query = $query;
+    $page = $page;
+    return view('albums')->with('query',$query)->with('page',$page);
 });
 
 /**
