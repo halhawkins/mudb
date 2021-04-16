@@ -62,6 +62,15 @@ Route::get('/tracks/{query}/{page?}',function($query,$page=1){
 });
 
 /**
+ * Return a page of track search results
+ */
+Route::get('/artists/{query}/{page?}',function($query,$page=1){
+    $query = $query;
+    $page = $page;
+    return view('artists')->with('query',$query)->with('page',$page);
+});
+
+/**
  * Return Spotify categories
  */
 Route::get('/categories',function() {
