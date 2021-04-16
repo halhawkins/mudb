@@ -20,7 +20,7 @@
     -->
     <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder</a>
+            <a href="{{url('/')}}" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder</a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,7 +47,7 @@
         <div class="dropdown">
             <img id="user-avatar" src="{{Auth::user()->avatar}}" alt="user avatar" data-toggle="dropdown" aria-haspopup="true" class="avatar-image  dropdown-toggle">
                 <div class="dropdown-menu" aria-labelledby="user-avatar">
-                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="{{url('/')}}/profile" class="dropdown-item">Profile</a>
                     <hr/>
                     <a href="{{url('/')}}/auth/logout" class="dropdown-item">Logout</a>
                 </div>
@@ -161,11 +161,11 @@
 
                 <div style="text-align:center;margin:4px;"><a class="btn btn-dark" href="{{url('/')}}/auth/redirect"><img src="{{url('/')}}/images/google-logo.png" style="width:32px;height:32px;margin-right:8px;">Sign-in using Google</a></div>
                 <div style="text-align:center;margin:4px;">Or</div>
-                <form method="post" action="">
+                <form method="post" action="{{url('/')}}/auth/login">
                     @csrf
                 <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="name" class="form-control p_input">
+                    <label>Email</label>
+                    <input type="text" name="email" class="form-control p_input">
                 </div>
                 <div class="form-group">
                     <label>Password *</label>

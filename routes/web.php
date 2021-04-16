@@ -4,6 +4,7 @@
  use Illuminate\Http\Request;
  use App\Http\Controllers\UserController;
  use App\Http\Controllers\LoginController;
+ use App\Http\Controllers\FileUploadController;
  use Laravel\Socialite\Facades\Socialite;
 
  /**
@@ -100,6 +101,16 @@ Route::get('/auth/redirect',[LoginController::class,'redirectToGoogle']);
  * Handle auth results from Google
  */
 Route::get('/auth/callback',[LoginController::class,'handleGoogleCallback']);
+
+Route::post('/auth/register',[LoginController::class,'register']);
+Route::post('/auth/login',[LoginController::class,'authenticate']);
+
+Route::get('/profile',function(){
+    return view('profile');
+});
+
+Route::get('file-upload', [FileUploadController::class, 'fileUpload'])->name('file.upload');
+Route::post('file-upload', [FileUploadController::class, 'fileUploadPost'])->name('file.upload.post');
 
 Route::get('/register',function(){
     return view('register');

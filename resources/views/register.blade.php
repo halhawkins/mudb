@@ -3,7 +3,7 @@
 @section('script')
 @endsection
 @section('mainbody')
-<form action="register" method="post" style="width:100%">
+<form action="{{url('/')}}/auth/register" method="post" style="width:100%">
     @csrf
 <div class="col-12">
     <div class="row">

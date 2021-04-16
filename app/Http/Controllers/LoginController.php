@@ -23,7 +23,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return back();
         }
 
         return back()->withErrors([
@@ -34,17 +34,18 @@ class LoginController extends Controller
     public function register(Request $request){
         $user = User::where('email',"=",$request->email)->first();
         if($user){
-            return Response::json(array("error"=>400,"Message"=>"Register: User email already exists."),400);
+            return response()->json(array("error"=>400,"Message"=>"Register: User email already exists."),400);
         }
         else if($request->password !== $request->confirm){
-            return Response::json(array("error"=>400,"Message"=>"Register: 'Password' and 'Confirm Password' fields do not match."),400);
+            return response()->json(array("error"=>400,"Message"=>"Register: 'Password' and 'Confirm Password' fields do not match."),400);
         }
         else{
             $user = new User();
             $user->name = $request->name;
             $user->email= $request->email;
+            $user->password = $request->password;
             $user->provider_id = "none";
-            $user->avatar = url('/images/generic-user-icon-19-png');
+            $user->avatar = url('/images/generic-user-icon-19.jpg');
             $user->save();
         }
         $request->session()->regenerate();
