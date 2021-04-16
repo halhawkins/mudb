@@ -21,7 +21,7 @@
             albumID = '{{$albumid}}';
             $.ajax({
                 type: "GET",
-                url: "../api/album/" + albumID,
+                url: "{{url('/')}}/api/album/" + albumID,
                 success: function (response) {
                     // console.log(response);
                     albumName = response.name;
@@ -44,7 +44,7 @@
                     artistArray = response.artists;
                     artists = "";
                     $.each(artistArray,function(i,artist){
-                        artists = artists + `<a href="../artist/` + artist.id + `">` + artist.name + `</a>`;
+                        artists = artists + `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
                         if(artistArray.length > (i+1))
                             artists = artists + ", ";
                     });
@@ -115,7 +115,7 @@
                 <div class="row primary-bg" id="artist" style="padding-bottom:0px;">
                     <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
                         <h3 id="album-name-div"  class="primary-bg"></h3>
-                        <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
+                        <img class="img-fluid" id="artist-image" src="{{url('/')}}/images/generic-user-icon-19.jpg">
                         <p id="album-info"></p>
                     </div>
 
