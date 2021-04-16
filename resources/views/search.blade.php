@@ -54,7 +54,7 @@
                         ad.append(content);                        
                         });
                         if(artists.length > 19)
-                            ad.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/artists/` + query + `/2">More...</a></div>`)
+                            ad.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/artists/` + query + `/1">More...</a></div>`)
                     // albums
                     //
                     // alert(query);
@@ -79,7 +79,7 @@
                         albs.append(content);                        
                         });
                         if(albums.length > 19)
-                            albs.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/albums/` + query + `/2">More...</a></div>`)
+                            albs.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/albums/` + query + `/1">More...</a></div>`)
                     // tracks
                     //
                     $.each(tracks,function(i,track){
@@ -107,7 +107,7 @@
                         });
                         query = '{{$query}}';
                         if(tracks.length > 19)
-                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/tracks/` + query + `/2">More...</a></div>`)
+                            trks.append(`<div class="col-md-12"><a style="float:right; font-size:1.3em;" href="{{url('/')}}/tracks/` + query + `/1">More...</a></div>`)
                     }
                 })
             });
