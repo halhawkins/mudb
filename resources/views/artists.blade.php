@@ -71,20 +71,6 @@
 
             // create an array of pages to ng-repeat in the pager control
             pages = Array.from(Array((endPage +1) - startPage).keys()).map(i => startPage + i);
-            console.log(
-                {
-                totalItems: totalItems,
-                currentPage: currentPage,
-                pageSize: pageSize,
-                totalPages: totalPages,
-                startPage: startPage,
-                endPage: endPage,
-                startIndex: startIndex,
-                endIndex: endIndex,
-                pages: pages
-            }
-
-            );
             // endPage--;
             ret = `<div class="w-100"><div class="d-flex justify-content-center"><ul class="pagination" style="align-self:center">
             `
@@ -104,7 +90,7 @@
                     `;
                 }
             });
-            next = pages[pages.length-1]+1
+            next = currentPage+1;
             if(endPage < totalPages){
                 ret += `    <li class="page-item"><a class="page-link active" href="{{url('/')}}/artists/{{$query}}/` + next + `">&raquo</a></i>
                     `;
@@ -112,18 +98,6 @@
             ret += `</ul></div></div>`;
             return ret;
 
-            // return object with all pager properties required by the view
-            // {
-            //     totalItems: totalItems,
-            //     currentPage: currentPage,
-            //     pageSize: pageSize,
-            //     totalPages: totalPages,
-            //     startPage: startPage,
-            //     endPage: endPage,
-            //     startIndex: startIndex,
-            //     endIndex: endIndex,
-            //     pages: pages
-            // };
         }
 
         $(document).ready(function(){
@@ -139,22 +113,12 @@
                     $("#artists-heading").append("&quot;" + query + "&quot; (" + String((page-1)*perPage+1) + "-" + String((page-1)*20+response.artists.items.length) + " of " + totalArtists + ")");
 
                     $.each(artistArray, function(i,artist){
-                        //console.log(artist.images);
-                        // artists = "";
-                        // $.each(artist.artists,function(i,val){
-                        //     artists += `<a href="{{url('/')}}/artist/` + val.id + `">` + val.name + `</a>`;
-                        //     if(track.artists.length > (i+1))
-                        //         artists += ", ";
-                        // });
                         artistName = artist.name;
-                        // explicit = track.explicit;
-                        // previewUrl=track.preview_url;
                         if(typeof artist.images[0] === 'undefined')
                             image = "{{url('/')}}/images/generic-user-icon-19.jpg";
                         else
                             image = artist.images[0].url;
                         spotifyUrl = artist.uri;
-                        // releaseYear = new Date(track.album.release_date).getFullYear();
                         burl = "{{url('/')}}";
                         content = `
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
@@ -171,8 +135,6 @@
                     $("#artists").append(paginate(totalArtists,page,perPage,8));
                 }
 
-                    // followers = response.followers.total;
-                    // tags = response.genres;
             });
         });
         

@@ -71,20 +71,6 @@
 
             // create an array of pages to ng-repeat in the pager control
             pages = Array.from(Array((endPage ) - startPage).keys()).map(i => startPage + i);
-            console.log(
-                {
-                totalItems: totalItems,
-                currentPage: currentPage,
-                pageSize: pageSize,
-                totalPages: totalPages,
-                startPage: startPage,
-                endPage: endPage,
-                startIndex: startIndex,
-                endIndex: endIndex,
-                pages: pages
-            }
-
-            );
             // endPage--;
             ret = `<div class="w-100"><div class="d-flex justify-content-center"><ul class="pagination" style="align-self:center">
             `
@@ -104,60 +90,13 @@
                     `;
                 }
             });
-            next = pages[pages.length-1]+1
+            next = currentPage+1;
             if(endPage < totalPages){
                 ret += `    <li class="page-item"><a class="page-link active" href="{{url('/')}}/tracks/{{$query}}/` + next + `">&raquo</a></i>
                     `;
             }
             ret += `</ul></div></div>`;
             return ret;
-
-            // return object with all pager properties required by the view
-            // {
-            //     totalItems: totalItems,
-            //     currentPage: currentPage,
-            //     pageSize: pageSize,
-            //     totalPages: totalPages,
-            //     startPage: startPage,
-            //     endPage: endPage,
-            //     startIndex: startIndex,
-            //     endIndex: endIndex,
-            //     pages: pages
-            // };
-        }
-
-        function oldpaginate(total,perPage,page){
-            lastPage = Math.floor(total/perPage);
-            if(page>=6 && total >= 10){
-                start = page-5;
-                content = `
-                    <ul id="pagenav">
-                        <li><a href="{{url('/')}}/tracks/{{$query}}/` + start-1 + `">&laquo</a></li>`;
-                for(i = start; i < start+10; i++){
-                    content += `        
-                            <li><a href="{{url('/')}}/tracks/{{$query}}/` + i + `">` + i + `</a></li>
-                            `;
-                    end = i +1;
-                }
-                content += `
-                        <li><a href="{{url('/')}}/tracks/{{$query}}/` + end + `">&laquo</a></li></ul>`;
-                
-            }
-            else if(page <6 && total >= 10){
-                start = 1;
-                content = `
-                    <ul id="pagenav">
-                        <li><a href="{{url('/')}}/tracks/{{$query}}/` + start-1 + `">&laquo</a></li>`;
-                for(i = start; i < start+10; i++){
-                    content += `        
-                            <li><a href="{{url('/')}}/tracks/{{$query}}/` + i + `">` + i + `</a></li>
-                            `;
-                    end = i +1;
-                }
-                content += `
-                        <li><a href="{{url('/')}}/tracks/{{$query}}/` + end + `">&laquo</a></li></ul>`;
-            }
-            return content;        
         }
 
         $(document).ready(function(){
