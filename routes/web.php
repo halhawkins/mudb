@@ -71,6 +71,14 @@ Route::get('/artists/{query}/{page?}',function($query,$page=1){
     return view('artists')->with('query',$query)->with('page',$page);
 });
 
+Route::get('/viral/{page?}/{perpage?}',function($page=1,$perpage=20){
+    return view('viral')->with('page',$page)->with('perpage',$perpage);
+});
+
+Route::get('/top200/{page?}/{perpage?}',function($page=1,$perpage=20){
+    return view('top200')->with('page',$page)->with('perpage',$perpage);
+});
+
 /**
  * Return a page of album search results
  */

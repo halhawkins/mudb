@@ -78,7 +78,8 @@ Route::get('/track/{trackid}',function($trackid){
     return response()->json($res);
 });
 
-Route::get('/viral/',[SpotifyController::class,'viral']);
+Route::get('/viral/{page?}/{perpage?}',[SpotifyController::class,'viral']);
+Route::get('/top200/{page?}/{perpage?}',[SpotifyController::class,'top200']);
 
 Route::get('/trackvideo/{isrc}',function($isrc){
     $res = Youtube::searchVideos($isrc);
