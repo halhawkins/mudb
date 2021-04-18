@@ -24,7 +24,8 @@ class spotify_top200 extends Model
         'track_name',
         'artist',
         'streams',
-        'spotify_id'
+        'spotify_id',
+        'spotify-data',
     ];
 
     /**
@@ -48,7 +49,7 @@ class spotify_top200 extends Model
 
     public function setspotify_idAttribute($spotify_id){
 
-        $this->attributes['spotify_id'] = basename($spotify_id);
+        $this->attributes['spotify_id'] = \basename($spotify_id);
     }
 
 }

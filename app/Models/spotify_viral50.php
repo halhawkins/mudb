@@ -24,7 +24,8 @@ class spotify_viral50 extends Model
         'track_name',
         'artist',
         'streams',
-        'spotify_id'
+        'spotify_id',
+        'spotify_data',
     ];
 
     /**
