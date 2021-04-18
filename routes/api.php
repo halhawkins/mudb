@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
+use App\Http\Controllers\SpotifyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,8 @@ Route::get('/track/{trackid}',function($trackid){
     $res = Spotify::track($trackid)->get();
     return response()->json($res);
 });
+
+Route::get('/viral/',[SpotifyController::class,'viral']);
 
 Route::get('/trackvideo/{isrc}',function($isrc){
     $res = Youtube::searchVideos($isrc);
