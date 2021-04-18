@@ -22,7 +22,6 @@ class SpotifyViral50 extends Migration
             $table->unsignedInteger('position');
             $table->string('track_name');
             $table->string('artist');
-            $table->unsignedInteger('streams');
             $table->string('spotify_id');
             $table->timestamps();
         });
