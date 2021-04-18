@@ -6,6 +6,7 @@ use App\Models\spotify_viral50;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use illuminate\Support\Facades\DB;
+use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
 
 class importSpotifyLists extends Command
 {
@@ -74,6 +75,7 @@ class importSpotifyLists extends Command
         $viral50 = preg_grep('/^(viral50)/i', scandir($spath));    
         foreach ($top200 as $key => $value) {
             if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
+                $cnt = 0;
     
                 while(($row =   fgetcsv($handle)) !== FALSE){
                     if(is_numeric($row[0])){
@@ -83,7 +85,12 @@ class importSpotifyLists extends Command
                         $rec->artist = $row[2];
                         $rec->streams = $row[3];
                         $rec->spotify_id = \basename($row[4]);
+                        $data = Spotify::track(\basename($row[4]))->get();
+                        $rec->spotify_data = json_encode($data);
                         $rec->save();
+                        if($cnt%5 === 0)
+                            sleep(2);
+                        $cnt++;
                         // echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
@@ -93,16 +100,22 @@ class importSpotifyLists extends Command
         }
         foreach ($viral50 as $key => $value) {
             if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
-    
+                $cnt=0;
                 while(($row =   fgetcsv($handle)) !== FALSE){
                     if(is_numeric($row[0])){
+                        
                         $rec = new spotify_viral50;
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
                         $rec->artist = $row[2];
                         $rec->spotify_id = \basename($row[3]);
+                        $data = Spotify::track(\basename($row[3]))->get();
+                        $rec->spotify_data = json_encode($data);
                         $rec->save();
-                        // echo \basename($rec->spotify_id) . "\n";
+                        if($cnt%5 === 0)
+                            sleep(2);
+                        $cnt++;
+                         // echo \basename($rec->spotify_id) . "\n";
                         // echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
