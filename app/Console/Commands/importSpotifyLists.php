@@ -82,9 +82,9 @@ class importSpotifyLists extends Command
                         $rec->track_name = $row[1];
                         $rec->artist = $row[2];
                         $rec->streams = $row[3];
-                        $rec->spotify_id = $row[4];
+                        $rec->spotify_id = \basename($row[4]);
                         $rec->save();
-                        echo $row[1].' by ' . $row[2] . " saved.\n";
+                        // echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
                 }
@@ -100,14 +100,28 @@ class importSpotifyLists extends Command
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
                         $rec->artist = $row[2];
-                        $rec->spotify_id = $row[3];
+                        $rec->spotify_id = \basename($row[3]);
                         $rec->save();
-                        echo $row[1].' by ' . $row[2] . " saved.\n";
+                        // echo \basename($rec->spotify_id) . "\n";
+                        // echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
                 }
                 \fclose($handle);
             }
+        }
+    }
+
+    public function archiveLists(){
+        $destdir = str_replace("\\","/",\storage_path("app/archive/"));
+        $sourcedir = str_replace("\\","/",\storage_path("app/stage/"));
+        if(!file_exists($destdir)){
+            Storage::makeDirectory("archive");
+        }
+        $files = \scandir($sourcedir);
+        foreach ($files as $file) {
+            if($file !== "." && $file !== "..")
+                rename($sourcedir . '/' . $file, $destdir . '/' . $file);
         }
     }
 
@@ -122,6 +136,7 @@ class importSpotifyLists extends Command
         $this->getCSV(1);
         // echo storage_path();
         $this->importLists();
+        $this->archiveLists();
 
         return 0;
     }
