@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use illuminate\Support\Facades\DB;
 use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
+use Illuminate\Support\Carbon;
 
 class importSpotifyLists extends Command
 {
@@ -72,7 +73,9 @@ class importSpotifyLists extends Command
     public function importLists(){
         $spath = str_replace("\\","/",\storage_path("app/stage/"));
         $top200 = preg_grep('/^(top200)/i', scandir($spath));
-        $viral50 = preg_grep('/^(viral50)/i', scandir($spath));    
+        $viral50 = preg_grep('/^(viral50)/i', scandir($spath));
+        spotify_top200::whereDate('created_at', Carbon::today())->delete();    
+        spotify_viral50::whereDate('created_at', Carbon::today())->delete();    
         foreach ($top200 as $key => $value) {
             if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
                 $cnt = 0;
