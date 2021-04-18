@@ -47,8 +47,16 @@ class spotify_viral50 extends Model
         // 'email_verified_at' => 'datetime',
     ];
 
-    public function setspotify_idAttribute($spotify_id){
-
-        $this->attributes['spotify_id'] = basename($spotify_id);
+    /**
+     * getSpotifyDataAttribute
+     * 
+     * accessor to transform JSON data from database back
+     * to an array
+     *
+     * @param [string] $value json field data
+     * @return array
+     */
+    public function getSpotifyDataAttribute($value){
+        return json_decode($value,true);
     }
 }
