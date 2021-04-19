@@ -74,6 +74,7 @@ class importSpotifyLists extends Command
         $spath = str_replace("\\","/",\storage_path("app/stage/"));
         $top200 = preg_grep('/^(top200)/i', scandir($spath));
         $viral50 = preg_grep('/^(viral50)/i', scandir($spath));
+        // print_r($viral50);
         spotify_top200::whereDate('created_at', Carbon::today())->delete();    
         spotify_viral50::whereDate('created_at', Carbon::today())->delete();    
         foreach ($top200 as $key => $value) {
@@ -82,6 +83,7 @@ class importSpotifyLists extends Command
     
                 while(($row =   fgetcsv($handle)) !== FALSE){
                     if(is_numeric($row[0])){
+                        print_r($row);
                         $rec = new spotify_top200;
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
@@ -126,7 +128,7 @@ class importSpotifyLists extends Command
                 \fclose($handle);
             }
         }
-        $this->archiveLists();
+        // $this->archiveLists();
     }
 
     public function archiveLists(){
