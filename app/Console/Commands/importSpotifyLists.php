@@ -151,8 +151,8 @@ class importSpotifyLists extends Command
      */
     public function handle()
     {
-        $this->getCSV(0);
-        $this->getCSV(1);
+        // $this->getCSV(0);
+        // $this->getCSV(1);
         // echo storage_path();
         $this->importLists();
 
