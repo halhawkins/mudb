@@ -94,7 +94,7 @@ class importSpotifyLists extends Command
                         if($cnt%5 === 0)
                             sleep(2);
                         $cnt++;
-                        // echo $row[1].' by ' . $row[2] . " saved.\n";
+                        echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
                 }
@@ -119,13 +119,14 @@ class importSpotifyLists extends Command
                             sleep(2);
                         $cnt++;
                          // echo \basename($rec->spotify_id) . "\n";
-                        // echo $row[1].' by ' . $row[2] . " saved.\n";
+                        echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
                     // DB::table('spotify_to200')
                 }
                 \fclose($handle);
             }
         }
+        $this->archiveLists();
     }
 
     public function archiveLists(){
@@ -152,7 +153,6 @@ class importSpotifyLists extends Command
         $this->getCSV(1);
         // echo storage_path();
         $this->importLists();
-        $this->archiveLists();
 
         return 0;
     }
