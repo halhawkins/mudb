@@ -31,6 +31,10 @@ Route::get('/artist/{artistid}', function($artistid){
     return view('artist')->with('artistid',$artistid);
 });
 
+Route::get('/newreleases',function(){
+    return view('newreleases');
+})
+
 /**
  * Return an album page
  */
