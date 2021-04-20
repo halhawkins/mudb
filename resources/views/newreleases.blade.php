@@ -4,6 +4,8 @@
 <script>
         $(document).ready(function(){
             content = "";
+            $(".viral-menu,.top200-menu").removeClass("active");
+            $(".new-releases-menu").addClass("active");
             $.ajax({
                 type: "GET", 
                 url: "{{url('/')}}/api/newreleases",
