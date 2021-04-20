@@ -33,7 +33,7 @@ Route::get('/artist/{artistid}', function($artistid){
 
 Route::get('/newreleases',function(){
     return view('newreleases');
-})
+});
 
 /**
  * Return an album page
