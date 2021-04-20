@@ -35,47 +35,11 @@ class importSpotifyLists extends Command
         parent::__construct();
     }
 
-    public function getCSV($id){
-        switch($id){
-            case 0:
-                $url = 'https://spotifycharts.com/regional/global/daily/latest/download';
-                $prefix = 'top200-';
-                break;
-            case 1:
-                $url = 'https://spotifycharts.com/viral/global/daily/latest/download';
-                $prefix = 'viral50-';
-                break;
-            default:
-                return array("error","Invalid download id");
-        }    
-        $ch = curl_init($url);
-        // $dir = substr($_SERVER["DOCUMENT_ROOT"], 0, strrpos($_SERVER["DOCUMENT_ROOT"], '/')) . "/stage/";
-        if(!file_exists(str_replace("\\","/",\storage_path("app/stage/")))){
-            Storage::makeDirectory("stage");
-            // Storage::makeDirectory(str_replace("\\","/",\storage_path("app/stage/")));
-        }
-        $dir = str_replace("\\","/",\storage_path("app/stage/"));
-        $file_name = $prefix . date('m-d-Y') . '.csv';
-        $save_file_loc = $dir . $file_name;
-
-        $fp = fopen($save_file_loc, 'wb');
-
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-
-        curl_exec($ch);
-
-        curl_close($ch);
-        fclose($fp);
-    
-    }
-
     public function importLists(){
         $spath = str_replace("\\","/",\storage_path("app/stage/"));
         $top200 = preg_grep('/^(top200)/i', scandir($spath));
         $viral50 = preg_grep('/^(viral50)/i', scandir($spath));
-        print_r($viral50);
-        print_r($top200);
+
         spotify_top200::whereDate('created_at', Carbon::today())->delete();    
         spotify_viral50::whereDate('created_at', Carbon::today())->delete();    
         foreach ($top200 as $key => $value) {
@@ -84,7 +48,6 @@ class importSpotifyLists extends Command
     
                 while(($row =   fgetcsv($handle)) !== FALSE){
                     if(is_numeric($row[0])){
-                        print_r($row);
                         $rec = new spotify_top200;
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
@@ -94,12 +57,14 @@ class importSpotifyLists extends Command
                         $data = Spotify::track(\basename($row[4]))->get();
                         $rec->spotify_data = json_encode($data);
                         $rec->save();
-                        if($cnt%5 === 0)
+                        /* 
+                            Import 5 records then sleep for a few seconds
+                            to avoid rate limiting.
+                        */
+                        if($cnt%5 === 0) 
                             sleep(2);
                         $cnt++;
-                        echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
-                    // DB::table('spotify_to200')
                 }
                 \fclose($handle);
             }
@@ -118,18 +83,18 @@ class importSpotifyLists extends Command
                         $data = Spotify::track(\basename($row[3]))->get();
                         $rec->spotify_data = json_encode($data);
                         $rec->save();
+                        /* 
+                            Import 5 records then sleep for a few seconds
+                            to avoid rate limiting.
+                        */
                         if($cnt%5 === 0)
                             sleep(2);
                         $cnt++;
-                         // echo \basename($rec->spotify_id) . "\n";
-                        echo $row[1].' by ' . $row[2] . " saved.\n";
                     }
-                    // DB::table('spotify_to200')
                 }
                 \fclose($handle);
             }
         }
-        // $this->archiveLists();
     }
 
     public function archiveLists(){
@@ -152,10 +117,8 @@ class importSpotifyLists extends Command
      */
     public function handle()
     {
-        // $this->getCSV(0);
-        // $this->getCSV(1);
-        // echo storage_path();
         $this->importLists();
+        $this->archiveLists();
 
         return 0;
     }
