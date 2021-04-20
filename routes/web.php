@@ -11,7 +11,7 @@
   * Display the default page
   */
 Route::get('/', function () {
-    return view('top200');
+    return view('/top200/1/20');
 });
 
 /**
