@@ -100,6 +100,8 @@
         }
 
         $(document).ready(function(){
+            $(".new-releases-menu").removeClass("active");
+            $(".viral-menu").addClass("active");
             perPage = {{$perpage}};
             page = "{{$page}}";
             $.ajax({
