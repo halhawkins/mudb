@@ -28,7 +28,7 @@
                 <div class="navbar-nav">
                     <a href="{{url('/')}}/top200" class="nav-item nav-link top200-menu">Top 200</a>
                     <a href="{{url('/')}}/viral" class="nav-item nav-link viral-menu">Viral Chart</a>
-                    <a href="{{url('/')}}/newreleases" class="nav-item nav-link new-releases-menu`">New Releases</a>
+                    <a href="{{url('/')}}/newreleases" class="nav-item nav-link new-releases-menu">New Releases</a>
                     <!-- <a href="#" class="nav-item nav-link">Contact</a> -->
                 </div>
                 <div class="navbar-nav ml-auto">
