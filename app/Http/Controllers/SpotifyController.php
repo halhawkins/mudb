@@ -11,7 +11,7 @@ class SpotifyController extends Controller
 {
     //
     public function viral($page=1,$perpage=20){
-        $spotify_viral50 = spotify_viral50::select('spotify_data')->whereDate('created_at', Carbon::today())->get();
+        $spotify_viral50 = spotify_viral50::select('position','spotify_data')->whereDate('created_at', Carbon::today())->orderBy('position')->get();
         $viral50For = date('Y-m-d');
         $count = count($spotify_viral50);
         $chunks = array_chunk(json_decode(json_encode($spotify_viral50),true),$perpage);
@@ -21,7 +21,7 @@ class SpotifyController extends Controller
     }
     //
     public function top200($page=1,$perpage=20){
-        $top200 = spotify_top200::select('spotify_data')->whereDate('created_at', Carbon::today())->get();
+        $top200 = spotify_top200::select('position','streams','spotify_data')->whereDate('created_at', Carbon::today())->orderBy('position','asc')->get();
         $top200For = date('Y-m-d');
         $count = count($top200);
         $chunks = array_chunk(json_decode(json_encode($top200),true),$perpage);
