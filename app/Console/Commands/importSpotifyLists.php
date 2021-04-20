@@ -42,6 +42,10 @@ class importSpotifyLists extends Command
 
         spotify_top200::whereDate('created_at', Carbon::today())->delete();    
         spotify_viral50::whereDate('created_at', Carbon::today())->delete();    
+        if(env('ECHO_IMPORT_RESULTS')==1){
+            print_r($top200);
+            print_r($viral50);
+        }
         foreach ($top200 as $key => $value) {
             if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
                 $cnt = 0;
@@ -49,6 +53,8 @@ class importSpotifyLists extends Command
                 while(($row =   fgetcsv($handle)) !== FALSE){
                     if(is_numeric($row[0])){
                         $rec = new spotify_top200;
+                        if(env('ECHO_IMPORT_RESULTS')==1)
+                            print($row[1] . " by " . $row[2] . " id=" . \basename($row[4]) . " requested.\n");
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
                         $rec->artist = $row[2];
@@ -76,6 +82,8 @@ class importSpotifyLists extends Command
                     if(is_numeric($row[0])){
                         
                         $rec = new spotify_viral50;
+                        if(env('ECHO_IMPORT_RESULTS')==1)
+                            print($row[1] . " by " . $row[2] . " id=" . \basename($row[3]) . " requested.\n");
                         $rec->position = $row[0];
                         $rec->track_name = $row[1];
                         $rec->artist = $row[2];
@@ -118,7 +126,7 @@ class importSpotifyLists extends Command
     public function handle()
     {
         $this->importLists();
-        $this->archiveLists();
+        // $this->archiveLists();
 
         return 0;
     }
