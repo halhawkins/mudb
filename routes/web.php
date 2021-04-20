@@ -11,7 +11,7 @@
   * Display the default page
   */
 Route::get('/', function () {
-    return view('newreleases');
+    return view('top200');
 });
 
 /**
