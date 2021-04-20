@@ -26,9 +26,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
-                    <!-- <a href="#" class="nav-item nav-link active">Home</a>
-                    <a href="#" class="nav-item nav-link">Services</a>
-                    <a href="#" class="nav-item nav-link">About</a>
+                    <a href="{{url('/')}}/viral" class="nav-item nav-link viral-menu">Viral Chart</a>
+                    <a href="{{url('/')}}/newreleases" class="nav-item nav-link new-releases-menu">New Releases</a>
+                    <!-- <a href="#" class="nav-item nav-link">About</a>
                     <a href="#" class="nav-item nav-link">Contact</a> -->
                 </div>
                 <div class="navbar-nav ml-auto">
