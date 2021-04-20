@@ -26,7 +26,9 @@
                     // console.log(response);
                     albumName = response.name;
                     $("#album-name-div").html(albumName);
+                    coverArt = response.images[0].url;
                     cr = response.copyrights;
+                    $(".cover-art").attr('src',coverArt);
                     copyright = "";
                     $.each(cr,function(i,val){
                         if(val.type == 'C'){
@@ -115,7 +117,7 @@
                 <div class="row primary-bg" id="artist" style="padding-bottom:0px;">
                     <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
                         <h3 id="album-name-div"  class="primary-bg"></h3>
-                        <img class="img-fluid" id="artist-image" src="{{url('/')}}/images/generic-user-icon-19.jpg">
+                        <img class="img-fluid cover-art" id="artist-image" src="{{url('/')}}/images/generic-user-icon-19.jpg">
                         <p id="album-info"></p>
                     </div>
 
