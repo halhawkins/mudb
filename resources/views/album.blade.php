@@ -152,7 +152,7 @@ function paginate(
                                         <h5><a href="{{url('/')}}/track/` + track.id + `">` + trackName + `</a></h5>
                                         <h6>` + response.name + ` (` + releaseYear + `)</h6>
                                         `+ artists +`<br>
-                                        <a href="` + spotifyUrl + `" title="Play on spotify"><img src="/assets/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                        <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
                                         <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
                                         </div>
                                     </div>`;
