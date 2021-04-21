@@ -34,8 +34,8 @@ Route::get('/artist/{artistid}/{page?}/{perpage?}', function($artistid,$page=1,$
 /**
  * Return an album page
  */
-Route::get('/album/{albumid}', function($albumid){
-    return view('album')->with('albumid',$albumid);
+Route::get('/album/{albumid}/{page?}/{perpage?}', function($albumid,$page=1,$perpage=20){
+    return view('album')->with('albumid',$albumid)->with('page',$page)->with('perpage',$perpage);
 });
 
 /**

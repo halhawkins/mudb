@@ -35,6 +35,11 @@ Route::get('/album/{query}',function($query){
     return response()->json($res);
 });
 
+Route::get('/albumtracks/{albumid}/{page?}/{perpage?}',function($albumid,$page=1,$perpage=20){
+    $res = Spotify::albumTracks($albumid)->limit($perpage)->offset(($page-1)*$perpage)->get();
+    return response()->json($res);
+});
+
 Route::get('/artist/{query}',function($query){
     $res = Spotify::artist($query)->get();
     return response()->json($res);
