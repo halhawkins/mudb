@@ -68,8 +68,8 @@ Route::get('/getalbums/{query}/{page}',function($query,$page){
     return response()->json($res);
 });
 
-Route::get('/artistalbums/{query}',function($query){
-    $res = Spotify::artistAlbums($query)->get();
+Route::get('/artistalbums/{query}/{page?}/{perpage?}',function($query, $page=1, $perpage=20){
+    $res = Spotify::artistAlbums($query)->limit($perpage)->offset(($page-1)*$perpage)->get();
     return response()->json($res);
 });
 

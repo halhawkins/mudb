@@ -27,8 +27,8 @@ Route::post('/register',[UserController::class,'register']);
 /**
  * Return an artist page
  */
-Route::get('/artist/{artistid}', function($artistid){
-    return view('artist')->with('artistid',$artistid);
+Route::get('/artist/{artistid}/{page?}/{perpage?}', function($artistid,$page=1,$perpage=20){
+    return view('artist')->with('artistid',$artistid)->with('page',$page)->with('perpage',$perpage);
 });
 
 /**
