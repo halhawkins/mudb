@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/newreleases/',function() {
-    $res = Spotify::newReleases()->get();//Spotify::searchArtists('Peter Gabriel')->get();
+Route::get('/newreleases/{page?}/{perpage?}',function($page=1,$perpage=20) {
+    $res = Spotify::newReleases()->limit($perpage)->offset(($page-1)*$perpage)->get();
     return response()->json($res);
 });
 

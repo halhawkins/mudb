@@ -2,16 +2,95 @@
 
 @section('script')
 <script>
+
+function paginate(
+            totalItems,
+            currentPage,
+            pageSize,
+            maxPages = 10
+        ) {
+            // calculate total pages
+            let totalPages = Math.ceil(totalItems / pageSize);
+            currentPage = parseInt(currentPage);
+            // ensure current page isn't out of range
+            if (currentPage < 1) {
+                currentPage = 1;
+            } else if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+
+            startPage = 0;
+            endPage = 0;
+            if (totalPages <= maxPages) {
+                // total pages less than max so show all pages
+                startPage = 1;
+                endPage = totalPages+1;
+            } else {
+                // total pages more than max so calculate start and end pages
+                maxPagesBeforeCurrentPage = Math.floor(maxPages / 2);
+                maxPagesAfterCurrentPage = Math.ceil(maxPages / 2) - 1;
+                if (currentPage <= maxPagesBeforeCurrentPage) {
+                    // current page near the start
+                    startPage = 1;
+                    endPage = maxPages;
+                } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
+                    // current page near the end
+                    startPage = totalPages - maxPages + 1;
+                    endPage = totalPages;
+                } else {
+                    // current page somewhere in the middle
+                    startPage = currentPage - maxPagesBeforeCurrentPage;
+                    endPage = currentPage + maxPagesAfterCurrentPage;
+                }
+            }
+
+            // calculate start and end item indexes
+            startIndex = (currentPage - 1) * pageSize;
+            endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+
+            // create an array of pages to ng-repeat in the pager control
+            pages = Array.from(Array((endPage ) - startPage).keys()).map(i => startPage + i);
+            // endPage--;
+            ret = `<div class="w-100"><div class="d-flex justify-content-center"><ul class="pagination" style="align-self:center">
+            `
+            prev = startPage -1;
+            if(startPage > 1){
+                ret += `    <li class="page-item"><a class="page-link active" href="{{url('/')}}/newreleases/` + prev + `/{{$perpage}}">&laquo</a></i>
+                    `;
+            }
+
+            $.each(pages,function(i,li){
+                if(currentPage === li){
+                    ret += `    <li class="page-item"><a class="page-link active" href="{{url('/')}}/newreleases/` + li + `/{{$perpage}}">` + li + `</a></i>
+                    `;
+                }
+                else{
+                    ret += `    <li class="page-item"><a class="page-link" href="{{url('/')}}/newreleases/` + li + `/{{$perpage}}">` + li + `</a></i>
+                    `;
+                }
+            });
+            next = currentPage+1;
+            if(endPage < totalPages){
+                ret += `    <li class="page-item"><a class="page-link active" href="{{url('/')}}/newreleases/` + next + `/{{$perpage}}">&raquo</a></i>
+                    `;
+            }
+            ret += `</ul></div></div>`;
+            return ret;
+        }
+
         $(document).ready(function(){
             content = "";
             $(".viral-menu,.top200-menu").removeClass("active");
             $(".new-releases-menu").addClass("active");
+            page = {{$page}};
+            perPage = {{$perpage}};
             $.ajax({
                 type: "GET", 
-                url: "{{url('/')}}/api/newreleases",
-                success: function (response) {
+                url: "{{url('/')}}/api/newreleases/" + page + "/" + perPage,
+                success: function (response) { 
                     ad = $("#recent-releases");
                     releases = response.albums.items;
+                    totalTracks = response.albums.total;
                     $.each(releases,function(i,val){
                         image = val.images[1].url;
                         name = val.name;
@@ -31,6 +110,8 @@
                                     </div>`;
                         ad.append(content);                        
                     })
+                    $("#recent-releases").append(paginate(totalTracks,page,perPage,8));  
+
                 }
             });
         })

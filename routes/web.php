@@ -31,10 +31,6 @@ Route::get('/artist/{artistid}', function($artistid){
     return view('artist')->with('artistid',$artistid);
 });
 
-Route::get('/newreleases',function(){
-    return view('newreleases');
-});
-
 /**
  * Return an album page
  */
@@ -55,6 +51,10 @@ Route::get('/search',function(Request $req) {
  */
 Route::get('/track/{trackid}',function($trackid){
     return view('track')->with('trackid',$trackid);
+});
+
+Route::get('/newreleases/{page?}/{perpage?}',function($page=1,$perpage=20){
+    return view('newreleases')->with('page',$page)->with('perpage',$perpage);
 });
 
 /**
