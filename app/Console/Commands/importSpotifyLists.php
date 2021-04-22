@@ -37,8 +37,10 @@ class importSpotifyLists extends Command
 
     public function importLists(){
         $spath = str_replace("\\","/",\storage_path("app/stage/"));
-        $top200 = preg_grep('/^(top200)/i', scandir($spath));
-        $viral50 = preg_grep('/^(viral50)/i', scandir($spath));
+        $top200 = "top200-" . date('m-d-Y') . ".csv";
+        $viral50 = "viral50-" . date('m-d-Y') . ".csv";
+        // $top200 = preg_grep('/^(top200)/i', scandir($spath));
+        // $viral50 = preg_grep('/^(viral50)/i', scandir($spath));
 
         spotify_top200::whereDate('created_at', Carbon::today())->delete();    
         spotify_viral50::whereDate('created_at', Carbon::today())->delete();    
@@ -46,63 +48,63 @@ class importSpotifyLists extends Command
             print_r($top200);
             print_r($viral50);
         }
-        foreach ($top200 as $key => $value) {
-            if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
-                $cnt = 0;
-    
-                while(($row =   fgetcsv($handle)) !== FALSE){
-                    if(is_numeric($row[0])){
-                        $rec = new spotify_top200;
-                        if(env('ECHO_IMPORT_RESULTS')==1)
-                            print($row[1] . " by " . $row[2] . " id=" . \basename($row[4]) . " requested.\n");
-                        $rec->position = $row[0];
-                        $rec->track_name = $row[1];
-                        $rec->artist = $row[2];
-                        $rec->streams = $row[3];
-                        $rec->spotify_id = \basename($row[4]);
-                        $data = Spotify::track(\basename($row[4]))->get();
-                        $rec->spotify_data = json_encode($data);
-                        $rec->save();
-                        /* 
-                            Import 5 records then sleep for a few seconds
-                            to avoid rate limiting.
-                        */
-                        if($cnt%5 === 0) 
-                            sleep(2);
-                        $cnt++;
-                    }
+
+        if(($handle     =   fopen($spath . $top200, "r")) !== FALSE){
+            $cnt = 0;
+
+            while(($row =   fgetcsv($handle)) !== FALSE){
+                if(is_numeric($row[0])){
+                    $rec = new spotify_top200;
+                    if(env('ECHO_IMPORT_RESULTS')==1)
+                        print($row[1] . " by " . $row[2] . " id=" . \basename($row[4]) . " requested.\n");
+                    $rec->position = $row[0];
+                    $rec->track_name = $row[1];
+                    $rec->artist = $row[2];
+                    $rec->streams = $row[3];
+                    $rec->spotify_id = \basename($row[4]);
+                    $data = Spotify::track(\basename($row[4]))->get();
+                    $rec->spotify_data = json_encode($data);
+                    $rec->save();
+                    /* 
+                        Import 5 records then sleep for a few seconds
+                        to avoid rate limiting.
+                    */
+                    if($cnt%5 === 0) 
+                        sleep(2);
+                    $cnt++;
                 }
-                \fclose($handle);
             }
+            \fclose($handle);
         }
-        foreach ($viral50 as $key => $value) {
-            if(($handle     =   fopen($spath . $value, "r")) !== FALSE){
-                $cnt=0;
-                while(($row =   fgetcsv($handle)) !== FALSE){
-                    if(is_numeric($row[0])){
-                        
-                        $rec = new spotify_viral50;
-                        if(env('ECHO_IMPORT_RESULTS')==1)
-                            print($row[1] . " by " . $row[2] . " id=" . \basename($row[3]) . " requested.\n");
-                        $rec->position = $row[0];
-                        $rec->track_name = $row[1];
-                        $rec->artist = $row[2];
-                        $rec->spotify_id = \basename($row[3]);
-                        $data = Spotify::track(\basename($row[3]))->get();
-                        $rec->spotify_data = json_encode($data);
-                        $rec->save();
-                        /* 
-                            Import 5 records then sleep for a few seconds
-                            to avoid rate limiting.
-                        */
-                        if($cnt%5 === 0)
-                            sleep(2);
-                        $cnt++;
-                    }
+
+        if(($handle     =   fopen($spath . $viral50, "r")) !== FALSE){
+            $cnt=0;
+            while(($row =   fgetcsv($handle)) !== FALSE){
+                if(is_numeric($row[0])){
+                    
+                    $rec = new spotify_viral50;
+                    if(env('ECHO_IMPORT_RESULTS')==1)
+                        print($row[1] . " by " . $row[2] . " id=" . \basename($row[3]) . " requested.\n");
+                    $rec->position = $row[0];
+                    $rec->track_name = $row[1];
+                    $rec->artist = $row[2];
+                    $rec->spotify_id = \basename($row[3]);
+                    $data = Spotify::track(\basename($row[3]))->get();
+                    $rec->spotify_data = json_encode($data);
+                    $rec->save();
+                    /* 
+                        Import 5 records then sleep for a few seconds
+                        to avoid rate limiting.
+                    */
+                    if($cnt%5 === 0)
+                        sleep(2);
+                    $cnt++;
                 }
-                \fclose($handle);
             }
+            \fclose($handle);
         }
+        $current_date = date('Y-m-d');
+        \file_put_contents(\base_path("\importdate.dat"),$current_date);
     }
 
     public function archiveLists(){
