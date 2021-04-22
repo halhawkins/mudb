@@ -104,7 +104,7 @@ class importSpotifyLists extends Command
             \fclose($handle);
         }
         $current_date = date('Y-m-d');
-        \file_put_contents(\base_path("\importdate.dat"),$current_date);
+        \file_put_contents(\base_path("importdate.dat"),$current_date);
     }
 
     public function archiveLists(){
