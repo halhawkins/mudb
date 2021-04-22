@@ -16,7 +16,33 @@ body{
     line-height: 60px; /* Vertically center the text there */
     background-color: #f5f5f5;
   }
-  
+
+.thumbs-up{
+    color:gray;
+}
+
+.thumbs-down{
+    color:gray;
+}
+
+.thumbs-up:before{
+    font-family: 'dripicons-v2';
+    content: "\e04e";
+}  
+
+.thumbs-down:before{
+    font-family: 'dripicons-v2';
+    content: "\e04d";
+}  
+
+.thumbs-up .activated{
+    color:green;
+}
+
+.thumbs-down .activated{
+    color:red;
+}
+
 #recent-releases{
     color: rgb(173, 145, 113);
 }

@@ -110,7 +110,7 @@
                 success: function (response) {
                     trackArray = response.tracks;
                     totalTracks = response.total_count;
-                    $("#tracks-heading").append(" (" + String((page-1)*perPage+1) + "-" + String((page-1)*20+response.tracks.length) + " of " + totalTracks + ")");
+                    $("#tracks-heading").append(" (" + String((page-1)*perPage+1) + "-" + String((page-1)*20+response.tracks.length) + " of " + totalTracks + ") for " + new Date(response.top200_for_date).toLocaleDateString());
 
                     $.each(trackArray, function(i,item){
                         track = item.spotify_data;
@@ -170,7 +170,7 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Spotify Top 200</h3><div class="toggle-panel"></div>
+            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Top 200</h3><div class="toggle-panel"></div>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">

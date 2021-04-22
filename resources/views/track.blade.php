@@ -81,6 +81,9 @@
                     <div class="col-md-3 col-lg-3 col-xl-3 primary-bg" style="padding-bottom:0px;">
                         <h3 id="artist-name"></h3>
                         <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
+                        @auth
+                        <div class="m-2"><em class="dripicons-thumbs-down"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-up"></em></div>
+                        @endauth
                         <p id="bio"></p>
                     </div>
 
