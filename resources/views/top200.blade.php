@@ -31,7 +31,7 @@
             maxPages = 10
         ) {
             // calculate total pages
-            let totalPages = Math.ceil(totalItems / pageSize);
+            let totalPages = Math.ceil(totalItems / pageSize)+1;
             currentPage = parseInt(currentPage);
             // ensure current page isn't out of range
             if (currentPage < 1) {
