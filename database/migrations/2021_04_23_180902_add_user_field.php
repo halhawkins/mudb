@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Likes extends Migration
+class AddUserField extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,8 @@ class Likes extends Migration
     public function up()
     {
         //
-        Schema::dropIfExists('likes');
-        Schema::create('likes',function(Blueprint $table){
-            $table->string('type');
-            $table->integer('like');
-            $table->string('itemID');
+        Schema::table('likes',function(Blueprint $table) {
+            $table->text('userID')->before('itemID');
         });
     }
 
@@ -29,6 +26,9 @@ class Likes extends Migration
      */
     public function down()
     {
+        Schema::table('likes',function(Blueprint $table) {
+            $table->dropColumn('userID');
+        });
         //
     }
 }
