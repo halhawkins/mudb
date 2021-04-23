@@ -6,7 +6,7 @@
  use App\Http\Controllers\LoginController;
  use App\Http\Controllers\FileUploadController;
  use Laravel\Socialite\Facades\Socialite;
-
+ use App\Http\Controllers\LikeController;
  /**
   * Display the default page
   */
@@ -124,6 +124,15 @@ Route::get('/profile',function(){
 Route::get('file-upload', [FileUploadController::class, 'fileUpload'])->name('file.upload');
 Route::post('file-upload', [FileUploadController::class, 'fileUploadPost'])->name('file.upload.post');
 
+Route::post('/rateitem', [LikeController::class,'RateItem']);
+
+Route::get('/rating/{itemid}/{type}', function($itemid,$type){
+    $i = new LikeController;
+    $t = $i->getRating($itemid,$type);
+    return response()->json($t);
+}); 
+
 Route::get('/register',function(){
     return view('register');
 });
+

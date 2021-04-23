@@ -91,6 +91,23 @@ Route::get('/trackvideo/{isrc}',function($isrc){
     return response()->json($res);
 });
 
+Route::get('/availablegenres',function(){
+    $res = Spotify::availableGenreSeeds()->get();
+    return response()->json($res);
+});
+
+Route::get('/recommendations',function(){
+    $seed = SpotifySeed::setGenres(['movies']) //, 'indie-pop''rock', 'pop','alt-rock'
+    // ->setArtists(['2qT62DYO8Ajb276vUJmvhz','1YEGETLT2p8k97LIo3deHL','2BGRfQgtzikz1pzAD0kaEn'])
+    // ->setTargetValence(1.00)
+    // ->setSpeechiness(0.3, 0.9)
+    // ->setLiveness(0.3, 1.0)
+    ;
+    $res= array( 'seed'=>$seed, Spotify::recommendations($seed)->get());
+    // $res = 
+    return response()->json($res);
+});
+
 Route::get('/publicpath', function(){
     return url('/');
 });
