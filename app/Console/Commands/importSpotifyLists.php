@@ -36,7 +36,7 @@ class importSpotifyLists extends Command
     }
 
     public function importLists(){
-        error_log("beginning import\n",3,\base_path()."./import_insert.log");
+        error_log("beginning import\n",3,\base_path()."import_insert.log");
         $spath = str_replace("\\","/",\storage_path("app/stage/"));
         $top200 = "top200-" . date('m-d-Y') . ".csv";
         $viral50 = "viral50-" . date('m-d-Y') . ".csv";
