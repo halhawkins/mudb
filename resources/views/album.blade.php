@@ -156,7 +156,7 @@ function paginate(
                     releaseYear = new Date(albumResp.release_date).getFullYear();
                     $.ajax({
                         type: "GET",
-                        url: "{{url('/')}}/mudb/public/rating/" + albumID + "/album",
+                        url: "{{url('/')}}/rating/" + albumID + "/album",
                         success: function (likes) {
                             if(likes.like === 1){
                                 $(".dripicons-thumbs-up").css("color","#00FF00");
