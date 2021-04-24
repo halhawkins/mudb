@@ -265,8 +265,10 @@ a:hover{
     color: black;
 }
 .dripicons-thumbs-up{
+    color: #808080;
     cursor: pointer;
 }
 .dripicons-thumbs-down{
+    color: #808080;
     cursor: pointer;
 }
