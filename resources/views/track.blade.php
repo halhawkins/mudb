@@ -25,47 +25,40 @@
     cursor: pointer;
 }
     </style>
+<script src="{{url('/')}}/js/app.js"></script>
     <script>
     function playOnSpotify(id){
         window.open("https://api.spotify.com/v1/albums/" + id, "_blank");
         alert(id);
     }
         $(document).ready(function(){
-            $(".dripicons-thumbs-up").click(function(){
-                if($(".dripicons-thumbs-up").css("color") == "#FF0000"){
-                    rating = 0;
-                }
-                else{
-                    // alert("Hi!");
-                    rating =1;
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "{{url('/')}}/rateitem",
-                    data: {
-                        itemid: "{{$trackid}}",
-                        type: "track",
-                        rating: rating
-                    },
-                    success: function (response) {
-                        if(rating)
-                            $(".dripicons-thumbs-up").css("color","#FF0000");
-                        else
-                            $(".dripicons-thumbs-up").css("color","#808080");
-                    },
-                    fail: function(xhr, status, error){
-                        alert(error);
-                    }
-                });
-            });
-            $("img.play-on-spotify").click(function(){
-            });
-            trackId = '{{$trackid}}';
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                    if($(this).attr("class") === 'dripicons-thumbs-up'){
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = 1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    else{
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = -1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    like("{{url('/')}}","{{$trackid}}","track",rating);
+            });
+            $("img.play-on-spotify").click(function(){
+            });
+            trackId = '{{$trackid}}';
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/api/track/" + trackId,
@@ -88,7 +81,16 @@
                         url: "http://localhost/mudb/public/rating/" + trackId + "/track",
                         success: function (likes) {
                             if(likes.like === 1){
-                                $(".dripicons-thumbs-up").css("color","#FF0000");
+                                $(".dripicons-thumbs-up").css("color","#00FF00");
+                                $(".dripicons-thumbs-down").css("color","#808080");
+                            }
+                            else if(likes.like === -1){
+                                $(".dripicons-thumbs-up").css("color","#808080");
+                                $(".dripicons-thumbs-down").css("color","#FF0000");
+                            }
+                            else{
+                                $(".dripicons-thumbs-up").css("color","#808080");
+                                $(".dripicons-thumbs-down").css("color","#808080");
                             }
                         }
                     });

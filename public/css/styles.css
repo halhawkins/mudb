@@ -264,3 +264,9 @@ a{
 a:hover{
     color: black;
 }
+.dripicons-thumbs-up{
+    cursor: pointer;
+}
+.dripicons-thumbs-down{
+    cursor: pointer;
+}

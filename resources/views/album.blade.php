@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('script')
+<script src="{{url('/')}}/js/app.js"></script>
     <script>
 function paginate(
             url,
@@ -94,6 +95,30 @@ function paginate(
         }
 
         $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                    if($(this).attr("class") === 'dripicons-thumbs-up'){
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = 1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    else{
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = -1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    like("{{url('/')}}",'{{$albumid}}','album',rating);
+            });
             page = {{$page}};
             perPage = {{$perpage}};
             albumID = '{{$albumid}}';
@@ -129,6 +154,24 @@ function paginate(
                             artists = artists + ", ";
                     });
                     releaseYear = new Date(albumResp.release_date).getFullYear();
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost/mudb/public/rating/" + albumID + "/album",
+                        success: function (likes) {
+                            if(likes.like === 1){
+                                $(".dripicons-thumbs-up").css("color","#00FF00");
+                                $(".dripicons-thumbs-down").css("color","#808080");
+                            }
+                            else if(likes.like === -1){
+                                $(".dripicons-thumbs-up").css("color","#808080");
+                                $(".dripicons-thumbs-down").css("color","#FF0000");
+                            }
+                            else{
+                                $(".dripicons-thumbs-up").css("color","#808080");
+                                $(".dripicons-thumbs-down").css("color","#808080");
+                            }
+                        }
+                    });
 
 
                     $.ajax({
@@ -164,11 +207,11 @@ function paginate(
                                 type: "GET",
                                 url: albumInfoURL,
                                 success: function (response) {
-                                    if(typeof(response.album)=== 'undefined') {
+                                    if(typeof(response.album.wiki)=== 'undefined') {
                                         albumSummary = "";
-                                        alert("woops");
                                     }
                                     else{
+                                        console.log(response.album);
                                         albumSummary = response.album.wiki.summary;
                                         albumName = response.album.name;
                                         $("#album-info").append(albumSummary);
@@ -197,6 +240,9 @@ function paginate(
                     <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
                         <h3 id="album-name-div"  class="primary-bg"></h3>
                         <img class="img-fluid cover-art" id="artist-image" src="{{url('/')}}/images/generic-user-icon-19.jpg">
+                        @auth
+                        <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
+                        @endauth
                         <p id="album-info"></p>
                     </div>
 

@@ -1,91 +1,42 @@
 @extends('layout')
 
 @section('script')
+<style>
+.dripicons-thumbs-up{
+    color:#808080;
+    cursor: pointer;
+}
+.dripicons-thumbs-down{
+    color: #808080;
+    cursor: pointer;
+}
+</style>
+<script src="{{url('/')}}/js/app.js"></script>
     <script>
-function paginate(
-            url,
-            totalItems,
-            currentPage,
-            pageSize,
-            maxPages = 10
-        ) {
-            // calculate total pages
-            let totalPages = Math.ceil(totalItems / pageSize);
-            currentPage = parseInt(currentPage);
-            // ensure current page isn't out of range
-            if (currentPage < 1) {
-                currentPage = 1;
-            } else if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
-
-            startPage = 0;
-            endPage = 0;
-            if (totalPages <= maxPages) {
-                // total pages less than max so show all pages
-                startPage = 1;
-                endPage = totalPages+1;
-            } else {
-                // total pages more than max so calculate start and end pages
-                maxPagesBeforeCurrentPage = Math.floor(maxPages / 2);
-                maxPagesAfterCurrentPage = Math.ceil(maxPages / 2) - 1;
-                if (currentPage <= maxPagesBeforeCurrentPage) {
-                    // current page near the start
-                    startPage = 1;
-                    endPage = maxPages;
-                } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
-                    // current page near the end
-                    startPage = totalPages - maxPages + 1;
-                    endPage = totalPages;
-                } else {
-                    // current page somewhere in the middle
-                    startPage = currentPage - maxPagesBeforeCurrentPage;
-                    endPage = currentPage + maxPagesAfterCurrentPage;
-                }
-            }
-
-            // calculate start and end item indexes
-            startIndex = (currentPage - 1) * pageSize;
-            endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
-
-            // create an array of pages to ng-repeat in the pager control
-            pages = Array.from(Array((endPage ) - startPage).keys()).map(i => startPage + i);
-            // endPage--;
-            ret = `<div class="w-100"><div class="d-flex justify-content-center"><ul class="pagination" style="align-self:center">
-            `
-            prev = startPage -1;
-            if(startPage > 1){
-                ret += `    <li class="page-item"><a class="page-link active" href=` + url + prev + `/{{$perpage}}">&laquo</a></i>
-                    `;
-            }
-
-            $.each(pages,function(i,li){
-                if(currentPage === li){
-                    ret += `    <li class="page-item"><a class="page-link active" href="` + url + li + `/{{$perpage}}">` + li + `</a></i>
-                    `;
-                }
-                else{
-                    ret += `    <li class="page-item"><a class="page-link" href="` + url + li + `/{{$perpage}}">` + li + `</a></i>
-                    `;
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            next = currentPage+1;
-            if(endPage < totalPages){
-                ret += `    <li class="page-item"><a class="page-link active" href="` + url + next + `/{{$perpage}}">&raquo</a></i>
-                    `;
-            }
-            ret += `</ul></div></div>`;
-            return ret;
-        }
-
-    function playOnSpotify(id){
-        window.open("https://api.spotify.com/v1/albums/" + id, "_blank");
-        alert(id);
-    }
-        $(document).ready(function(){
-            $("img.play-on-spotify").click(function(){
-                // id = this.data();
-                alert(this);
+            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                    if($(this).attr("class") === 'dripicons-thumbs-up'){
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = 1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    else{
+                        if($(this).css("color")==="rgb(128, 128, 128)"){
+                            rating = -1;
+                        }
+                        else{
+                            rating = 0;
+                        }
+                    }
+                    like("{{url('/')}}","{{$artistid}}","artist",rating);
             });
             artistID = '{{$artistid}}';
             albs = $("#releases");
@@ -131,7 +82,7 @@ function paginate(
                                             if(album.artists.length > (i+1))
                                                 content = content + ", ";
                                         })
-                                        content = content + `<br/><a href="` + album.uri + `"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a>`;
+                                        content = content + `<br/><a href="` + album.uri + `" target="_blank"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a>`;
                                         content = content + `</div>
                                                             </div>
                                                 `;
@@ -139,6 +90,25 @@ function paginate(
                                         });
                                         url = "{{url('/')}}/artist/" + artistID + "/";
                                         $("#artist").append(paginate(url,totalAlbums,page,perPage,8)); 
+
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "http://localhost/mudb/public/rating/{{$artistid}}/artist",
+                                            success: function (likes) {
+                                                if(likes.like === 1){
+                                                    $(".dripicons-thumbs-up").css("color","#00FF00");
+                                                    $(".dripicons-thumbs-down").css("color","#808080");
+                                                }
+                                                else if(likes.like === -1){
+                                                    $(".dripicons-thumbs-up").css("color","#808080");
+                                                    $(".dripicons-thumbs-down").css("color","#FF0000");
+                                                }
+                                                else{
+                                                    $(".dripicons-thumbs-up").css("color","#808080");
+                                                    $(".dripicons-thumbs-down").css("color","#808080");
+                                                }
+                                            }
+                                        });
 
                                 }
                             });
@@ -162,6 +132,9 @@ function paginate(
                     <div class="col-md-3 col-lg-3 col-xl-3 " style="padding-bottom:0px;">
                         <h3 id="artist-name  primary-bg"></h3>
                         <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
+                        @auth
+                        <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
+                        @endauth
                         <p id="bio"></p>
                     </div>
 
