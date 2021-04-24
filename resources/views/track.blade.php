@@ -18,6 +18,12 @@
 #track-info h4{
     color: black;
 }
+.dripicons-thumbs-up{
+    cursor: pointer;
+}
+.dripicons-thumbs-down{
+    cursor: pointer;
+}
     </style>
     <script>
     function playOnSpotify(id){
@@ -25,10 +31,41 @@
         alert(id);
     }
         $(document).ready(function(){
+            $(".dripicons-thumbs-up").click(function(){
+                if($(".dripicons-thumbs-up").css("color") == "#FF0000"){
+                    rating = 0;
+                }
+                else{
+                    // alert("Hi!");
+                    rating =1;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('/')}}/rateitem",
+                    data: {
+                        itemid: "{{$trackid}}",
+                        type: "track",
+                        rating: rating
+                    },
+                    success: function (response) {
+                        if(rating)
+                            $(".dripicons-thumbs-up").css("color","#FF0000");
+                        else
+                            $(".dripicons-thumbs-up").css("color","#808080");
+                    },
+                    fail: function(xhr, status, error){
+                        alert(error);
+                    }
+                });
+            });
             $("img.play-on-spotify").click(function(){
             });
             trackId = '{{$trackid}}';
-
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/api/track/" + trackId,
@@ -45,6 +82,15 @@
                         artists += `<a href="{{url('/')}}/artist/` + val.id + `">` + val.name + `</a>`;
                         if(response.artists.length > (i+1))
                             artists += ", ";
+                    });
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost/mudb/public/rating/" + trackId + "/track",
+                        success: function (likes) {
+                            if(likes.like === 1){
+                                $(".dripicons-thumbs-up").css("color","#FF0000");
+                            }
+                        }
                     });
                     $.ajax({
                         type: "GET",
@@ -82,7 +128,7 @@
                         <h3 id="artist-name"></h3>
                         <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
                         @auth
-                        <div class="m-2"><em class="dripicons-thumbs-down"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-up"></em></div>
+                        <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
                         @endauth
                         <p id="bio"></p>
                     </div>
