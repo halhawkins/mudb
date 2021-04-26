@@ -7,6 +7,8 @@
  use App\Http\Controllers\FileUploadController;
  use Laravel\Socialite\Facades\Socialite;
  use App\Http\Controllers\LikeController;
+ use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
+ use Aerni\Spotify\Facades\SpotifySeedFacade as SpotifySeed;
  /**
   * Display the default page
   */
@@ -146,6 +148,27 @@ Route::post('/deltag', function(){
     $t = $_REQUEST['tagid'];
     $l = new LikeController;
     $res = $l->delTag($t);
+});
+
+Route::get('/recommendations',function(){
+    return view('recommendations')->with('page',1)->with('perpage',20);
+});
+
+Route::get("/personal",function(){
+    $l = new LikeController;
+    $tags = implode(', ',$l->getUserTags());
+    $artists = implode(', ',$l->getUserArtists());
+    $tracks = implode(', ',$l->getUserTracks());
+    // $seedo = new SpotifySeed;
+    $seed = SpotifySeed::
+        // setGenres($tags)
+        // ->
+        setArtists($artists)
+        ->
+        setTracks($tracks)
+        ;
+    $res = Spotify::recommendations($seed)->get();
+    return response()->json($res);
 });
 
 Route::get('/register',function(){

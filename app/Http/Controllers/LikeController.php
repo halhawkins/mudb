@@ -47,8 +47,18 @@ class LikeController extends Controller
     }
 
     public function getUserTags(){
-        $tags = likes::select("itemID")->where("userID","=",Auth::user()->id)->where("type","=","tag")->get();
-        return $tags;
+        $tags = DB::table('likes')->where("userID","=",Auth::user()->id)->where("type","=","tag")->pluck('itemID');
+        return json_decode(json_encode($tags,true));
+    }
+
+    public function getUserArtists(){
+        $artists = DB::table('likes')->where("userID","=",Auth::user()->id)->where("type","=","artist")->pluck('itemID');
+        return json_decode(json_encode($artists,true));
+    }
+
+    public function getUserTracks(){
+        $tracks = DB::table('likes')->where("userID","=",Auth::user()->id)->where("type","=","track")->pluck('itemID');
+        return json_decode(json_encode($tracks,true));
     }
 
     public function getRating($itemid,$type){
