@@ -80,7 +80,7 @@ function paginate(
 
         $(document).ready(function(){
             content = "";
-            $(".viral-menu,.top200-menu").removeClass("active");
+            $(".viral-menu,.top200-menu, .recommendations-menu").removeClass("active");
             $(".new-releases-menu").addClass("active");
             page = {{$page}};
             perPage = {{$perpage}};

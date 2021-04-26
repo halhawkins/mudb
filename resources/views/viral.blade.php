@@ -100,7 +100,7 @@
         }
 
         $(document).ready(function(){
-            $(".new-releases-menu, .top200-menu").removeClass("active");
+            $(".new-releases-menu, .top200-menu, .recommendations-menu").removeClass("active");
             $(".viral-menu").addClass("active");
             perPage = {{$perpage}};
             page = "{{$page}}";

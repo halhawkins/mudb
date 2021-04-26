@@ -100,10 +100,10 @@
         }
 
         $(document).ready(function(){
-            $(".viral-menu,.new-releases-menu").removeClass("active");
-            $(".top200-menu").addClass("active");
+            $(".viral-menu,.top200-menu,.new-releases-menu").removeClass("active");
+            $(".recommendations-menu").addClass("active");
             perPage = {{$perpage}};
-            page = "{{$page}}";
+            page = 1;
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/personal",
