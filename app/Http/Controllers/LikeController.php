@@ -35,6 +35,22 @@ class LikeController extends Controller
             return response(400)->json(array("error"=>"No authenticated user."));
     }
 
+    public function delTags(){
+        $userid = Auth::user()->id;
+        likes::where("userID","=",$userid)->where("type","=","tag")->delete();
+    }
+
+    public function delTag($tagid){
+        $userid = Auth::user()->id;
+
+        likes::where("userID","=",$userid)->where("type","=","tag")->where("itemID","=",$tagid)->delete();
+    }
+
+    public function getUserTags(){
+        $tags = likes::select("itemID")->where("userID","=",Auth::user()->id)->where("type","=","tag")->get();
+        return $tags;
+    }
+
     public function getRating($itemid,$type){
         $stats = likes::select(DB::raw("count(*) as `total`, count(IF(`like` > 0, 1, null)) as `likes`, count(IF(`like` < 0, 1, null)) as `hates`"))
             ->where("type","=",$type)

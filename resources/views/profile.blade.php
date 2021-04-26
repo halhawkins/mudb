@@ -35,13 +35,157 @@ div.update img{
     width:32px;
 }
 
+.genre-list-item{
+    cursor: pointer;
+    width: 100%;
+    background-color: #ededed;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding-left:12px;
+    padding-right:12px;
+    padding-top:3px;
+    padding-bottom: 3px;
+    margin: 4px;
+}
+.genre-list-item:hover{
+    background-color: #d9d9d9;
+}
+
     </style>
+    <link href="{{url('/')}}/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
+    <script src="{{url('/')}}/js/bootstrap-tokenfield.js"></script>
     <script>
 
+        let allGenre;
+        function findTagId(name){
+            id = "";
+            $.each(allGenre,function(i,val){
+                if(val.name===name){
+                    id = val.id;
+                }
+            });
+            return id;
+        }
+
+        function findTagName(id){
+            name = "";
+            $.each(allGenre,function(i,val){
+                if(val.id===id){
+                    name = val.name;
+                }
+            });
+            return name;
+        }
+
+        function saveTag(id){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{url('/')}}/rateitem",
+                data: {
+                    itemid: id,
+                    type: "tag",
+                    rating: 1
+                }
+            });
+        }
+
+        function clearLikes(){
+            $.ajax({
+                    type: "POST",
+                    url: "{{url('/')}}/deltags"
+            })
+        }
+
+        function addToTagList(name){
+            names = [];
+            value = "tag-" + name;
+            $("#genre-tags").tokenfield("createToken",name);
+            names = $("#genre-tags").tokenfield('getTokensList',", ").split(", ");
+            return names;
+        }
+
+        function updateUserTags(){
+            names = [];
+            names = $("#genre-tags").tokenfield('getTokensList',", ").split(", ");
+            return names;
+        }
+
+        function deleteTag(name){
+            tagid = findTagId(name);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{url('/')}}/deltag",
+                data: {
+                    tagid: tagid
+                },
+                success: function (response) {
+                    
+                }
+            });
+        }
+
+        function getUserTags(){
+            tags = [];
+            $.ajax({
+                type: "GET",
+                url: "{{url('/')}}/getusertags",
+                success: function (response) {
+
+                    // iterate through users saved tags and add them
+                    $.each(response,function(i,val){
+                        tag = findTagName(val.itemID);
+                        tags.push(tag);
+                        addToTagList(tag);
+                    });
+                }
+            });
+            return tags;
+        }
+        // --- close button = a.close
         $(document).ready(function(){
-            // $(".image-upload").click(function(){
-            //     alert("boing");
-            // });
+            $("#genre-tags").tokenfield(
+            )
+            .on('tokenfield:createdtoken', function (e) {
+                tagel = $("#genre-tags").data("bs.tokenfield").$input.parent().children().children('a:last');
+                $(tagel).click(function(){
+                    name = $(this).parent().children('span').text();
+                    deleteTag(name);
+                    $(this).parent().remove();
+                });
+            });
+            genres = [];
+            $.ajax({
+                type: "GET",
+                url: "{{url('/')}}/categories",
+                success: function (response) {
+
+                    allGenre = response;
+
+                    $.each(response,function(i,val){
+                        el = `<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 "><div class="genre-list-item" data-genreid="` + val.id + `">` + val.name + `</div></div>`;
+                        $(".genre-list").append(el);
+                    });
+                    $(".genre-list-item").click(function(e){
+                        addToTagList($(this).text());
+                        saveTag(findTagId($(this).text()));
+                    });
+
+                    names = getUserTags();
+                    $.each(names, function(i,val){
+                        addToTagList(val.itemID);
+                    });
+                }
+            });
         });
         
     </script>
@@ -90,9 +234,17 @@ div.update img{
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-block enter-btn">Update</button>
                             </div>
-                        
                         </form>
                     </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <em>Prefered tags</em>
+                            <input readonly type="text" class="form-control" id="genre-tags" value="" >
+                        </div>
+                        <em>Select your prefered tags:</em>
+                        <div class="row genre-list"></div>
+                    </div>
+                   
                 </div>
             </div>
 

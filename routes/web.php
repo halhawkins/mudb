@@ -96,8 +96,12 @@ Route::get('/albums/{query}/{page?}',function($query,$page=1){
  * Return Spotify categories
  */
 Route::get('/categories',function() {
-    $res = Spotify::categories()->get();
-    return response()->json($res);
+    // $items = [];
+    $limit = 1000;
+    $page=0;
+    $jsonarray = json_decode(file_get_contents(str_replace("\\","/",\storage_path("app/categories/"))."categories.json"),true);
+    $items = $jsonarray['categories']['items'];
+    return response()->json($items);
 });
 
 /**
@@ -131,6 +135,18 @@ Route::get('/rating/{itemid}/{type}', function($itemid,$type){
     $t = $i->getRating($itemid,$type);
     return response()->json($t);
 }); 
+
+Route::post('/deltags',[LikeController::class,'delTags']);
+Route::get('/getusertags',function(){
+    $l = new LikeController;
+    $res = $l->getUserTags();
+    return response()->json($res);
+});
+Route::post('/deltag', function(){
+    $t = $_REQUEST['tagid'];
+    $l = new LikeController;
+    $res = $l->delTag($t);
+});
 
 Route::get('/register',function(){
     return view('register');
