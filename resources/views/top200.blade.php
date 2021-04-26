@@ -116,7 +116,6 @@
                         track = item.spotify_data;
                         position = item.position;
                         streams = item.streams;
-                        console.log(track);
                         artists = "";
                         $.each(track.artists,function(i,val){
                             artists += `<a href="{{url('/')}}/artist/` + val.id + `">` + val.name + `</a>`;
