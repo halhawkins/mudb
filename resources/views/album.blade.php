@@ -95,140 +95,141 @@ function paginate(
         }
 
         $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
-                    if($(this).attr("class") === 'dripicons-thumbs-up'){
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = 1;
-                        }
-                        else{
-                            rating = 0;
-                        }
+            $.getScript("{{url('/')}}/js/app.js", function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                    else{
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = -1;
-                        }
-                        else{
-                            rating = 0;
-                        }
-                    }
-                    like("{{url('/')}}",'{{$albumid}}','album',rating);
-            });
-            page = {{$page}};
-            perPage = {{$perpage}};
-            albumID = '{{$albumid}}';
-            $.ajax({
-                type: "GET",
-                url: "{{url('/')}}/api/album/" + "{{$albumid}}",
-                success: function (albumResp) {
-                    coverArt = albumResp.images[0].url;
-                    cr = albumResp.copyrights;
-                    $(".cover-art").attr('src',coverArt);
-                    copyright = "";
-                    $.each(cr,function(i,val){
-                        if(val.type == 'C'){
-                            copyright = val.text;
-                        }
-                        
-                    });
-                    if(!copyright){
-                        if(cr[0])
-                            copyright = cr[0].text;
-                        else
-                            copyright = "";
-                    }
-                    $("#copyright").html(copyright);
-                    albumName = albumResp.name;
-                    $("#album-name-div").html(albumName);
-                    // coverArt = response.images[0].url;
-                    artistArray = albumResp.artists;
-                    artists = "";
-                    $.each(artistArray,function(i,artist){
-                        artists = artists + `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
-                        if(artistArray.length > (i+1))
-                            artists = artists + ", ";
-                    });
-                    releaseYear = new Date(albumResp.release_date).getFullYear();
-                    $.ajax({
-                        type: "GET",
-                        url: "{{url('/')}}/rating/" + albumID + "/album",
-                        success: function (likes) {
-                            like = parseInt(likes.like);
-                            if(like === 1){
-                                $(".dripicons-thumbs-up").css("color","#00FF00");
-                                $(".dripicons-thumbs-down").css("color","#808080");
-                            }
-                            else if(like === -1){
-                                $(".dripicons-thumbs-up").css("color","#808080");
-                                $(".dripicons-thumbs-down").css("color","#FF0000");
+                });
+                $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                        if($(this).attr("class") === 'dripicons-thumbs-up'){
+                            if($(this).css("color")==="rgb(128, 128, 128)"){
+                                rating = 1;
                             }
                             else{
-                                $(".dripicons-thumbs-up").css("color","#808080");
-                                $(".dripicons-thumbs-down").css("color","#808080");
+                                rating = 0;
                             }
                         }
-                    });
-
-
-                    $.ajax({
-                        type: "GET",
-                        url: "{{url('/')}}/api/albumtracks/" + albumID + "/" + page + "/" + perPage,
-                        success: function (response) {
-                            // console.log(response);
-                            totalTracks = response.total;
-                            trackArray = response.items;
-                            id = response.id;
-                            $.each(trackArray, function(i,track){
-                                trackName = track.name;
-                                explicit = track.explicit;
-                                previewUrl=track.preview_url;
-                                // image = response.images[0].url;
-                                spotifyUrl = track.uri;
-                                content = `
-                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> 
-                                        <div class="col-12 artist-card">
-                                        <img src="` + coverArt + `" alt="album cover" style="width:100%;height:auto;">
-                                        <h5><a href="{{url('/')}}/track/` + track.id + `">` + trackName + `</a></h5>
-                                        <h6>` + response.name + ` (` + releaseYear + `)</h6>
-                                        `+ artists +`<br>
-                                        <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                                        <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
-                                        </div>
-                                    </div>`;
-                                $("#tracks").append(content)
-                            });
-
-                            albumInfoURL = "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&artist=" + encodeURIComponent(artistArray[0].name) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
-                            $.ajax({
-                                type: "GET",
-                                url: albumInfoURL,
-                                success: function (response) {
-                                    if(typeof(response.album.wiki)=== 'undefined') {
-                                        albumSummary = "";
-                                    }
-                                    else{
-                                        console.log(response.album);
-                                        albumSummary = response.album.wiki.summary;
-                                        albumName = response.album.name;
-                                        $("#album-info").append(albumSummary);
-                                    }
-                                }
-                            });
-                            url = "{{url('/')}}/album/" + albumID + "/";
-                            $("#artist").append(paginate(url,totalTracks,page,perPage,8));
+                        else{
+                            if($(this).css("color")==="rgb(128, 128, 128)"){
+                                rating = -1;
+                            }
+                            else{
+                                rating = 0;
+                            }
                         }
+                        app.like("{{url('/')}}",'{{$albumid}}','album',rating);
+                });
+                page = {{$page}};
+                perPage = {{$perpage}};
+                albumID = '{{$albumid}}';
+                $.ajax({
+                    type: "GET",
+                    url: "{{url('/')}}/api/album/" + "{{$albumid}}",
+                    success: function (albumResp) {
+                        coverArt = albumResp.images[0].url;
+                        cr = albumResp.copyrights;
+                        $(".cover-art").attr('src',coverArt);
+                        copyright = "";
+                        $.each(cr,function(i,val){
+                            if(val.type == 'C'){
+                                copyright = val.text;
+                            }
+                            
+                        });
+                        if(!copyright){
+                            if(cr[0])
+                                copyright = cr[0].text;
+                            else
+                                copyright = "";
+                        }
+                        $("#copyright").html(copyright);
+                        albumName = albumResp.name;
+                        $("#album-name-div").html(albumName);
+                        // coverArt = response.images[0].url;
+                        artistArray = albumResp.artists;
+                        artists = "";
+                        $.each(artistArray,function(i,artist){
+                            artists = artists + `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
+                            if(artistArray.length > (i+1))
+                                artists = artists + ", ";
+                        });
+                        releaseYear = new Date(albumResp.release_date).getFullYear();
+                        $.ajax({
+                            type: "GET",
+                            url: "{{url('/')}}/rating/" + albumID + "/album",
+                            success: function (likes) {
+                                like = parseInt(likes.like);
+                                if(like === 1){
+                                    $(".dripicons-thumbs-up").css("color","#00FF00");
+                                    $(".dripicons-thumbs-down").css("color","#808080");
+                                }
+                                else if(like === -1){
+                                    $(".dripicons-thumbs-up").css("color","#808080");
+                                    $(".dripicons-thumbs-down").css("color","#FF0000");
+                                }
+                                else{
+                                    $(".dripicons-thumbs-up").css("color","#808080");
+                                    $(".dripicons-thumbs-down").css("color","#808080");
+                                }
+                            }
+                        });
 
-                    });
+
+                        $.ajax({
+                            type: "GET",
+                            url: "{{url('/')}}/api/albumtracks/" + albumID + "/" + page + "/" + perPage,
+                            success: function (response) {
+                                totalTracks = response.total;
+                                trackArray = response.items;
+                                id = response.id;
+                                $.each(trackArray, function(i,track){
+                                    trackName = track.name;
+                                    explicit = track.explicit;
+                                    previewUrl=track.preview_url;
+                                    // image = response.images[0].url;
+                                    spotifyUrl = track.uri;
+                                    content = `
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> 
+                                            <div class="col-12 artist-card">
+                                            <img src="` + coverArt + `" alt="album cover" style="width:100%;height:auto;">
+                                            <h5><a href="{{url('/')}}/track/` + track.id + `">` + trackName + `</a></h5>
+                                            <h6>` + response.name + ` (` + releaseYear + `)</h6>
+                                            `+ artists +`<br>
+                                            <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                            <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                                            </div>
+                                        </div>`;
+                                    $("#tracks").append(content)
+                                });
+
+                                albumInfoURL = "https://ws.audioscrobbler.com/2.0/?method=album.getinfo&album=" + encodeURIComponent(albumName) + "&artist=" + encodeURIComponent(artistArray[0].name) + "&api_key=40e7023497e3403fc3d672679eba6f03&format=json";
+                                $.ajax({
+                                    type: "GET",
+                                    url: albumInfoURL,
+                                    success: function (response) {
+                                        if(typeof(response.album.wiki)=== 'undefined') {
+                                            albumSummary = "";
+                                        }
+                                        else{
+                                            albumSummary = response.album.wiki.summary;
+                                            albumName = response.album.name;
+                                            $("#album-info").append(albumSummary);
+                                        }
+                                    }
+                                });
+                                url = "{{url('/')}}/album/" + albumID + "/";
+                                $("#artist").append(paginate(url,totalTracks,page,perPage,8));
+                            }
+
+                        });
+
+                        
+            }
+                });
 
                     
-        }
             });
-
 
         });
         

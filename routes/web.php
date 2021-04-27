@@ -160,15 +160,20 @@ Route::get('/recommendations',function(){
 Route::get("/personal",function(){
     $l = new LikeController;
     $tags = implode(', ',$l->getUserTags());
-    $artists = implode(', ',$l->getUserArtists());
-    $tracks = implode(', ',$l->getUserTracks());
+    $artists = $l->getUserArtists();
+    shuffle($artists);
+    $tracks = $l->getUserTracks();
+    shuffle($tracks);
+    $pos = rand(0,5);
+    $trackseeds = array_slice($tracks,0,$pos);
+    $artistseeds = array_slice($artists,0,5-$pos);
     // $seedo = new SpotifySeed;
     $seed = SpotifySeed::
         // setGenres($tags)
         // ->
-        setArtists($artists)
+        setArtists($artistseeds)
         ->
-        setTracks($tracks)
+        setTracks($trackseeds)
         ;
     $res = Spotify::recommendations($seed)->get();
     return response()->json($res);

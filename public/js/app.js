@@ -77,8 +77,8 @@ function paginate(
     ret += `</ul></div></div>`;
     return ret;
 }
-
-function like(url,itemId,itemType,rating){
+window.app = {};
+window.app.like = function(url,itemId,itemType,rating){
 
     $.ajax({
         type: "POST",
