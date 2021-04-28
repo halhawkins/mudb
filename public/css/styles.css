@@ -215,6 +215,62 @@ ul{
     margin: 8px;
     padding: 8px;
     height:95%;
+    -webkit-box-shadow: 4px 4px 15px -1px #898989; 
+    box-shadow: 4px 4px 15px -1px #898989;
+}
+
+.artist-image > a > img{
+    width:100%;
+    height:auto;
+}
+.artist-card > .info-container{
+    display: inline-flex;
+    /* height: inherit; */
+}
+
+
+.artist-card.compact{
+
+}
+
+.toggle-bar > em{
+    color: rgba(255,255,255,0.5);
+    font-size: 1.5em;
+}
+
+audio{
+    height:12px; 
+    width:90%;
+    background-color:white; 
+    margin-left:5px;
+    margin-bottom: 1em;
+}
+.compact{
+    font-size: .9em;;
+}
+.compact > h5,h6,a, br{
+    font-size: .9em;
+}
+.compact > h5{
+    font-weight: bold;
+    margin-bottom: .05em; 
+}
+.compact > em{
+    text-overflow: ellipsis;
+}
+.compact > audio{
+    display: none;
+}
+
+.tile-view-card{
+    display: inline;
+}
+ .info-container > h5{
+     margin-bottom: .05em;
+ }
+.artist-card.compact > a > img{
+    width:25%;
+    height: auto;
 }
 
 .artist-info{

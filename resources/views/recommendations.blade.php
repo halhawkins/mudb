@@ -100,6 +100,16 @@
         }
 
         $(document).ready(function(){
+            $(".dripicons-view-thumb").click(function(){
+                $(".artist-card,.info-container").removeClass('compact');
+                $(".info-container compact").removeClass("col-10").addClass("col-12");
+                $(".artist-image").removeClass("col-2").addClass("col-12");
+            });
+            $(".dripicons-view-list-large").click(function(){
+                $(".artist-card,.info-container").addClass('compact');
+                $(".info-container").removeClass("col-12").addClass("col-10");
+                $(".artist-image").removeClass("col-12").addClass("col-2");
+            });
             $(".viral-menu,.top200-menu,.new-releases-menu").removeClass("active");
             $(".recommendations-menu").addClass("active");
             perPage = {{$perpage}};
@@ -142,15 +152,20 @@
                         burl = "{{url('/')}}";
                         content = `
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
-                                <div class="col-12 artist-card">
-                                <a href="{{url('/')}}/track/` + track.id + `">
-                                <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
-                                <h5>` + trackName + `</a></h5>
-                                <h6>` + albumName + ` (` + releaseYear + `)</h6>
-                                `+ artists +`<br>
-                                <em>Streamed ` + streams + ` times.</em><br />
-                                <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                                <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                                <div class="col-12 artist-card compact">
+                                    <div class="row">
+                                            <div class="col-2 artist-image">
+                                                <a href="{{url('/')}}/track/` + track.id + `">
+                                                <img src="` + image + `" alt="album cover"></a>
+                                            </div>
+                                            <div class="col-10 info-container compact">
+                                                    <h5>` + trackName + `</h5>
+                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span>
+                                                            <em>`+ artists +`</em><br>
+                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                                    <audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                                            </div><!-- end info-container -->
+                                    </div>
                                 </div>
                             </div>`;
                         $("#tracks").append(content);
@@ -169,7 +184,7 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Recommendations</h3><div class="toggle-panel"></div>
+            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Recommendations</h3><em class="btn float-right icon dripicons-view-thumb"></em><em class="btn float-right icon dripicons-view-list-large"></em>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
