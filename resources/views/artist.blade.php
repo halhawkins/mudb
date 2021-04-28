@@ -36,7 +36,7 @@
                             rating = 0;
                         }
                     }
-                    like("{{url('/')}}","{{$artistid}}","artist",rating);
+                    app.like("{{url('/')}}","{{$artistid}}","artist",rating);
             });
             artistID = '{{$artistid}}';
             albs = $("#releases");

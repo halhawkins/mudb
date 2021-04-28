@@ -54,7 +54,7 @@
                             rating = 0;
                         }
                     }
-                    like("{{url('/')}}","{{$trackid}}","track",rating);
+                    app.like("{{url('/')}}","{{$trackid}}","track",rating);
             });
             $("img.play-on-spotify").click(function(){
             });
