@@ -124,6 +124,11 @@ ul{
     background-color: white;
 }
 
+.panel-heading{
+    font-size: 1.2em;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 
 .aux-bg1{
     background-color: #ADE8F4;
@@ -251,6 +256,9 @@ audio{
 }
 .compact > h5,h6,a, br{
     font-size: .9em;
+}
+.artist-card.compact .position{
+    display: none;
 }
 .compact > h5{
     font-weight: bold;

@@ -99,7 +99,28 @@
             return ret;
         }
 
+        function large_view(){
+            $(".artist-cell").addClass("col-lg-3").addClass("col-md-4");
+            $(".artist-card,.info-container").removeClass('compact');
+            $(".info-container compact").removeClass("col-9 col-sm-10 col-xl-11").addClass("col-12");
+            $(".artist-image").removeClass("col-3 col-sm-2 col-xl-1").addClass("col-12");
+
+        }
+
+        function compact_view(){
+                $(".artist-cell").removeClass("col-lg-3").removeClass("col-md-4");
+                $(".artist-card,.info-container").addClass('compact');
+                $(".info-container").removeClass("col-12").addClass("col-9 col-sm-10 col-xl-11");
+                $(".artist-image").removeClass("col-12").addClass("col-3 col-sm-2 col-xl-1");             
+        }
+
         $(document).ready(function(){
+            $(".dripicons-view-thumb").click(function(){
+                large_view();
+            });
+            $(".dripicons-view-list-large").click(function(){
+                compact_view();
+            });
             $(".viral-menu,.new-releases-menu,.recommendations-menu").removeClass("active");
             $(".top200-menu").addClass("active");
             perPage = {{$perpage}};
@@ -110,7 +131,7 @@
                 success: function (response) {
                     trackArray = response.tracks;
                     totalTracks = response.total_count;
-                    $("#tracks-heading").append(" (" + String((page-1)*perPage+1) + "-" + String((page-1)*20+response.tracks.length) + " of " + totalTracks + ") for " + new Date(response.top200_for_date).toLocaleDateString());
+                    $("#tracks-heading").append("  for " + new Date(response.top200_for_date).toLocaleDateString());
 
                     $.each(trackArray, function(i,item){
                         track = item.spotify_data;
@@ -141,23 +162,43 @@
                         // releaseYear = "";
                         burl = "{{url('/')}}";
                         content = `
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
-                                <div class="col-12 artist-card">
-                                <h3>` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
-                                <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
-                                <h5>` + trackName + `</a></h5>
-                                <h6>` + albumName + ` (` + releaseYear + `)</h6>
-                                `+ artists +`<br>
-                                <em>Streamed ` + streams + ` times.</em><br />
-                                <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                                <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                            <div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
+                                <div class="col-12 artist-card compact">
+                                    <div class="row">
+                                            <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                            <h3 class="position">` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
+                                                <img src="` + image + `" alt="album cover"></a>
+                                            </div>
+                                            <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                    <h5>` + trackName + `</h5>
+                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span>
+                                                            <em>`+ artists +`</em><br>
+                                                    <em>Streamed ` + streams + ` times.</em><br />
+                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
+                        if(previewUrl !== null) // surpress 404s loading missing preview track
+                            content +=              `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
+                        content +=                  `</div><!-- end info-container -->
+                                    </div>
                                 </div>
                             </div>`;
+                        // content = `
+                        //     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
+                        //         <div class="col-12 artist-card">
+                        //         <h3>` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
+                        //         <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
+                        //         <h5>` + trackName + `</a></h5>
+                        //         <h6>` + albumName + ` (` + releaseYear + `)</h6>
+                        //         `+ artists +`<br>
+                        //         <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                        //         <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
+                        //         </div>
+                        //     </div>`;
                         $("#tracks").append(content);
                         
 
                     });
                     $("#tracks").append(paginate(totalTracks,page,perPage,8));
+                    large_view();                
                 }
 
                     // followers = response.followers.total;
@@ -169,7 +210,7 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Top 200</h3><div class="toggle-panel"></div>
+            <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Top 200</h3><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
