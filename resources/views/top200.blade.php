@@ -159,7 +159,7 @@
                             albumName = "";
                         }
                         spotifyUrl = track.uri;
-                        // releaseYear = "";
+
                         burl = "{{url('/')}}";
                         content = `
                             <div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
@@ -181,18 +181,6 @@
                                     </div>
                                 </div>
                             </div>`;
-                        // content = `
-                        //     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
-                        //         <div class="col-12 artist-card">
-                        //         <h3>` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
-                        //         <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
-                        //         <h5>` + trackName + `</a></h5>
-                        //         <h6>` + albumName + ` (` + releaseYear + `)</h6>
-                        //         `+ artists +`<br>
-                        //         <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                        //         <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
-                        //         </div>
-                        //     </div>`;
                         $("#tracks").append(content);
                         
 
@@ -200,9 +188,6 @@
                     $("#tracks").append(paginate(totalTracks,page,perPage,8));
                     large_view();                
                 }
-
-                    // followers = response.followers.total;
-                    // tags = response.genres;
             });
         });
         
