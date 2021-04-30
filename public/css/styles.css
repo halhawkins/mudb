@@ -232,10 +232,14 @@ ul{
     display: inline-flex;
     /* height: inherit; */
 }
+.track-name{
+    color: black;
+}
 
 .compact .artist-image > a > img{
     /* display: block; */
-    height:100%;
+    height:auto;
+    max-width: 80px;
     max-height: 80px;
     width:auto;
 }

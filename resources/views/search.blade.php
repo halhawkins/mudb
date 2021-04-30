@@ -3,19 +3,19 @@
 @section('script')
     <script>
     function large_view(){
-            $(".artist-cell").addClass("col-lg-3").addClass("col-md-4");
-            $(".artist-card,.info-container").removeClass('compact');
-            $(".info-container compact").removeClass("col-9 col-sm-10 col-xl-11").addClass("col-12");
-            $(".artist-image").removeClass("col-3 col-sm-2 col-xl-1").addClass("col-12");
+        $(".artist-cell").addClass("col-lg-3").addClass("col-md-4");
+        $(".artist-card,.info-container").removeClass('compact');
+        $(".info-container compact").removeClass("col-9 col-sm-10 col-xl-11").addClass("col-12");
+        $(".artist-image").removeClass("col-3 col-sm-2 col-xl-1").addClass("col-12");
 
-        }
+    }
 
-        function compact_view(){
-                $(".artist-cell").removeClass("col-lg-3").removeClass("col-md-4");
-                $(".artist-card,.info-container").addClass('compact');
-                $(".info-container").removeClass("col-12").addClass("col-9 col-sm-10 col-xl-11");
-                $(".artist-image").removeClass("col-12").addClass("col-3 col-sm-2 col-xl-1");             
-        }
+    function compact_view(){
+            $(".artist-cell").removeClass("col-lg-3").removeClass("col-md-4");
+            $(".artist-card,.info-container").addClass('compact');
+            $(".info-container").removeClass("col-12").addClass("col-9 col-sm-10 col-xl-11");
+            $(".artist-image").removeClass("col-12").addClass("col-3 col-sm-2 col-xl-1");             
+    }
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){
                 large_view();
@@ -183,7 +183,7 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Artists</h3><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em><em class="btn float-right icon dripicons-contract-2 expand" title="Contract Panel"></em>
+            <div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Artists</h3><em class="btn float-right icon dripicons-contract-2 expand" title="Contract Panel"></em><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
