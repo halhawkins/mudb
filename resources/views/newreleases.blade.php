@@ -2,6 +2,11 @@
 
 @section('script')
 <script>
+        @if(Session::has('viewstyle'))
+        viewstyle = "{{session('viewstyle')}}";
+        @else
+        viewstyle = "fat";
+        @endif
 
 function paginate(
             totalItems,
@@ -83,6 +88,19 @@ function paginate(
             $(".artist-card,.info-container").removeClass('compact');
             $(".info-container compact").removeClass("col-9 col-sm-10 col-xl-11").addClass("col-12");
             $(".artist-image").removeClass("col-3 col-sm-2 col-xl-1").addClass("col-12");
+            $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{url('/')}}/setviewstyle",
+                data: {viewstyle:"large"},
+                success: function (response) {
+                    viewstyle="large";
+                }
+            });
 
         }
 
@@ -91,6 +109,19 @@ function paginate(
                 $(".artist-card,.info-container").addClass('compact');
                 $(".info-container").removeClass("col-12").addClass("col-9 col-sm-10 col-xl-11");
                 $(".artist-image").removeClass("col-12").addClass("col-3 col-sm-2 col-xl-1");             
+                $.ajaxSetup({
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                });
+                 $.ajax({
+                type: "POST",
+                url: "{{url('/')}}/setviewstyle",
+                data: {viewstyle:"compact"},
+                success: function (response) {
+                    viewstyle="compact";
+                }
+            });
         }
 
         $(document).ready(function(){
@@ -150,7 +181,10 @@ function paginate(
                         ad.append(content);                        
                     })
                     $("#recent-releases").append(paginate(totalTracks,page,perPage,8));  
-                    large_view();  
+                    if(viewstyle === "compact")
+                        compact_view();       
+                    else   
+                        large_view();         
                 }
             });
         })

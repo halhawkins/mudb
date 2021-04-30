@@ -157,6 +157,11 @@ Route::get('/recommendations',function(){
     return view('recommendations')->with('page',1)->with('perpage',20);
 });
 
+Route::post('/setviewstyle', function(){
+    $mode = $_REQUEST['viewstyle'];
+    session(['viewstyle'=>$mode]);
+});
+
 Route::get("/personal",function(){
     $l = new LikeController;
     $tags = implode(', ',$l->getUserTags());

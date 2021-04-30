@@ -13,6 +13,11 @@
 </style>
 <script src="{{url('/')}}/js/app.js"></script>
     <script>
+        @if(Session::has('viewstyle'))
+        viewstyle = "{{session('viewstyle')}}";
+        @else
+        viewstyle = "fat";
+        @endif
         $(document).ready(function(){
             $.ajaxSetup({
                 headers: {
