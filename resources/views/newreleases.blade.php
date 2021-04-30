@@ -78,7 +78,28 @@ function paginate(
             return ret;
         }
 
+        function large_view(){
+            $(".artist-cell").addClass("col-lg-3").addClass("col-md-4");
+            $(".artist-card,.info-container").removeClass('compact');
+            $(".info-container compact").removeClass("col-9 col-sm-10 col-xl-11").addClass("col-12");
+            $(".artist-image").removeClass("col-3 col-sm-2 col-xl-1").addClass("col-12");
+
+        }
+
+        function compact_view(){
+                $(".artist-cell").removeClass("col-lg-3").removeClass("col-md-4");
+                $(".artist-card,.info-container").addClass('compact');
+                $(".info-container").removeClass("col-12").addClass("col-9 col-sm-10 col-xl-11");
+                $(".artist-image").removeClass("col-12").addClass("col-3 col-sm-2 col-xl-1");             
+        }
+
         $(document).ready(function(){
+            $(".dripicons-view-thumb").click(function(){
+                large_view();
+            });
+            $(".dripicons-view-list-large").click(function(){
+                compact_view();
+            });
             content = "";
             $(".viral-menu,.top200-menu, .recommendations-menu").removeClass("active");
             $(".new-releases-menu").addClass("active");
@@ -93,25 +114,43 @@ function paginate(
                     totalTracks = response.albums.total;
                     $.each(releases,function(i,val){
                         image = val.images[1].url;
-                        name = val.name;
+                        trackName = val.name;
                         artistarray = val.artists;
                         artists = "";
+                        spotifyUrl = val.uri;
                         $.each(artistarray,function(i,artist){
                             artists = artists +`<a href="{{url('/')}}/artist/` + artist.id + `">` +  artist.name + `</a>`;
                             if(artists.length > (i+1))
                                 artists = artists + ", ";
                         })
-                        content = `<div class="col-md-3">
-                                        <div class="col-12 artist-card">
-                                            <img src="` + image + `" style="width:100%;height:auto;">
-                                            <h5><a href="{{url('/')}}/album/` + val.id + `">` + name + `</a></h5><em>` + val.album_type + `</em><p>
-                                            ` + artists +
-                                        `</p></div>
-                                    </div>`;
+                        // content = `<div class="col-md-3">
+                        //                 <div class="col-12 artist-card">
+                        //                     <img src="` + image + `" style="width:100%;height:auto;">
+                        //                     <h5><a href="{{url('/')}}/album/` + val.id + `">` + name + `</a></h5><em>` + val.album_type + `</em><p>
+                        //                     ` + artists +
+                        //                 `</p></div>
+                        //             </div>`;
+                        content = `
+                            <div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
+                                <div class="col-12 artist-card compact">
+                                    <div class="row">
+                                            <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                                <a href="{{url('/')}}/track/` + val.id + `">
+                                                <img src="` + image + `" alt="album cover"></a>
+                                            </div>
+                                            <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                    <h5>` + trackName + `</h5>
+                                                    
+                                                            <em>`+ artists +`</em><br>
+                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
+                        content +=                  `</div><!-- end info-container -->
+                                    </div>
+                                </div>
+                            </div>`;
                         ad.append(content);                        
                     })
                     $("#recent-releases").append(paginate(totalTracks,page,perPage,8));  
-
+                    large_view();  
                 }
             });
         })
@@ -119,7 +158,7 @@ function paginate(
 @endsection
 
 @section('mainbody')
-<div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Recent Releases</h3><div class="toggle-panel"></div>
+<div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Recent Releases</h3><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em>
             </div>
             <div class="col-md-12">
                 <div class="row aux-bg1" id="recent-releases"></div> <!--style="background-color: #ccccff"-->
