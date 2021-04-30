@@ -71,7 +71,7 @@ height: 20px;
 object-fit: cover;
 }
 .navbar-dark{
-background-color: #27889f;
+background-color: #656c70;
 }
 .copyright{
     font-size: .8em;
@@ -115,10 +115,10 @@ ul{
     background-color: rgb(46, 21, 89);
 } */
 .main-bg{
-    background-color: #03045E;
+    background-color: #ffffff;
 }
 .primary-bg{
-    background-color: #0077B6;
+    background-color: #656c70;
 }
 .secondary-bg{
     background-color: white;
@@ -131,11 +131,11 @@ ul{
 }
 
 .aux-bg1{
-    background-color: #ADE8F4;
+    background: #cecece;
 }
 .aux-bg2{
-    background-color: #023e8a;
-    color:white;
+    background: #a1a1a1;
+    color:rgb(0, 0, 0);
 }
 .aux-bg2 a{
     color:white;
@@ -329,12 +329,12 @@ audio{
 }
 .toggle-bar{
     color: white;
-    background-color: #0077B6;
+    background-color: #656c70;
     border-bottom: 1px solid #17525f;
 }
 .toggle-bar:hover{
     color: white;
-    background-color: #0096C7;
+    background-color: #6A7B7D;
 }
 a{
     color: black;

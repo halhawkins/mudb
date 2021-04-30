@@ -221,18 +221,18 @@
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="artist-list" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="artist-list"></div>
             </div>
             <div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Albums</h3><em class="btn float-right icon dripicons-contract-2 expand" title="Contract Panel"></em>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="album-list" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="album-list"></div>
             </div>
             <div class="col-md-12 toggle-bar"><h3 id="tracks-heading" class="panel-heading">Tracks</h3><em class="btn float-right icon dripicons-contract-2 expand" title="Contract Panel"></em>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="track-list" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="track-list"></div>
             </div>
 @endsection

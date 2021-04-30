@@ -239,7 +239,7 @@
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="tracks" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="tracks"></div>
             </div>
 
 @endsection
