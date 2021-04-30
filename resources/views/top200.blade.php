@@ -197,8 +197,10 @@
                                 <div class="col-12 artist-card compact">
                                     <div class="row">
                                             <div class="col-3 col-sm-2 col-xl-1 artist-image">
-                                            <h3 class="position">` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
-                                                <img src="` + image + `" alt="album cover"></a>
+                                            <a href="{{url('/')}}/track/` + track.id + `">
+                                                <img src="` + image + `" alt="album cover">
+                                                <h3 class="position rank">` + position + `</h3>
+                                            </a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
                                                     <h5>` + trackName + `</h5>

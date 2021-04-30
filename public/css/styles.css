@@ -236,6 +236,14 @@ ul{
     color: black;
 }
 
+.rank {
+    position: absolute;
+    color: #222;
+    top: .25em;
+    left: 1em;
+    text-shadow: 1px 1px 1px #FFFFFF;
+  }  
+
 .compact .artist-image > a > img{
     /* display: block; */
     height:auto;
@@ -262,7 +270,10 @@ audio{
     font-size: .9em;
 }
 .artist-card.compact .position{
-    display: none;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 2px #FFFFFF;
+
+    /* display: none; */
 }
 .compact > h5{
     font-weight: bold;

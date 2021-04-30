@@ -198,8 +198,10 @@
                                 <div class="col-12 artist-card compact">
                                     <div class="row">
                                             <div class="col-3 col-sm-2 col-xl-1 artist-image">
-                                            <h3 class="position">` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
-                                                <img src="` + image + `" alt="album cover"></a>
+                                            <a href="{{url('/')}}/track/` + track.id + `">
+                                                <img src="` + image + `" alt="album cover">
+                                                <h3 class="position rank">` + position + `</h3>
+                                            </a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
                                                     <h5>` + trackName + `</h5>
@@ -212,17 +214,7 @@
                                     </div>
                                 </div>
                             </div>`;
-                        //     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
-                        //         <div class="col-12 artist-card">
-                        //         <h3>` + position + `</h3><a href="{{url('/')}}/track/` + track.id + `">
-                        //         <img src="` + image + `" alt="album cover" style="width:100%;height:auto;">
-                        //         <h5>` + trackName + `</a></h5>
-                        //         <h6>` + albumName + ` (` + releaseYear + `)</h6>
-                        //         `+ artists +`<br>
-                        //         <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
-                        //         <audio title="Audio preview" style="height:16px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>
-                        //         </div>
-                        //     </div>`;
+
                         $("#tracks").append(content);
                         
 
