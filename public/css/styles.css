@@ -21,6 +21,10 @@ body{
     color:gray;
 }
 
+.dripicons-view-list-large{
+    height: 24px;
+}
+
 .thumbs-down{
     color:gray;
 }
