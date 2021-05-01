@@ -78,15 +78,23 @@ function paginate(
     return ret;
 }
 window.app = {};
-window.app.like = function(url,itemId,itemType,rating){
-
+window.app.like = function(data){//url,itemId,itemType,rating
+    // console.log("like data = ",data);
+    itemName = data.itemName;
+    itemArtist = data.itemArtist;
+    itemId = data.itemId;
+    url = data.url;
+    itemType = data.itemType;
+    rating = data.rating;
     $.ajax({
         type: "POST",
         url: url + "/rateitem",
         data: {
             itemid: itemId,
             type: itemType,
-            rating: rating
+            rating: rating,
+            itemName: itemName,
+            itemArtist: itemArtist
         },
         success: function (response) {
             switch(rating){

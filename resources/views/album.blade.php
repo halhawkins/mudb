@@ -140,6 +140,7 @@ function paginate(
             });
     }
 
+
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){
                 large_view();
@@ -148,30 +149,6 @@ function paginate(
                 compact_view();
             });
             $.getScript("{{url('/')}}/js/app.js", function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
-                        if($(this).attr("class") === 'dripicons-thumbs-up'){
-                            if($(this).css("color")==="rgb(128, 128, 128)"){
-                                rating = 1;
-                            }
-                            else{
-                                rating = 0;
-                            }
-                        }
-                        else{
-                            if($(this).css("color")==="rgb(128, 128, 128)"){
-                                rating = -1;
-                            }
-                            else{
-                                rating = 0;
-                            }
-                        }
-                        app.like("{{url('/')}}",'{{$albumid}}','album',rating);
-                });
                 image = "";
                 page = {{$page}};
                 perPage = {{$perpage}};
@@ -203,11 +180,51 @@ function paginate(
                         // coverArt = response.images[0].url;
                         artistArray = albumResp.artists;
                         artists = "";
+                        textArtists = "";
                         $.each(artistArray,function(i,artist){
-                            artists = artists + `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
-                            if(artistArray.length > (i+1))
-                                artists = artists + ", ";
+                            textArtists += artist.name;
+                            artists += `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
+                            if(artistArray.length > (i+1)){
+                                artists += ", ";
+                                textArtists += ", ";
+                            }
                         });
+
+
+                        // likes buttons
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                                if($(this).attr("class") === 'dripicons-thumbs-up'){
+                                    if($(this).css("color")==="rgb(128, 128, 128)"){
+                                        rating = 1;
+                                    }
+                                    else{
+                                        rating = 0;
+                                    }
+                                }
+                                else{
+                                    if($(this).css("color")==="rgb(128, 128, 128)"){
+                                        rating = -1;
+                                    }
+                                    else{
+                                        rating = 0;
+                                    }
+                                }
+                                app.like({
+                                    url:"{{url('/')}}",
+                                    itemType:'album',
+                                    itemName: albumName,
+                                    itemArtist: textArtists,
+                                    rating: rating,
+                                    itemId: '{{$albumid}}',
+                                }
+                                    );
+                        });
+                        $(".album-artists").html(artists);
                         releaseYear = new Date(albumResp.release_date).getFullYear();
                         $.ajax({
                             type: "GET",
@@ -257,11 +274,12 @@ function paginate(
                                         <div class="col-12 artist-card compact">
                                             <div class="row">
                                                 <div class="col-3 col-sm-2 col-xl-2 artist-image">
-                                                    <a href="{{url('/')}}/track/` + id + `">
+                                                    <a href="{{url('/')}}/track/` + track.id + `">
                                                     <img src="` + image + `" alt="album cover"></a>
                                                 </div>
                                                 <div class="col-9 col-sm-10 col-xl-10 info-container compact">
-                                                    <h5 class="track-name">` + trackName + `</h5>
+                                                    <a href="{{url('/')}}/track/` + track.id + `">
+                                                    <h5 class="track-name">` + trackName + `</h5></a>
                                                             <em>`+ trackArtists +`</em><br>
                                                     <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
                         if(previewUrl !== null) // surpress 404s loading missing preview track
@@ -339,6 +357,7 @@ function paginate(
                         @auth
                         <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
                         @endauth
+                        <em class="album-artists"></em>
                         <p id="album-info"></p>
                     </div>
 

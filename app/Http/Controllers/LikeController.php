@@ -12,13 +12,25 @@ class LikeController extends Controller
     public function RateItem(){ //$itemid,$type,$rating
         if(Auth::check()){
             $userid = Auth::user()->id;
+            error_log(print_r($_REQUEST,true),3,"./rateitem.log");
             $itemid = $_REQUEST['itemid'];
             $type = $_REQUEST['type'];
             $rating = $_REQUEST['rating'];
-            likes::updateOrCreate(
-                ['userID'=>$userid,'itemID'=>$itemid,'type'=>$type],
-                ['like'=>$rating]
-            );
+            $itemName = $_REQUEST['itemName'];
+            $itemArtist = $_REQUEST['itemArtist'];
+            if(empty($itemName))
+                $itemName = null;
+            if(empty($itemArtist))
+                $itemArtist = null;
+            if($rating == 0){
+                likes::where('userId','=',$userid)->where('itemID','=',$itemid)->where('type','=',$type)->delete();
+            }
+            else{
+                likes::updateOrCreate(
+                    ['userID'=>$userid,'itemID'=>$itemid,'type'=>$type],
+                    ['like'=>$rating,'item_name'=>$itemName,'artist'=>$itemArtist]
+                );
+            }
             // likes::where('userID',$userid)
             //     ->where('itemID',$itemid)
             //     ->where('type',$type)

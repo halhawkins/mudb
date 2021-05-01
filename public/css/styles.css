@@ -107,7 +107,9 @@ ul{
     margin-bottom: .25em;
     background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(11,20,0,0) 100%);
 }
-
+.album-artists{
+    color:white;
+}
 /* .primary-bg{
     background-color: #ccccff;
 }

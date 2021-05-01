@@ -67,36 +67,46 @@
             $(".dripicons-view-list-large").click(function(){
                 compact_view();
             });
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
-                    if($(this).attr("class") === 'dripicons-thumbs-up'){
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = 1;
-                        }
-                        else{
-                            rating = 0;
-                        }
-                    }
-                    else{
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = -1;
-                        }
-                        else{
-                            rating = 0;
-                        }
-                    }
-                    app.like("{{url('/')}}","{{$artistid}}","artist",rating);
-            });
             artistID = '{{$artistid}}';
             albs = $("#releases");
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/api/artist/" + artistID,
                 success: function (response) {
+
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                            if($(this).attr("class") === 'dripicons-thumbs-up'){
+                                if($(this).css("color")==="rgb(128, 128, 128)"){
+                                    rating = 1;
+                                }
+                                else{
+                                    rating = 0;
+                                }
+                            }
+                            else{
+                                if($(this).css("color")==="rgb(128, 128, 128)"){
+                                    rating = -1;
+                                }
+                                else{
+                                    rating = 0;
+                                }
+                            }
+                            app.like({
+                                url:"{{url('/')}}",
+                                itemType:'artist',
+                                itemName: null,
+                                itemArtist: response.name,
+                                rating: rating,
+                                itemId: artistID,
+                            });
+                    });
+
                     $("#artist-image").attr("src",response.images[0].url);
                     backgroundimage = "linear-gradient(to bottom, rgba(245, 246, 252, 0.22), rgba(255, 255, 255, 1)), url(" + response.images[0].url + ")";
                     artistName = response.name;

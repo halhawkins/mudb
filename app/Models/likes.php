@@ -14,5 +14,7 @@ class likes extends Model
         'type',
         'itemID',
         'like',
+        'item_name',
+        'artist'
     ];
 }

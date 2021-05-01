@@ -32,30 +32,6 @@
         alert(id);
     }
         $(document).ready(function(){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
-                    if($(this).attr("class") === 'dripicons-thumbs-up'){
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = 1;
-                        }
-                        else{
-                            rating = 0;
-                        }
-                    }
-                    else{
-                        if($(this).css("color")==="rgb(128, 128, 128)"){
-                            rating = -1;
-                        }
-                        else{
-                            rating = 0;
-                        }
-                    }
-                    app.like("{{url('/')}}","{{$trackid}}","track",rating);
-            });
             $("img.play-on-spotify").click(function(){
             });
             trackId = '{{$trackid}}';
@@ -68,14 +44,56 @@
                     albumName = response.album.name;
                     albumType = response.album.album_type;
                     trackName = response.name;
+                    artistArray = response.artists;
                     releaseYear = new Date(response.album.release_date).getFullYear();
                     artists = "";
                     $("#track-info").append(`<a href="` + response.uri + `"><img src="{{url("/")}}/images/Spotify_play.png" style="width:32px;height:auto;"><span style="font-size:1.2em;"> Play on Spotify</span></a>`);
-                    $.each(response.artists,function(i,val){
-                        artists += `<a href="{{url('/')}}/artist/` + val.id + `">` + val.name + `</a>`;
-                        if(response.artists.length > (i+1))
+                    textArtists = "";
+                    $.each(artistArray,function(i,artist){
+                        textArtists += artist.name;
+                        artists += `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
+                        if(artistArray.length > (i+1)){
                             artists += ", ";
+                            textArtists += ", ";
+                        }
                     });
+
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
+                            if($(this).attr("class") === 'dripicons-thumbs-up'){
+                                if($(this).css("color")==="rgb(128, 128, 128)"){
+                                    rating = 1;
+                                }
+                                else{
+                                    rating = 0;
+                                }
+                            }
+                            else{
+                                if($(this).css("color")==="rgb(128, 128, 128)"){
+                                    rating = -1;
+                                }
+                                else{
+                                    rating = 0;
+                                }
+                            }
+                            app.like({
+                                    url:"{{url('/')}}",
+                                    itemType:'track',
+                                    itemName: trackName,
+                                    itemArtist: textArtists,
+                                    rating: rating,
+                                    itemId: '{{$trackid}}',
+                                }
+                                    );
+                            // app.like("{{url('/')}}","{{$trackid}}","track",rating);
+                    });
+
+
                     $.ajax({
                         type: "GET",
                         url: "http://localhost/mudb/public/rating/" + trackId + "/track",
