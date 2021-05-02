@@ -177,7 +177,6 @@
                             url: "{{url('/')}}/likesinfo",
                             data: {likes:s},
                             success: function (response) {
-                                console.log(response);
                                 seedsresp.push(response);
                                 $.each(response,function(i,val){
                                     // s.push({type:val.type.toLowerCase(),id:val.id});
@@ -187,7 +186,6 @@
                                         infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].item_name + `</a> by ` + val[0].artist + `</td></tr>`;
                                 });
                                 infobox += "</table>"
-                                console.log(infobox);
                                 $(".sources-content").html(infobox);
                                // $("#infobox").tooltip({ selector: '#infobox' });
                                 

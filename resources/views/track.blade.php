@@ -117,7 +117,6 @@
                         url: "{{url('/')}}/api/trackvideo/" + isrc,
                         success: function (res) {
                             $.each(res,function(i,val){
-                                console.log(JSON.stringify(val));
                                 $("#releases").html(`
                                     <div class="videoWrapper">
                                     <iframe

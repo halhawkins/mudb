@@ -118,7 +118,6 @@
                         type: "GET",
                         url: bioURL,
                             success: function (res2) {
-                             console.log(res2.artist.bio.summary);
                             page = {{$page}};
                             perPage = {{$perpage}};
                             $("#bio").html(res2.artist.bio.summary);
@@ -194,7 +193,6 @@
                             });
                         },
                         fail:function(){
-                            console.log("fail");
                         }
                     });
                     followers = response.followers.total;

@@ -79,7 +79,6 @@ function paginate(
 }
 window.app = {};
 window.app.like = function(data){//url,itemId,itemType,rating
-    // console.log("like data = ",data);
     itemName = data.itemName;
     itemArtist = data.itemArtist;
     itemId = data.itemId;

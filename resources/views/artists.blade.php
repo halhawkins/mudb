@@ -181,7 +181,6 @@
                         genres = artist.genres.slice(0,numGenres);
                         genrelist = "";
                         $.each(genres, function(i,genre){
-                            console.log("numGenres = "+numGenres+"\ni+1 = ",i+1);
                             genrelist += genre;
                             if(numGenres > (i+1)){
                                 genrelist += ", ";
