@@ -150,7 +150,8 @@
                                                     <img src="` + image + `" alt="album cover"></a>
                                                 </div>
                                                 <div class="col-9 col-sm-10 col-xl-10 info-container compact">
-                                                    <h5 class="track-name">` + album.name + `</h5>
+                                                    <a href="{{url('/')}}/album/` + album.id + `">
+                                                    <h5 class="track-name">` + album.name + `</h5></a>
                                                             <em>`+ albumArtists +`</em><br>
                                                     <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
                                                 </div>

@@ -183,7 +183,8 @@
                             else
                                 image = "{{url('/')}}/images/generic-user-icon-19.jpg";
                             releaseYear = new Date(track.album.release_date).getFullYear();
-                            albumName = track.album.name
+                            albumName = track.album.name;
+                            albumID = track.album.id;
                         }
                         else{
                             image = "{{url('/')}}/images/generic-user-icon-19.jpg";
@@ -203,11 +204,15 @@
                                             </a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                <a href="{{url('/')}}/track/` + track.id + `">
                                                     <h5>` + trackName + `</h5>
-                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span>
-                                                            <em>`+ artists +`</em><br>
-                                                    <em>Streamed ` + streams + ` times.</em><br />
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
+                                                </a>
+                                                <a href="{{url('/')}}/album/` + albumID + `">
+                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span><br/>
+                                                </a>
+                                                <em>`+ artists +`</em><br/>
+                                                <em>Streamed ` + streams + ` times.</em><br />
+                                                <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
                         if(previewUrl !== null) // surpress 404s loading missing preview track
                             content +=              `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
                         content +=                  `</div><!-- end info-container -->

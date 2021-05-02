@@ -172,11 +172,6 @@
                         releaseYear = new Date(album.release_date).getFullYear();
                         artistArray = album.artists;
                         artists = "";
-                        $.each(artistArray, function(i, artist){
-                            artists += `<a href="{{url('/')}}/artist/"` + artist.id + `>` + artist.name + `</a> `;
-                            if(i < artistArray.length-1)
-                                artists += ", ";
-                        });
                         burl = "{{url('/')}}";
 
                         $.each(album.artists, function(i,artguy) {
@@ -187,19 +182,23 @@
                         
                         content =
                                 `<div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
-                                <div class="col-12 artist-card compact">
-                                    <div class="row">
+                                    <div class="col-12 artist-card compact">
+                                        <div class="row">
                                             <div class="col-3 col-sm-2 col-xl-1 artist-image">
                                                 <a href="{{url('/')}}/album/` + album.id+ `">
-                                                <img src="` + image + `" alt="album cover"></a>
+                                                    <img src="` + image + `" alt="album cover">
+                                                </a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                <a href="{{url('/')}}/album/` + album.id+ `">
                                                     <h5>` + albumName + ` (` + releaseYear + `)</h5>
-                                                            <em>`+ artists +`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                                </a>
+                                                <em>`+ artists +`</em><br>
+                                                <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>`;
+                                </div>`;
 
                         $("#albums").append(content);
                         

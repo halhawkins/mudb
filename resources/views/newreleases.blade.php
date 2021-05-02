@@ -165,16 +165,19 @@ function paginate(
                             <div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
                                 <div class="col-12 artist-card compact">
                                     <div class="row">
-                                            <div class="col-3 col-sm-2 col-xl-1 artist-image">
-                                                <a href="{{url('/')}}/track/` + val.id + `">
-                                                <img src="` + image + `" alt="album cover"></a>
-                                            </div>
-                                            <div class="col-9 col-sm-10 col-xl-11 info-container compact">
-                                                    <h5>` + trackName + `</h5>
-                                                    
-                                                            <em>`+ artists +`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
-                        content +=                  `</div><!-- end info-container -->
+                                        <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                            <a href="{{url('/')}}/track/` + val.id + `">
+                                                <img src="` + image + `" alt="album cover">
+                                            </a>
+                                        </div>
+                                        <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                            <a href="{{url('/')}}/track/` + val.id + `">
+                                                <h5>` + trackName + `</h5>
+                                            </a>
+                                                
+                                            <em>`+ artists +`</em><br>
+                                            <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                        </div><!-- end info-container -->
                                     </div>
                                 </div>
                             </div>`;

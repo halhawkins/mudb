@@ -183,7 +183,8 @@
                             else
                                 image = "{{url('/')}}/images/generic-user-icon-19.jpg";
                             releaseYear = new Date(track.album.release_date).getFullYear();
-                            albumName = track.album.name
+                            albumName = track.album.name;
+                            albumID = track.album.id;
                         }
                         else{
                             image = "{{url('/')}}/images/generic-user-icon-19.jpg";
@@ -196,20 +197,24 @@
                         <div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
                                 <div class="col-12 artist-card compact">
                                     <div class="row">
-                                            <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                        <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                        <a href="{{url('/')}}/track/` + track.id + `">
+                                            <img src="` + image + `" alt="album cover">
+                                            <h3 class="position rank">` + position + `</h3>
+                                        </a>
+                                        </div>
+                                        <div class="col-9 col-sm-10 col-xl-11 info-container compact">
                                             <a href="{{url('/')}}/track/` + track.id + `">
-                                                <img src="` + image + `" alt="album cover">
-                                                <h3 class="position rank">` + position + `</h3>
+                                                <h5>` + trackName + `</h5>
                                             </a>
-                                            </div>
-                                            <div class="col-9 col-sm-10 col-xl-11 info-container compact">
-                                                    <h5>` + trackName + `</h5>
-                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span>
-                                                            <em>`+ artists +`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
+                                            <a href="{{url('/')}}/album/` + albumID + `">
+                                                <span class="">` + albumName + ` (` + releaseYear + `)</span><br/>
+                                            </a>
+                                            <em>`+ artists +`</em><br>
+                                            <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
                         if(previewUrl !== null) // surpress 404s loading missing preview track
-                            content +=              `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
-                        content +=                  `</div><!-- end info-container -->
+                            content +=      `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
+                        content +=      `</div><!-- end info-container -->
                                     </div>
                                 </div>
                             </div>`;

@@ -110,9 +110,11 @@
                                                 <img src="` + image + `" alt="album cover"></a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                <a href="{{url('/')}}/artist/` + artistId+ `">
                                                     <h5>` + artistName + `</h5>
-                                                    <em>`+genrelist+`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="View on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> View on Spotify</a><br/>
+                                                </a>
+                                                <em>`+genrelist+`</em><br>
+                                                <a href="` + spotifyUrl + `" title="View on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> View on Spotify</a><br/>
                                     </div>
                                 </div>
                             </div>`;
@@ -140,19 +142,22 @@
                         
                         content =
                                 `<div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
-                                <div class="col-12 artist-card compact">
-                                    <div class="row">
+                                    <div class="col-12 artist-card compact">
+                                        <div class="row">
                                             <div class="col-3 col-sm-2 col-xl-1 artist-image">
                                                 <a href="{{url('/')}}/album/` + album.id+ `">
                                                 <img src="` + image + `" alt="album cover"></a>
                                             </div>
                                             <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                                <a href="{{url('/')}}/album/` + album.id+ `">
                                                     <h5>` + albumName + ` (` + releaseYear + `)</h5>
-                                                            <em>`+ artists +`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                                </a>
+                                                <em>`+ artists +`</em><br>
+                                                <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>`;
+                                </div>`;
 
                         albs.append(content);                        
                         });
@@ -167,6 +172,7 @@
                         releaseYear = releaseDate.getFullYear();
                         trackArtists = "";
                         albumName = album.name;
+                        albumId = album.id;
                         trackName = track.name;
                         spotifyUrl = track.uri;
                         previewUrl = track.preview_url;
@@ -179,24 +185,28 @@
 
                         content = 
                         
-                        `<div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
+                            `<div class="col-lg-3 col-md-4 col-sm-12 col-12 artist-cell"> 
                                 <div class="col-12 artist-card compact">
                                     <div class="row">
-                                            <div class="col-3 col-sm-2 col-xl-1 artist-image">
-                                                <a href="{{url('/')}}/track/` + track.id + `">
-                                                <img src="` + image + `" alt="album cover"></a>
-                                            </div>
-                                            <div class="col-9 col-sm-10 col-xl-11 info-container compact">
-                                                    <h5>` + trackName + `</h5>
-                                                    <span class="">` + albumName + ` (` + releaseYear + `)</span>
-                                                            <em>`+ trackArtists +`</em><br>
-                                                    <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
+                                        <div class="col-3 col-sm-2 col-xl-1 artist-image">
+                                            <a href="{{url('/')}}/track/` + track.id + `">
+                                                <img src="` + image + `" alt="album cover">
+                                            </a>
+                                        </div>
+                                        <div class="col-9 col-sm-10 col-xl-11 info-container compact">
+                                            <a href="{{url('/')}}/track/` + track.id + `">
+                                                <h5>` + trackName + `</h5>
+                                            </a>
+                                            <span class=""><a href="{{url('/')}}/album/` + albumId + `">` + albumName + ` (` + releaseYear + `)</a></span><br/>
+                                            <em>`+ trackArtists +`</em><br>
+                                            <a href="` + spotifyUrl + `" title="Play on spotify"><img src="{{url('/')}}/images/Spotify_play.png" style="width:24px;height:auto;"> Play on Spotify</a><br/>`
                         if(previewUrl !== null) // surpress 404s loading missing preview track
-                            content +=              `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
-                        content +=                  `</div><!-- end info-container -->
+                            content +=         `<audio title="Audio preview" style="height:12px; width:90%;background-color:white; margin-left:5px;" src="` + previewUrl + `" type="audio/mpeg" controls disabled>I'm sorry. You're browser doesn't support HTML5 <code>audio</code>.</audio>`;
+                        content +=      `</div><!-- end info-container -->
                                     </div>
                                 </div>
-                            </div>`;
+                            </div>
+                                `;
 
 
                         trks.append(content);                        
