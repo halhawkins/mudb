@@ -97,6 +97,18 @@ ul{
     list-style: none;
 }
 
+.tooltip{
+    width:320px !important;
+}
+.tooltip-inner{
+    max-width: 320px;
+    width:100%;
+    white-space: nowrap;
+    text-align: left;
+}
+.tooltip a{
+   color: white;
+}
 .album-list li{
     margin-bottom: .25em;
     background: linear-gradient(180deg, rgba(255,255,255,0.48252804539784666) 0%, rgba(11,20,0,0) 100%);
