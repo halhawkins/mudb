@@ -192,7 +192,7 @@ function paginate(
 @endsection
 
 @section('mainbody')
-<div class="col-md-12 toggle-bar"><h3 id="artists-heading" class="panel-heading">Recent Releases</h3><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em>
+<div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="artists-heading" class="panel-heading">Recent Releases</h3></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
             </div>
             <div class="col-md-12">
                 <div class="row aux-bg1" id="recent-releases"></div> <!--style="background-color: #ccccff"-->

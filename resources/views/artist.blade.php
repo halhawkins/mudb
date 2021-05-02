@@ -205,7 +205,7 @@
 @endsection
 
 @section('mainbody')
-        <div class="col-md-12 toggle-bar"><h3 id="artist-name" class="panel-heading"></h3><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em>
+        <div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="artist-name" class="panel-heading"></h3></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
         <div class="col-md-12 artist-info primary-bg"><h3 id="artist-name-heading"></h3>
