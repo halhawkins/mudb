@@ -8,8 +8,8 @@
     <title>{{config('app.name')}}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset(url('/') .'/css/webfont.css')}}">
-    <link rel="stylesheet" href="{{asset(url('/') . '/css/fontawesome.css')}}">
-    <link rel="stylesheet" href="{{ asset(url('/').'/css/solid.css?v=1.0')}}">
+    <link rel="stylesheet" href="{{asset(url('/') . '/css/fonts/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{ asset(url('/').'/css/fonts/solid.css?v=1.0')}}">
     <link rel="stylesheet" href="{{ asset(url('/').'/css/styles.css?v=1.0')}}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
