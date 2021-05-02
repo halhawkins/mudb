@@ -12,7 +12,6 @@ class LikeController extends Controller
     public function RateItem(){ //$itemid,$type,$rating
         if(Auth::check()){
             $userid = Auth::user()->id;
-            error_log(print_r($_REQUEST,true),3,"./rateitem.log");
             $itemid = $_REQUEST['itemid'];
             $type = $_REQUEST['type'];
             $rating = $_REQUEST['rating'];
@@ -45,6 +44,13 @@ class LikeController extends Controller
         }
         else
             return response(400)->json(array("error"=>"No authenticated user."));
+    }
+
+    public function likesInfo($itemsArray){
+        foreach ($itemsArray as $value) {
+            $res[] = likes::where("type","=",$value['type'])->where("itemID","=",$value['id'])->get();
+        }
+        return $res;
     }
 
     public function delTags(){

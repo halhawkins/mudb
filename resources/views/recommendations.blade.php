@@ -156,12 +156,44 @@
             $(".recommendations-menu").addClass("active");
             perPage = {{$perpage}};
             page = 1;
+            seeds = [];
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/personal",
                 success: function (response) {
                     trackArray = response.tracks;
                     totalTracks = response.total_count;
+                    seedsresp = response.seeds;
+                    s = [];
+                    $.each(seedsresp,function(i,val){
+                        s.push({type:val.type.toLowerCase(),id:val.id});
+                        // infobox += `<a href="{{url('/')}}/` + val.type.toLowerCase() + "/" + val.id + `">` + val.item_name + `</a> by ` + val.artist + `<br>`;
+                    });
+                     infobox = `<strong>Recommendations based on these liked items:</strong>
+                     <table>
+                     `
+                        $.ajax({
+                            type: "GET",
+                            url: "{{url('/')}}/likesinfo",
+                            data: {likes:s},
+                            success: function (response) {
+                                console.log(response);
+                                seedsresp.push(response);
+                                $.each(response,function(i,val){
+                                    // s.push({type:val.type.toLowerCase(),id:val.id});
+                                    if(val[0].type == "artist")
+                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].artist + `</a></td></tr>`;
+                                    else
+                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].item_name + `</a> by ` + val[0].artist + `</td></tr>`;
+                                });
+                                infobox += "</table>"
+                                console.log(infobox);
+                                $(".sources-content").html(infobox);
+                               // $("#infobox").tooltip({ selector: '#infobox' });
+                                
+                            }
+                        });
+                    $("#recinfo").data('html','true').attr('title',infobox);
                     // $("#tracks-heading").append(" (" + String((page-1)*perPage+1) + "-" + String((page-1)*20+response.tracks.length) + " of " + totalTracks + ") for " + new Date(response.top200_for_date).toLocaleDateString());
 
                     $.each(trackArray, function(i,item){
@@ -232,7 +264,7 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="tracks-heading" class="panel-heading align-middle">Recommendations</h3>&nbsp;<em class="fas fa-info-circle"></em></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
+            <div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="tracks-heading" class="panel-heading align-middle">Recommendations</h3>&nbsp;<em id="infobox" title="Click for more information" data-toggle="modal" data-target="#sources-dialog" class="recinfo fas fa-info-circle"></em></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
@@ -240,3 +272,23 @@
             </div>
 
 @endsection
+
+@section('modals')
+    <div class="modal fade" role="dialog" id="sources-dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Items used to generate recommendations</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body sources-content">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
+

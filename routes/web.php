@@ -147,6 +147,14 @@ Route::get('/getusertags',function(){
     $res = $l->getUserTags();
     return response()->json($res);
 });
+
+Route::get('/likesinfo', function(){
+    $likes = $_REQUEST['likes'];
+    $l = new LikeController;
+    $res = $l->likesInfo($likes);
+    return response()->json($res);
+});
+
 Route::post('/deltag', function(){
     $t = $_REQUEST['tagid'];
     $l = new LikeController;
