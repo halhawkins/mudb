@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset(url('/') . '/css/fonts/fontawesome.css')}}">
     <link rel="stylesheet" href="{{ asset(url('/').'/css/fonts/solid.css?v=1.0')}}">
     <link rel="stylesheet" href="{{ asset(url('/').'/css/styles.css?v=1.0')}}">
-
+    <script src="{{asset(url('/').'/js/popper.min.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
@@ -193,5 +193,6 @@
             </div>
         </div>
     </div>
+    @yield('modals')
 </body>
 </html>
