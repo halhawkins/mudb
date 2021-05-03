@@ -24,7 +24,10 @@
     -->
     <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg">
         <div class="container-fluid">
-            <a href="{{url('/')}}" class="navbar-brand mr-3" style="font-size:1.4em;"><span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder</a>
+            <a href="{{url('/')}}" class="navbar-brand mr-3" style="font-size:1.4em;">
+                <!-- <img src="{{url('/')}}/images/violine1-sm.png" style="height:32px;"> -->
+                <span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder
+                </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
