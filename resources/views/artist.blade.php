@@ -175,11 +175,12 @@
                                             type: "GET",
                                             url: "{{url('/')}}/rating/{{$artistid}}/artist",
                                             success: function (likes) {
-                                                if(likes.like === 1){
+                                                like = parseInt(likes.like)
+                                                if(like === 1){
                                                     $(".dripicons-thumbs-up").css("color","#00FF00");
                                                     $(".dripicons-thumbs-down").css("color","#808080");
                                                 }
-                                                else if(likes.like === -1){
+                                                else if(like === -1){
                                                     $(".dripicons-thumbs-up").css("color","#808080");
                                                     $(".dripicons-thumbs-down").css("color","#FF0000");
                                                 }
