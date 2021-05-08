@@ -122,6 +122,16 @@ ul{
 .album-artists{
     color:white;
 }
+
+.btn.icon{
+    color:#ffffff9e;
+    height:93%;
+    margin: 4px 2px 2px 2px;
+}
+.btn.icon:hover{
+    border: #ffffff3e solid 1px;
+    background-color: rgba(255,255,255,.1);
+}
 /* .primary-bg{
     background-color: #ccccff;
 }
@@ -349,6 +359,7 @@ audio{
     color: white;
     background-color: #656c70;
     border-bottom: 1px solid #17525f;
+    padding-bottom: .2rem;
 }
 .toggle-bar:hover{
     color: white;
