@@ -96,7 +96,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost/mudb/public/rating/" + trackId + "/track",
+                        url: "{{url('/')}}/rating/" + trackId + "/track",
                         success: function (likes) {
                             if(likes.like === 1){
                                 $(".dripicons-thumbs-up").css("color","#00FF00");

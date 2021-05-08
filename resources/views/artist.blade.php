@@ -173,7 +173,7 @@
 
                                         $.ajax({
                                             type: "GET",
-                                            url: "http://localhost/mudb/public/rating/{{$artistid}}/artist",
+                                            url: "{{url('/')}}/rating/{{$artistid}}/artist",
                                             success: function (likes) {
                                                 if(likes.like === 1){
                                                     $(".dripicons-thumbs-up").css("color","#00FF00");
