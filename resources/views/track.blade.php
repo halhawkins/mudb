@@ -31,6 +31,8 @@
         window.open("https://api.spotify.com/v1/albums/" + id, "_blank");
         alert(id);
     }
+    itemData = "";
+
         $(document).ready(function(){
             $("img.play-on-spotify").click(function(){
             });
@@ -39,6 +41,7 @@
                 type: "GET",
                 url: "{{url('/')}}/api/track/" + trackId,
                 success: function (response) {
+                    itemData = response;
                     isrc = response.external_ids.isrc;
                     $("#artist-image").attr("src",response.album.images[0].url);
                     albumName = response.album.name;
@@ -88,6 +91,7 @@
                                     itemArtist: textArtists,
                                     rating: rating,
                                     itemId: '{{$trackid}}',
+                                    itemData: JSON.stringify(itemData),
                                 }
                                     );
                             // app.like("{{url('/')}}","{{$trackid}}","track",rating);

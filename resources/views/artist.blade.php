@@ -18,6 +18,7 @@
         @else
         viewstyle = "fat";
         @endif
+        item_data = "";
 
         function large_view(){
         $(".artist-cell").addClass("col-lg-4").addClass("col-md-6");
@@ -73,6 +74,7 @@
                 type: "GET",
                 url: "{{url('/')}}/api/artist/" + artistID,
                 success: function (response) {
+                    item_data = response;
 
 
                     $.ajaxSetup({
@@ -104,6 +106,7 @@
                                 itemArtist: response.name,
                                 rating: rating,
                                 itemId: artistID,
+                                itemData: JSON.stringify(item_data),
                             });
                     });
 

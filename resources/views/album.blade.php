@@ -8,6 +8,8 @@
         @else
         viewstyle = "fat";
         @endif
+
+        itemData = "";
 function paginate(
             url,
             totalItems,
@@ -158,6 +160,7 @@ function paginate(
                     type: "GET",
                     url: "{{url('/')}}/api/album/" + "{{$albumid}}",
                     success: function (albumResp) {
+                        itemData = albumResp;
                         image = albumResp.images[0].url;
                         cr = albumResp.copyrights;
                         $(".cover-art").attr('src',image);
@@ -221,6 +224,7 @@ function paginate(
                                     itemArtist: textArtists,
                                     rating: rating,
                                     itemId: '{{$albumid}}',
+                                    itemData: JSON.stringify(itemData),
                                 }
                                     );
                         });
