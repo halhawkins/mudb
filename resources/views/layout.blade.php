@@ -58,6 +58,7 @@
             <img id="user-avatar" src="{{Auth::user()->avatar}}" alt="user avatar" data-toggle="dropdown" aria-haspopup="true" class="avatar-image  dropdown-toggle">
                 <div class="dropdown-menu" aria-labelledby="user-avatar">
                     <a href="{{url('/')}}/profile" class="dropdown-item">Profile</a>
+                    <a href="{{url('/')}}/liked" class="dropdown-item">Liked Items</a>
                     <hr/>
                     <a href="{{url('/')}}/auth/logout" class="dropdown-item">Logout</a>
                 </div>
@@ -90,7 +91,7 @@
                     <p>Copyright &copy; 2021 Musicor</p>
                 </div>
                 <div class="col-md-6 text-md-right">
-                    <a href="#">Terms of Use</a> 
+                    <a href="{{url('/')}}/tos">Terms of Use</a> 
                     <span class="text-muted mx-2">|</span> 
                     <a href="#">Privacy Policy</a>
                 </div>
@@ -113,18 +114,6 @@
 
                 <form method="GET" action="{{url('/')}}/auth/redirect">
                     @csrf
-                    <!-- <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="name" class="form-control p_input">
-                    </div>
-                    <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control p_input">
-                    </div>
-                    <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control p_input">
-                    </div> -->
 
                     <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn">Register</button>
