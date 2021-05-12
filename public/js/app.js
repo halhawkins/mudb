@@ -83,6 +83,7 @@ window.app.like = function(data){//url,itemId,itemType,rating
     itemArtist = data.itemArtist;
     itemId = data.itemId;
     url = data.url;
+    itemData = data.itemData;
     itemType = data.itemType;
     rating = data.rating;
     $.ajax({
@@ -93,7 +94,8 @@ window.app.like = function(data){//url,itemId,itemType,rating
             type: itemType,
             rating: rating,
             itemName: itemName,
-            itemArtist: itemArtist
+            itemArtist: itemArtist,
+            itemData: itemData
         },
         success: function (response) {
             switch(rating){
