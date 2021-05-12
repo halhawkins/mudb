@@ -141,6 +141,20 @@ Route::get('/rating/{itemid}/{type}', function($itemid,$type){
     return response()->json($t);
 }); 
 
+Route::get('/liked',function(){
+    return view('liked');
+});
+
+Route::get('/likedtracks/{page?}/{perPage?}', function($page=1,$perPage=20){
+    return view('likedtracks')->with("page",$page)->with("perPage",$perPage);
+});
+
+Route::get('/userlikes/{type}/{page?}/{perpage?}',function($type,$page=1,$perPage=20){
+    $i = new LikeController;
+    $res = $i->userLikes($type,$page,$perPage);
+    return response()->json($res);
+});
+
 Route::post('/deltags',[LikeController::class,'delTags']);
 Route::get('/getusertags',function(){
     $l = new LikeController;
@@ -190,6 +204,14 @@ Route::get("/personal",function(){
         ;
     $res = Spotify::recommendations($seed)->get();
     return response()->json($res);
+});
+
+Route::get('/tos',function(){
+    return view('tos');
+});
+
+Route::get('/privacy',function(){
+    return view('privacy');
 });
 
 Route::get('/register',function(){
