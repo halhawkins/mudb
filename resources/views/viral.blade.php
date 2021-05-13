@@ -75,7 +75,7 @@
             endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
 
             // create an array of pages to ng-repeat in the pager control
-            pages = Array.from(Array((endPage ) - startPage).keys()).map(i => startPage + i);
+            pages = Array.from(Array((endPage ) - (startPage-1)).keys()).map(i => startPage + i);
             // endPage--;
             ret = `<div class="w-100"><div class="d-flex justify-content-center"><ul class="pagination" style="align-self:center">
             `
