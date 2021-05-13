@@ -220,7 +220,7 @@
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="albums" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="albums"></div>
             </div>
 
 @endsection

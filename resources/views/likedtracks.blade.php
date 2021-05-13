@@ -224,11 +224,11 @@
 @endsection
 
 @section('mainbody')
-            <div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="tracks-heading" class="panel-heading">Tracks</h3></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
+            <div class="col-md-12 toggle-bar"><div class="row"><div class="col-6 pt-1"><h3 id="tracks-heading" class="panel-heading">Liked Tracks</h3></div><div class="col-6"><em class="btn float-right icon dripicons-view-thumb" title="Full Size Panel View"></em><em class="btn float-right icon dripicons-view-list-large"  title="Compact View"></em></div></div>
                 <!-- #recent-releases filled in by ajax request handler -->
             </div>
             <div class="col-md-12">
-                <div class="row" id="tracks" style="background-color: #ccccff"></div>
+                <div class="row aux-bg1" id="tracks"></div>
             </div>
 
 @endsection
