@@ -48,6 +48,14 @@
             });
     }
         $(document).ready(function(){
+            $(".toggle-bar").click(function(){
+                if($(this).next().children(".aux-bg1").is(":visible")){
+                    $(this).next().children(".aux-bg1").hide();
+                }
+                else{
+                    $(this).next().children(".aux-bg1").show();
+                }
+            });
             $(".dripicons-view-thumb").click(function(){
                 large_view();
             });
