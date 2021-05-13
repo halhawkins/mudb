@@ -149,6 +149,14 @@ Route::get('/likedtracks/{page?}/{perPage?}', function($page=1,$perPage=20){
     return view('likedtracks')->with("page",$page)->with("perPage",$perPage);
 });
 
+Route::get('/likedalbums/{page?}/{perPage?}', function($page=1,$perPage=20){
+    return view('likedalbums')->with("page",$page)->with("perPage",$perPage);
+});
+
+Route::get('/likedartists/{page?}/{perPage?}', function($page=1,$perPage=20){
+    return view('likedartists')->with("page",$page)->with("perPage",$perPage);
+});
+
 Route::get('/userlikes/{type}/{page?}/{perpage?}',function($type,$page=1,$perPage=20){
     $i = new LikeController;
     $res = $i->userLikes($type,$page,$perPage);

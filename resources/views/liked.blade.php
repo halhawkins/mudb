@@ -127,7 +127,7 @@
                         ad.append(content);                        
                         });
                         if(artists.length > 19)
-                            ad.append(`<div class="w-100"><div class="d-flex justify-content-center"><a class="page-link" href="{{url('/')}}/artistlikes/1/20">More...</a></div></div>`)
+                            ad.append(`<div class="w-100"><div class="d-flex justify-content-center"><a class="page-link" href="{{url('/')}}/likedartists/1/20">More...</a></div></div>`)
                     // albums
                     //
                     // alert(query);
