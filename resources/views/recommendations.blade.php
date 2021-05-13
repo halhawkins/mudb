@@ -169,9 +169,9 @@
                         s.push({type:val.type.toLowerCase(),id:val.id});
                         // infobox += `<a href="{{url('/')}}/` + val.type.toLowerCase() + "/" + val.id + `">` + val.item_name + `</a> by ` + val.artist + `<br>`;
                     });
-                     infobox = `<strong>Recommendations based on these liked items:</strong>
-                     <table>
-                     `
+                     infobox = '';//`<strong>Recommendations based on these liked items:</strong>
+//                     <table>
+//                     `
                         $.ajax({
                             type: "GET",
                             url: "{{url('/')}}/likesinfo",
@@ -180,10 +180,16 @@
                                 seedsresp.push(response);
                                 $.each(response,function(i,val){
                                     // s.push({type:val.type.toLowerCase(),id:val.id});
+                                    idata = JSON.parse(val[0].item_data);
+                                    console.log(idata);
                                     if(val[0].type == "artist")
-                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].artist + `</a></td></tr>`;
+                                        img = idata.images[2].url;
                                     else
-                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].item_name + `</a> by ` + val[0].artist + `</td></tr>`;
+                                        img = idata.album.images[2].url;
+                                    if(val[0].type == "artist")
+                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `"><img src="` + img + `" alt="thumbnail" height="64"></a></td><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].artist + `</a></td></tr>`;
+                                    else
+                                        infobox += `<tr><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `"><img src="` + img + `" alt="thumbnail"></a></td><td><a href="{{url('/')}}/` + val[0].type.toLowerCase() + "/" + val[0].itemID + `">` + val[0].item_name + `</a> by ` + val[0].artist + `</td></tr>`;
                                 });
                                 infobox += "</table>"
                                 $(".sources-content").html(infobox);
@@ -282,7 +288,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Items used to generate recommendations</h4>
+                    <h4 class="modal-title">Recommendations based on these liked items:</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body sources-content">
