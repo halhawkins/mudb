@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB; 
+use App\Http\Controllers\VerifyEmailController;
+
 
 class UserController extends Controller
 {
@@ -19,7 +21,11 @@ class UserController extends Controller
                 'email' => $request['email'],
                 'password' => $request['password']
             ];
-            User::create($reg);
+            $id = User::create($reg)->id;
+
+            $u = Auth::user();
+            $r = new VerifyEmailController();
+            $r->SendEmail($u->id,$request['email']);
             return true;
         }
         else{

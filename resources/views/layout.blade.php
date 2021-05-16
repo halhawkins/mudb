@@ -80,7 +80,7 @@
     -->
     <div class="container">
         <div class="row">
- @yield('mainbody')
+        @yield('mainbody')
         </div>
 
         <hr>

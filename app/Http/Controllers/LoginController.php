@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\VerifyEmailController;
 
 class LoginController extends Controller
 {
@@ -50,6 +51,10 @@ class LoginController extends Controller
         }
         $request->session()->regenerate();
         Auth::login($user);
+
+        $u = $user;
+        $r = new VerifyEmailController();
+        $r->SendEmail($u->id,$request['email']);
         return view('profile')->with($request->email);
     }
 

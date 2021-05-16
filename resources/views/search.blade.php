@@ -48,10 +48,20 @@
             });
     }
         $(document).ready(function(){
-            $(".dripicons-view-thumb").click(function(){
+            $(".toggle-bar").click(function(){
+                if($(this).next().children(".aux-bg1").is(":visible")){
+                    $(this).next().children(".aux-bg1").hide();
+                }
+                else{
+                    $(this).next().children(".aux-bg1").show();
+                }
+            });
+            $(".dripicons-view-thumb").click(function(e){
+                e.stopPropagation(); // prevents .toggle-bar handler from collapsing the view
                 large_view();
             });
-            $(".dripicons-view-list-large").click(function(){
+            $(".dripicons-view-list-large").click(function(e){
+                e.stopPropagation(); // prevents .toggle-bar handler from collapsing the view
                 compact_view();
             });
             $(".expand").click(function(){

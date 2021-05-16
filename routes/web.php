@@ -9,6 +9,9 @@
  use App\Http\Controllers\LikeController;
  use Aerni\Spotify\Facades\SpotifyFacade as Spotify;
  use Aerni\Spotify\Facades\SpotifySeedFacade as SpotifySeed;
+ use App\Mail\VerifyEmail;
+ use Illuminate\Support\Facades\Mail;
+ use App\Http\Controllers\VerifyEmailController;
  /**
   * Display the default page
   */
@@ -226,3 +229,18 @@ Route::get('/register',function(){
     return view('register');
 });
 
+Route::get('/verify/{id}/{hash}',function($id,$hash){
+    $r = new VerifyEmailController();
+    $res = $r->verifyAccount($id,$hash);
+    if($res['code'] == 200)
+        return view('verified');
+    else
+        return view('resend');
+});
+
+Route::get('/testemail',function(){
+    $r = new VerifyEmailController();
+    $r->SendEmail("1","hal@localhost.com");
+    return view('email');
+    // Mail::to('hal@localhost.com')->send(new VerifyEmail());
+});
