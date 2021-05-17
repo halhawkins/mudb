@@ -50,6 +50,11 @@ div.update img{
 .genre-list-item:hover{
     background-color: #d9d9d9;
 }
+.passwordreq{
+    margin-top:1em;
+    margin-bottom:1em;
+    width: 100%;
+}
 
     </style>
     <link href="{{url('/')}}/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">
@@ -153,6 +158,15 @@ div.update img{
         }
         // --- close button = a.close
         $(document).ready(function(){
+            $(".passwordreq").click(function(){
+                $.ajax({
+                    type: "get",
+                    url: "{{url('/')}}/passwordreq/{{Auth::user()->email}}",
+                    success: function (response) {
+                        $(".response-div").addClass("bg-success").text("Check your email.");
+                    }
+                });
+            });
             $("#genre-tags").tokenfield(
             )
             .on('tokenfield:createdtoken', function (e) {
@@ -235,6 +249,11 @@ div.update img{
                                 <button type="submit" class="btn btn-primary btn-block enter-btn">Update</button>
                             </div>
                         </form>
+                        <div class="text-center">
+                            <button class="btn btn-primary passwordreq" >Reset Password</button>
+                        </div>
+                        <div class="text-center response-div">
+                        </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">

@@ -73,6 +73,12 @@ class LikeController extends Controller
         return $rets;
     }
 
+    public function likesCount(){
+        $userid = Auth::user()->id;
+        $count = likes::where("userID","=",$userid)->count();
+        return $count;
+    }
+
     public function likesInfo($itemsArray){
         foreach ($itemsArray as $value) {
             $res[] = likes::where("type","=",$value['type'])->where("itemID","=",$value['id'])->get();

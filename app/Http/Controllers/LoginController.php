@@ -58,6 +58,10 @@ class LoginController extends Controller
         return view('profile')->with($request->email);
     }
 
+    public function sendPasswordChange($email){
+        
+    }
+
     public function redirectToGoogle(){
         return Socialite::driver('google')->redirect();
     }

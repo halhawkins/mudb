@@ -173,9 +173,12 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
-                </div>
+                </div> 
 
-                <p class="sign-up">Don't have an Account?<a href=""> Sign Up</a></p>
+                <!-- <p class="sign-up">Don't have an Account?<a href=""> Sign Up</a></p>
+                </form> -->
+
+                <p ><a href="{{url('/')}}/resetpassword">I forgot my password</a></p>
                 </form>
                                     
                 </div>

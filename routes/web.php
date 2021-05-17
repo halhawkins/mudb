@@ -12,12 +12,18 @@
  use App\Mail\VerifyEmail;
  use Illuminate\Support\Facades\Mail;
  use App\Http\Controllers\VerifyEmailController;
+ use App\Http\Controllers\PasswordChangeEmailController;
  /**
   * Display the default page
   */
 Route::get('/', function () {
-    if(Auth::check())
-        return view('/recommendations')->with("perpage",20);
+    if(Auth::check()){
+        $l = new LikeController();
+        if($l->likesCount() > 0)
+            return view('/recommendations')->with("perpage",20);
+        else
+            return view('/top200')->with('page',1)->with('perpage',20);
+    }
     else
         return view('/top200')->with('page',1)->with('perpage',20);
 });
@@ -236,6 +242,39 @@ Route::get('/verify/{id}/{hash}',function($id,$hash){
         return view('verified');
     else
         return view('resend');
+});
+
+Route::get('/passwordreq/{email}', function($email){
+    $r = new PasswordChangeEmailController($email);
+    $r->SendEmail($email);
+    return response()->json(array("result"=>"success"));
+});
+
+Route::get('/passwordchange/{token}', function($token){
+    $r = new PasswordChangeEmailController();
+    $res = $r->CheckPasswordChangeToken($token);
+    if($res['status'] == "success")
+        return view('passwordchange')->with("token",$token);
+    else
+        return view('error')->with("message",$res['message']);
+});
+
+Route::post('/updatepassword',function(){
+    $r = new PasswordChangeEmailController();
+    $newpassword = $_REQUEST['newPassword'];
+    $confirm = $_REQUEST['confirm'];
+    $token = $_REQUEST['token'];
+    if($newpassword !== $confirm)
+        return response()->json(array("status" =>"error", "message" => "New password and confirm password do not match."),400);
+    $res = $r->UpdatePassword($token,$newpassword);
+    if($res["status"] == "success")
+        return response()->json($res,200);
+    else
+        return response()->json($res,400);
+});
+
+Route::get('/resetpassword', function(){
+    return view('resetpassword');
 });
 
 Route::get('/testemail',function(){
