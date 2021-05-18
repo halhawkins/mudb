@@ -11,9 +11,19 @@
     <link rel="stylesheet" href="{{asset(url('/') . '/css/fonts/fontawesome.css')}}">
     <link rel="stylesheet" href="{{ asset(url('/').'/css/fonts/solid.css?v=1.0')}}">
     <link rel="stylesheet" href="{{ asset(url('/').'/css/styles.css?v=1.0')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
     <script src="{{asset(url('/').'/js/popper.min.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+    .logo-placeholder{
+        font-family: 'Abel', sans-serif;
+        /* font-size: 1.5em; */
+        margin-top:0;
+        margin-bottom:0;
+    }
+    </style>
     </head>
 @yield('script')
 <body class="main-bg">
@@ -26,7 +36,7 @@
         <div class="container-fluid">
             <a href="{{url('/')}}" class="navbar-brand mr-3" style="font-size:1.4em;">
                 <!-- <img src="{{url('/')}}/images/violine1-sm.png" style="height:32px;"> -->
-                <span style="color:orange;">L</span><span>ogo</span> <span style="color:orange;">P</span>laceholder
+                <span class="logo-placeholder">Violine</span>
                 </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -88,7 +98,7 @@
         <footer class="footer aux-bg2">
             <div class="row">
                 <div class="col-md-6">
-                    <p>Copyright &copy; 2021 Musicor</p>
+                    <p>Copyright &copy; 2021 Violine</p>
                 </div>
                 <div class="col-md-6 text-md-right">
                     <a href="{{url('/')}}/tos">Terms of Use</a> 
