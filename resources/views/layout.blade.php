@@ -66,7 +66,7 @@
         @auth
         <div class="dropdown">
             <img id="user-avatar" src="{{Auth::user()->avatar}}" alt="user avatar" data-toggle="dropdown" aria-haspopup="true" class="avatar-image  dropdown-toggle">
-                <div class="dropdown-menu" aria-labelledby="user-avatar">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
                     <a href="{{url('/')}}/profile" class="dropdown-item">Profile</a>
                     <a href="{{url('/')}}/liked" class="dropdown-item">Liked Items</a>
                     <hr/>
