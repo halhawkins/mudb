@@ -43,7 +43,7 @@ class PasswordChangeEmail extends Mailable
             $vemail->verification_token = $hashvalue;
             $vemail->save();
             return $this
-            ->from('hal@localhost.com')
+            ->from(env("PASSWORD_RESET_EMAIL"))
             ->view('passwordchangeemail')->with('hashvalue',$hashvalue);
         }
         else{

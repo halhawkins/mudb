@@ -47,7 +47,7 @@ class VerifyEmail extends Mailable
         $vemail->save();
         // $hash = Auth::user();
         return $this
-            ->from('hal@localhost.com')
+            ->from(env("PASSWORD_CHANGE_EMAIL"))
             ->view('verification')->with('data',$data);
     }
 }
