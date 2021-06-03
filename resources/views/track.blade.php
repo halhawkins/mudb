@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('script')
-    <style>
+<style>
 .videoWrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
@@ -24,150 +24,176 @@
 .dripicons-thumbs-down{
     cursor: pointer;
 }
-    </style>
+.comment-avatar{
+    border-radius: 100%;
+    display: inline;
+    margin-left:.5em;
+}
+.comment-name{
+    /* font-size:.75em; */
+    margin-left:.5em;
+}
+ul{
+    /* margin-left: 0 !important; */
+    list-style-position: outside;
+}
+li{
+    margin-top: 1rem;
+    margin-left: 0 !important;
+    /* display:inline; */
+    list-style: none;
+    font-size: .85rem;
+}
+.comment-icons{
+    margin-left: .5rem;
+    margin-right: .5rem;
+    cursor: pointer;
+    padding: 2px;
+}
+.comment-icons:hover{
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+.btn-comment{
+    font-size: .8rem;
+    margin-left: .25rem;
+
+}
+.content-wrapper{
+    margin-left:1rem;
+    position:relative;
+}
+.context-menu-item{
+    margin-top:.25rem;
+    margin-bottom:.25rem;
+    margin-left:0;
+}
+.menuclass{
+    position: absolute;
+    padding-left:12px;
+    padding-right:12px;
+    background-color: white;
+    -webkit-box-shadow: 8px 8px 5px -3px rgba(0,0,0,0.59); 
+    box-shadow: 8px 8px 5px -3px rgba(0,0,0,0.59);
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-weight: 400;
+}
+.menuclass li:hover{
+    background: #333;
+    color:white;
+}
+
+.activated{
+    color: red;
+}
+</style>
+
 <script src="{{url('/')}}/js/app.js"></script>
-    <script>
-    function playOnSpotify(id){
-        window.open("https://api.spotify.com/v1/albums/" + id, "_blank");
-        alert(id);
-    }
-    itemData = "";
+<script src="{{url('/')}}/js/track.js"></script>
 
-        $(document).ready(function(){
-            $("img.play-on-spotify").click(function(){
-            });
-            trackId = '{{$trackid}}';
-            $.ajax({
-                type: "GET",
-                url: "{{url('/')}}/api/track/" + trackId,
-                success: function (response) {
-                    itemData = response;
-                    isrc = response.external_ids.isrc;
-                    $("#artist-image").attr("src",response.album.images[0].url);
-                    albumName = response.album.name;
-                    albumType = response.album.album_type;
-                    trackName = response.name;
-                    artistArray = response.artists;
-                    releaseYear = new Date(response.album.release_date).getFullYear();
-                    artists = "";
-                    $("#track-info").append(`<a href="` + response.uri + `"><img src="{{url("/")}}/images/Spotify_play.png" style="width:32px;height:auto;"><span style="font-size:1.2em;"> Play on Spotify</span></a>`);
-                    textArtists = "";
-                    $.each(artistArray,function(i,artist){
-                        textArtists += artist.name;
-                        artists += `<a href="{{url('/')}}/artist/` + artist.id + `">` + artist.name + `</a>`;
-                        if(artistArray.length > (i+1)){
-                            artists += ", ";
-                            textArtists += ", ";
-                        }
-                    });
+<script>
 
+function playOnSpotify(id){
+    window.open("https://api.spotify.com/v1/albums/" + id, "_blank");
+}
 
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $(".dripicons-thumbs-up, .dripicons-thumbs-down").click(function(){
-                            if($(this).attr("class") === 'dripicons-thumbs-up'){
-                                if($(this).css("color")==="rgb(128, 128, 128)"){
-                                    rating = 1;
-                                }
-                                else{
-                                    rating = 0;
-                                }
-                            }
-                            else{
-                                if($(this).css("color")==="rgb(128, 128, 128)"){
-                                    rating = -1;
-                                }
-                                else{
-                                    rating = 0;
-                                }
-                            }
-                            app.like({
-                                    url:"{{url('/')}}",
-                                    itemType:'track',
-                                    itemName: trackName,
-                                    itemArtist: textArtists,
-                                    rating: rating,
-                                    itemId: '{{$trackid}}',
-                                    itemData: JSON.stringify(itemData),
-                                }
-                                    );
-                            // app.like("{{url('/')}}","{{$trackid}}","track",rating);
-                    });
+itemData = "";
 
+const itemId = "{{$trackid}}";
 
-                    $.ajax({
-                        type: "GET",
-                        url: "{{url('/')}}/rating/" + trackId + "/track",
-                        success: function (likes) {
-                            if(likes.like === 1){
-                                $(".dripicons-thumbs-up").css("color","#00FF00");
-                                $(".dripicons-thumbs-down").css("color","#808080");
-                            }
-                            else if(likes.like === -1){
-                                $(".dripicons-thumbs-up").css("color","#808080");
-                                $(".dripicons-thumbs-down").css("color","#FF0000");
-                            }
-                            else{
-                                $(".dripicons-thumbs-up").css("color","#808080");
-                                $(".dripicons-thumbs-down").css("color","#808080");
-                            }
-                        }
-                    });
-                    $.ajax({
-                        type: "GET",
-                        url: "{{url('/')}}/api/trackvideo/" + isrc,
-                        success: function (res) {
-                            $.each(res,function(i,val){
-                                $("#releases").html(`
-                                    <div class="videoWrapper">
-                                    <iframe
-                                        src="https://www.youtube.com/embed/` + val.id.videoId + `">
-                                    </iframe>
-                                    </div>
-                                <div class="col-12" id="track-info">
-                                    <h4>` + trackName + `</h4><br/>
-                                </div>
-                                `);
-                            });
-                        }
-                    });
-                    $("#artist-image").parent().append(`<h4><a href="{{url("/")}}/album/` + response.album.id + `">` + albumName + "</a></h4><em>" + albumType + "</em><br/>("+releaseYear+")<br/><h5>" + artists + "</h5>");
-                    additionalInfo = $("#releases").parent().append(`<div class="row"></div>`);
-                    // additionalInfo.append("<div class='col-12'><pre>"+JSON.stringify(response,null,"\t")+"</pre></div>");
-                }
-            })
-        });
+$(document).ready(function(){
+    @guest
+        userid = 0;
+    @endguest 
+    @auth 
+        userid = {{Auth::user()->id}};
+    @endauth 
+    $.ajax({
+        type: "get",
+        url: "{{url('/')}}/comments/" + itemId,
+        success: function (response) {
+            showComments(response, "commentdiv",userid,"{{url('/')}}","{{Auth::user()->avatar}}");
+        }
+    });
+    getTrackData('{{$trackid}}',"{{url('/')}}");
+    $("img.play-on-spotify").click(function(){
+    });
+});
         
-    </script>
+</script>
 @endsection
 
 @section('mainbody')
-        <div class="col-md-12 artist-info"><h3 id="artist-name-heading"></h3>
-                <div class="row" id="artist" style="padding-bottom:0px;">
-                    <div class="col-md-3 col-lg-3 col-xl-3 primary-bg" style="padding-bottom:0px;">
-                        <h3 id="artist-name"></h3>
-                        <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
-                        @auth
-                        <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
-                        @endauth
-                        <p id="bio"></p>
-                    </div>
-
-                    <div class="col-md-9 col-lg-9 col-xl-9 aux-bg1">
-                                <div class="row">
-                                    <div class="col-12" id="releases">
-                                    </div>
-                               </div>
-                               <div class="row">
-                                    <div class="col-12" id="track-info">
-                                    </div>
-                               </div>
-                    </div>
-
-                    <!-- </div> -->
+<div class="col-md-12 artist-info"><h3 id="artist-name-heading"></h3>
+    <div class="row" id="artist" style="padding-bottom:0px;">
+        <div class="col-md-3 col-lg-3 col-xl-3 primary-bg" style="padding-bottom:0px;">
+            <div class="row">
+                <div class="col-12">
+                    <h3 id="artist-name"></h3>
+                    <img class="img-fluid" id="artist-image" src="/assets/images/generic-user-icon-19.jpg">
                 </div>
             </div>
+            @auth
+            <div class="m-2"><em class="dripicons-thumbs-up" title="I like this"></em>&nbsp;&nbsp;&nbsp;<em class="dripicons-thumbs-down" title="I dislike this"></em></div>
+            @endauth
+            <div id="bio" class="w-100">
+            </div>
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-xl-9 aux-bg1">
+                    <div class="row">
+                        <div class="col-12" id="releases">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" id="track-info">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-dark">
+                            <h5>Comments</h5>
+                            <p>Leave new comment. <i onclick="leaveComment(null,'{{url('/')}}','{{Auth::user()->avatar}}')" class="comment-icons fas fa-comment-dots"></i></p>
+                            <ul id="commentdiv">
+                            </ul>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- </div> -->
+    </div>
+</div>
+@endsection
+@section("modals")
+<div id="award-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="report-comment-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Report Comment</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- <form id="report-comment-form"> -->
+                    <textarea id="reason-for-report-input" class="form-control w-100"></textarea>
+                    <input id="comment-id-input" type="hidden"><br>
+                    <button id="submit-report-comment" class="btn btn-sm btn-primary">Submit</button>
+                    <button id="cancel-report-comment" class="btn btn-sm btn-default">Cancel</button>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -13,6 +13,9 @@
  use Illuminate\Support\Facades\Mail;
  use App\Http\Controllers\VerifyEmailController;
  use App\Http\Controllers\PasswordChangeEmailController;
+ use App\Http\Controllers\CommentController;
+ use App\Http\Controllers\CommentlikesController;
+ use App\Http\Controllers\ReportCommentsController;
  /**
   * Display the default page
   */
@@ -283,3 +286,14 @@ Route::get('/testemail',function(){
     return view('email');
     // Mail::to('hal@localhost.com')->send(new VerifyEmail());
 });
+
+Route::post('/comment',[CommentController::class, 'store']);
+Route::get('/comments/{itemId}', function($itemId){
+    $c = new CommentController();
+    $r = $c->getItemComments($itemId);
+    return $r;
+});
+Route::post('/reportcomment',[ReportCommentsController::class,'store']);
+Route::post('/likecomment',[CommentlikesController::class,'store']);
+Route::post('/deletecomment', [CommentController::class,'destroy']);
+Route::post('/editcomment', [CommentController::class, 'update']);
