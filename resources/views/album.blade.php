@@ -1,6 +1,76 @@
 @extends('layout')
 
 @section('script')
+<style>
+.dripicons-thumbs-up{
+    cursor: pointer;
+}
+.dripicons-thumbs-down{
+    cursor: pointer;
+}
+.comment-avatar{
+    border-radius: 100%;
+    display: inline;
+    margin-left:.5em;
+}
+.comment-name{
+    /* font-size:.75em; */
+    margin-left:.5em;
+}
+ul{
+    /* margin-left: 0 !important; */
+    list-style-position: outside;
+}
+li{
+    margin-top: 1rem;
+    margin-left: 0 !important;
+    /* display:inline; */
+    list-style: none;
+    font-size: .85rem;
+}
+.comment-icons{
+    margin-left: .5rem;
+    margin-right: .5rem;
+    cursor: pointer;
+    padding: 2px;
+}
+.comment-icons:hover{
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+.btn-comment{
+    font-size: .8rem;
+    margin-left: .25rem;
+
+}
+.content-wrapper{
+    margin-left:1rem;
+    position:relative;
+}
+.context-menu-item{
+    margin-top:.25rem;
+    margin-bottom:.25rem;
+    margin-left:0;
+}
+.menuclass{
+    position: absolute;
+    padding-left:12px;
+    padding-right:12px;
+    background-color: white;
+    -webkit-box-shadow: 8px 8px 5px -3px rgba(0,0,0,0.59); 
+    box-shadow: 8px 8px 5px -3px rgba(0,0,0,0.59);
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-weight: 400;
+}
+.menuclass li:hover{
+    background: #333;
+    color:white;
+}
+
+.activated{
+    color: red;
+}
+</style>
 <script src="{{url('/')}}/js/app.js"></script>
     <script>
         @if(Session::has('viewstyle'))
@@ -142,6 +212,7 @@ function paginate(
             });
     }
 
+    const itemId = "{{$albumid}}";
 
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){
@@ -150,7 +221,28 @@ function paginate(
             $(".dripicons-view-list-large").click(function(){
                 compact_view();
             });
-            $.getScript("{{url('/')}}/js/app.js", function () {
+            @guest
+                userid = 0;
+                $.ajax({
+                    type: "get",
+                    url: "{{url('/')}}/comments/" + itemId,
+                    success: function (response) {
+                        showComments(response, "commentdiv",userid,"{{url('/')}}",null);
+                    }
+                });
+            @endguest 
+            @auth 
+                userid = {{Auth::user()->id}};
+            $.ajax({
+                type: "get",
+                url: "{{url('/')}}/comments/" + itemId,
+                success: function (response) {
+                    showComments(response, "commentdiv",userid,"{{url('/')}}","{{Auth::user()->avatar}}");
+                }
+            });
+            @endauth 
+
+    $.getScript("{{url('/')}}/js/app.js", function () {
                 image = "";
                 page = {{$page}};
                 perPage = {{$perpage}};
@@ -347,6 +439,8 @@ function paginate(
         });
         
     </script>
+<script src="{{url('/')}}/js/album.js"></script>
+
 @endsection
 
 @section('mainbody')
@@ -369,9 +463,55 @@ function paginate(
                                 <div class="row aux-bg1" id="tracks">
 
                                </div>
+                               <div class="row aux-bg1" id="comments">
+                               <!-- <div class="row"> -->
+                                <div class="col-12 text-dark">
+                                    <h5>Comments</h5>
+                                    @auth
+                                    <p>Leave new comment. <i onclick="leaveComment(null,'{{url('/')}}','{{Auth::user()->avatar}}')" class="comment-icons fas fa-comment-dots"></i></p>
+                                    @endauth
+                                    <ul id="commentdiv">
+                                    </ul>
+                                </div>
+                            <!-- </div> -->
+                               </div>
                     </div>
 
                 </div>
             </div>
 
+@endsection
+@section("modals")
+<div id="award-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="report-comment-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Report Comment</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- <form id="report-comment-form"> -->
+                    <textarea id="reason-for-report-input" class="form-control w-100"></textarea>
+                    <input id="comment-id-input" type="hidden"><br>
+                    <button id="submit-report-comment" class="btn btn-sm btn-primary">Submit</button>
+                    <button id="cancel-report-comment" class="btn btn-sm btn-default">Cancel</button>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
