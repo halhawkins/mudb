@@ -12,6 +12,7 @@
 }
 </style>
 <script src="{{url('/')}}/js/app.js"></script>
+<script src="{{url('/')}}/js/album.js"></script>
     <script>
         @if(Session::has('viewstyle'))
         viewstyle = "{{session('viewstyle')}}";
@@ -61,6 +62,7 @@
             });
     }
 
+    const itemId = "{{$artistid}}";
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){
                 large_view();
@@ -70,6 +72,26 @@
             });
             artistID = '{{$artistid}}';
             albs = $("#releases");
+            @guest
+                userid = 0;
+                $.ajax({
+                    type: "get",
+                    url: "{{url('/')}}/comments/" + itemId,
+                    success: function (response) {
+                        showComments(response, "commentdiv",userid,"{{url('/')}}",null);
+                    }
+                });
+            @endguest 
+            @auth 
+                userid = {{Auth::user()->id}};
+            $.ajax({
+                type: "get",
+                url: "{{url('/')}}/comments/" + itemId,
+                success: function (response) {
+                    showComments(response, "commentdiv",userid,"{{url('/')}}","{{Auth::user()->avatar}}");
+                }
+            });
+            @endauth 
             $.ajax({
                 type: "GET",
                 url: "{{url('/')}}/api/artist/" + artistID,
@@ -228,6 +250,19 @@
                                 <div class="row aux-bg1" id="releases">
 
                                </div>
+                               <div class="row aux-bg1" id="comments">
+                               <!-- <div class="row"> -->
+                                <div class="col-12 text-dark">
+                                    <h5>Comments</h5>
+                                    @auth
+                                    <p>Leave new comment. <i onclick="leaveComment(null,'{{url('/')}}','{{Auth::user()->avatar}}')" class="comment-icons fas fa-comment-dots"></i></p>
+                                    @endauth
+                                    <ul id="commentdiv">
+                                    </ul>
+                                </div>
+                            <!-- </div> -->
+                               </div>
+
                     </div>
 
                     <!-- </div> -->
