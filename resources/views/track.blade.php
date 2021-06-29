@@ -104,10 +104,16 @@ const itemId = "{{$trackid}}";
 $(document).ready(function(){
     @guest
         userid = 0;
+        $.ajax({
+            type: "get",
+            url: "{{url('/')}}/comments/" + itemId,
+            success: function (response) {
+                showComments(response, "commentdiv",userid,"{{url('/')}}",null);
+            }
+        });
     @endguest 
     @auth 
         userid = {{Auth::user()->id}};
-    @endauth 
     $.ajax({
         type: "get",
         url: "{{url('/')}}/comments/" + itemId,
@@ -115,6 +121,7 @@ $(document).ready(function(){
             showComments(response, "commentdiv",userid,"{{url('/')}}","{{Auth::user()->avatar}}");
         }
     });
+    @endauth 
     getTrackData('{{$trackid}}',"{{url('/')}}");
     $("img.play-on-spotify").click(function(){
     });
@@ -152,7 +159,9 @@ $(document).ready(function(){
                     <div class="row">
                         <div class="col-12 text-dark">
                             <h5>Comments</h5>
+                            @auth
                             <p>Leave new comment. <i onclick="leaveComment(null,'{{url('/')}}','{{Auth::user()->avatar}}')" class="comment-icons fas fa-comment-dots"></i></p>
+                            @endauth
                             <ul id="commentdiv">
                             </ul>
                         </div>

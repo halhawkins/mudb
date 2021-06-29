@@ -146,7 +146,10 @@ class CommentController extends Controller
             
             foreach ($replies as $reply) {
                 $reply['user'] = User::where("id","=",$reply['user_id'])->first();
-                $liked = Commentlikes::where("item_id","=",$reply['id'])->where("user_id","=",Auth::user()->id)->where("award_type","=","like")->count();
+                if(Auth::check())
+                    $liked = Commentlikes::where("item_id","=",$reply['id'])->where("user_id","=",Auth::user()->id)->where("award_type","=","like")->count();
+                else
+                    $liked = 0;
                 if($liked > 0)
                     $iliked = true;
                 else
