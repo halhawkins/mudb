@@ -75,7 +75,9 @@ height: 20px;
 object-fit: cover;
 }
 .navbar-dark{
-background-color: #656c70;
+/* background-color: #656c70; */
+background: rgb(101,76,107);
+background: linear-gradient(68deg,#656c70  0%,  rgba(101,76,107,1)100%);
 }
 .copyright{
     font-size: .8em;
@@ -358,7 +360,7 @@ audio{
 .toggle-bar{
     color: white;
     background-color: #656c70;
-    border-bottom: 1px solid #17525f;
+    /* border-bottom: 1px solid #17525f; */
     padding-bottom: .2rem;
 }
 .toggle-bar:hover{

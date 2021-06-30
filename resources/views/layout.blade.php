@@ -34,7 +34,7 @@
         Start of Nav
         =====================================
     -->
-    <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg">
+    <nav class="navbar navbar-expand-md navbar-dark mb-3 primary-bg" style="background: rgb(101,76,107);background: linear-gradient(68deg,#656c70  0%,  rgba(101,76,107,1)100%);">
         <div class="container-fluid">
             <a href="{{url('/')}}" class="navbar-brand mr-3" style="font-size:1.4em;">
                 <!-- <img src="{{url('/')}}/images/violine1-sm.png" style="height:32px;"> -->
