@@ -5,7 +5,7 @@
 Violine is built upon Laravel 8 application framework and employs such packages as: <a href="https://github.com/aerni/laravel-spotify">aerni/laravel-spotify</a>, <a href="https://github.com/elegantweb/sanitizer">elegantweb/sanitizer</a> and <a href="https://github.com/alaouy/Youtube">alaouy/Youtube</a>
 Violine leverages and integrates API data from Spotify, LastFM and YouTube.
 
-Though this has been created for demonstration purposes, it is fully functional and development is ongoing. 
+Though this has been created for demonstration purposes, it is fully functional and as of June 2021, development is ongoing. 
 
 This implementation is the property of Harold Hawkins and may not be used without express written consent.
 
