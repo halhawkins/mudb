@@ -99,7 +99,7 @@ function playOnSpotify(id){
 
 itemData = "";
 
-const itemId = "{{$trackid}}";
+var itemId = "{{$trackid}}";
 
 $(document).ready(function(){
     @guest

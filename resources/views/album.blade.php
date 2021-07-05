@@ -212,7 +212,7 @@ function paginate(
             });
     }
 
-    const itemId = "{{$albumid}}";
+    var itemId = "{{$albumid}}";
 
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){

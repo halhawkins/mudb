@@ -62,7 +62,7 @@
             });
     }
 
-    const itemId = "{{$artistid}}";
+    var itemId = "{{$artistid}}";
         $(document).ready(function(){
             $(".dripicons-view-thumb").click(function(){
                 large_view();
