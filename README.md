@@ -9,8 +9,3 @@ Though this has been created for demonstration purposes, it is fully functional 
 
 This implementation is the property of Harold Hawkins and may not be used without express written consent.
 
-
-
-## /hh - Authentication
-
-Added Oauth support via Socialite for Google. Currently researching Fortify as well.
